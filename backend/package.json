@@ -1,0 +1,26 @@
+{
+  "name": "mern-frontend",
+  "main": "src/server.ts",
+  "scripts": {
+    "start": "node ./dist/server.js",
+    "build": "rm -rf ./dist & tsc --build ",
+    "dev": "npx nodemon"
+  },
+  "dependencies": {
+    "@types/cors": "^2.8.17",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "date-fns": "^4.1.0",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "mongoose": "^8.13.2",
+    "ts-node": "^10.9.2",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.8",
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.14.0",
+    "nodemon": "^3.1.9"
+  }
+}

@@ -1,0 +1,25 @@
+@import "tailwindcss";
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@theme {
+  --color-primary: #a2d2ff;
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    transition: all 130ms linear;
+    @apply m-0 box-border p-0;
+  }
+}
+
+@layer utilities {
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+
+  .flex-between {
+    @apply flex items-center justify-between;
+  }
+}
