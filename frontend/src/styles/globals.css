@@ -1,8 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap");
 @import "tailwindcss";
+
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 @theme {
-  --color-primary: #a2d2ff;
+  --color-primary: #f07167;
+  --color-primary-light: #fbf8ef;
+  --color-secondary: #fcbf49;
+
+  --font-foreground: "Inter", sans-serif;
 }
 
 @layer base {
@@ -11,6 +17,10 @@
   *::after {
     transition: all 130ms linear;
     @apply m-0 box-border p-0;
+  }
+
+  body {
+    @apply font-foreground;
   }
 }
 

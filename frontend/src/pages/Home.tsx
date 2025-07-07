@@ -1,7 +1,7 @@
 import useTitle from "@/lib/hooks/useTitle";
 
 function Home() {
-  useTitle("Home");
+  useTitle({ title: "Home" });
 
   return (
     <>

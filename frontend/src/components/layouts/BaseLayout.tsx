@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 
-const BaseLayout = () => {
+function BaseLayout() {
   const location = useLocation();
 
   useEffect(() => {
@@ -17,6 +17,6 @@ const BaseLayout = () => {
       </main>
     </>
   );
-};
+}
 
 export default BaseLayout;
