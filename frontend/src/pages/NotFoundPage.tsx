@@ -1,6 +1,6 @@
 import useTitle from "@/lib/hooks/useTitle";
 
-function NotFound() {
+function NotFoundPage() {
   useTitle({ title: "Page Not Found" });
 
   return (
@@ -10,4 +10,4 @@ function NotFound() {
   );
 }
 
-export default NotFound;
+export default NotFoundPage;

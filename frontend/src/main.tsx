@@ -2,8 +2,9 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "@/App";
 import { disableReactDevTools } from "@fvilers/disable-react-devtools";
+import env from "@/config/env";
 
-if (import.meta.env.VITE_NODE_ENV === "production") {
+if (env.VITE_NODE_ENV === "production") {
   disableReactDevTools();
 }
 

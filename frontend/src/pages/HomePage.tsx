@@ -1,6 +1,6 @@
 import useTitle from "@/lib/hooks/useTitle";
 
-function Home() {
+function HomePage() {
   useTitle({ title: "Home" });
 
   return (
@@ -10,4 +10,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default HomePage;
