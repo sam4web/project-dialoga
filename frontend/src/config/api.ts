@@ -2,12 +2,12 @@ import axios from "axios";
 import env from "./env";
 import { API_TIMEOUT_MS } from "./constants";
 
-export const API_ENDPOINTS = {
-  AUTH: {
-    LOGIN: "/api/auth/login",
-    REGISTER: "/api/auth/register",
-    REFRESH_TOKEN: "/api/auth/refresh",
-    LOGOUT: "/api/auth/logout",
+export const apiEndpoints = {
+  auth: {
+    login: "/api/auth/login",
+    register: "/api/auth/register",
+    refreshToken: "/api/auth/refresh",
+    logout: "/api/auth/logout",
   },
 };
 
