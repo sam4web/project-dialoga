@@ -1,8 +1,4 @@
-import axios from "axios";
-import env from "./env";
-import { API_TIMEOUT_MS } from "./constants";
-
-export const apiEndpoints = {
+const apiEndpoints = {
   auth: {
     login: "/api/auth/login",
     register: "/api/auth/register",
@@ -11,14 +7,4 @@ export const apiEndpoints = {
   },
 };
 
-const api = axios.create({
-  baseURL: env.VITE_API_BASE_URL,
-  timeout: API_TIMEOUT_MS,
-  headers: {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-  },
-  withCredentials: true,
-});
-
-export default api;
+export default apiEndpoints;
