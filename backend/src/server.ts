@@ -17,6 +17,7 @@ import errorHandler from "./middlewares/error-handler.middleware";
 
 // routes
 import indexRoutes from "./routes/index.route";
+import authRoutes from "./routes/auth.route";
 
 // connect to MongoDB
 connectDB();
@@ -29,6 +30,7 @@ app.use(cookieParser());
 
 // routes
 app.use("/api", indexRoutes);
+app.use("/api/auth", authRoutes);
 
 // catch 404 and forward to error handler
 app.all("/*splat", (request: Request, response: Response) => {
