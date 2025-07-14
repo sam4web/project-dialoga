@@ -1,8 +1,15 @@
 import { RouterProvider } from "react-router-dom";
-import AppRouter from "./routes";
+import useTheme from "@/hooks/useTheme";
+import AppRouter from "@/routes";
 
 const App = () => {
-  return <RouterProvider router={AppRouter} />;
+  useTheme();
+
+  return (
+    <>
+      <RouterProvider router={AppRouter} />
+    </>
+  );
 };
 
 export default App;

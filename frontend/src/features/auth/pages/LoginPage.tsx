@@ -1,4 +1,4 @@
-import useTitle from "@/lib/hooks/useTitle";
+import useTitle from "@/hooks/useTitle";
 
 function LoginPage() {
   useTitle({ title: "Welcome to Dialoga | Login to get started" });

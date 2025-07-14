@@ -1,4 +1,4 @@
-import useTitle from "@/lib/hooks/useTitle";
+import useTitle from "@/hooks/useTitle";
 
 function HomePage() {
   useTitle({ title: "Home" });
