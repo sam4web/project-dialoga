@@ -4,7 +4,7 @@ export type RegisterUserProps = {
   password: string;
 };
 
-export type LoginUserProps = { email: string; password: string };
+export type LoginUserProps = { username: string; password: string };
 
 export type TokenReturnType = Promise<{
   accessToken: string;

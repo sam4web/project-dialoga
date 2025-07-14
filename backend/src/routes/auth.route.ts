@@ -16,7 +16,7 @@ router.post("/register", validateRegister, register);
 // @method POST
 router.post("/refresh", refreshToken);
 
-// @route /api/auth/refresh
+// @route /api/auth/logout
 // @method POST
 router.post("/logout", logout);
 

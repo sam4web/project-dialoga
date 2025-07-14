@@ -5,9 +5,9 @@ import User from "../models/user.model";
 import { LoginUserProps, RegisterUserProps, TokenReturnType } from "../types/services";
 import ApiError from "../lib/utils/api-error";
 
-export const loginUser = async ({ email, password }: LoginUserProps): TokenReturnType => {
-  const user = await User.findOne({ email });
-  if (!user) throw new ApiError("User with provided email does not exists.", 404);
+export const loginUser = async ({ username, password }: LoginUserProps): TokenReturnType => {
+  const user = await User.findOne({ username });
+  if (!user) throw new ApiError("User with provided username does not exists.", 404);
   const doesPassMatch = await user.doesPasswordMatch(password);
   if (!doesPassMatch) throw new Error("Password does not match.");
   // generate new access and refresh token

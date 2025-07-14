@@ -15,11 +15,11 @@ export const validateRegister = (request: Request, response: Response, next: Nex
 };
 
 export const validateLogin = (request: Request, response: Response, next: NextFunction) => {
-  const emailValid = validateEmail(request.body?.email?.trim() || "");
-  const passwordValid = validateEmail(request.body?.email?.trim() || "");
+  const usernameValid = validateUsername(request.body?.username?.trim() || "");
+  const passwordValid = validatePassword(request.body?.password?.trim() || "");
 
-  if (![emailValid, passwordValid].every((field) => field.isValid)) {
-    response.json({ message: emailValid.message || passwordValid.message });
+  if (![usernameValid, passwordValid].every((field) => field.isValid)) {
+    response.json({ message: usernameValid.message || passwordValid.message });
     return;
   }
 

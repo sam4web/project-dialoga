@@ -6,14 +6,14 @@ import ApiError from "../lib/utils/api-error";
 // @route /api/auth/login
 // @method POST
 export const login = async (request: Request, response: Response) => {
-  const { email, password } = request.body;
-  if (!email || !password) {
+  const { username, password } = request.body;
+  if (!username || !password) {
     response.status(400).json({ error: "All fields are required" });
     return;
   }
 
   try {
-    const { accessToken, refreshToken } = await loginUser({ email, password });
+    const { accessToken, refreshToken } = await loginUser({ username, password });
 
     // add refresh token on response cookie
     response.cookie("token", refreshToken, {
