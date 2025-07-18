@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "react-router-dom";
 import InputField from "./InputField";
 import Button from "@/components/ui/Button";
-import { signInSchema, type TSignInSchema } from "../types/validation";
+import { signInSchema, type TSignInSchema } from "../types";
 
 function SignInForm() {
   const methods = useForm<TSignInSchema>({

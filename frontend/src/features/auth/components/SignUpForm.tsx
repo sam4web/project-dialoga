@@ -2,7 +2,7 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Button from "@/components/ui/Button";
 import InputField from "./InputField";
-import { signUpSchema, type TSignUpSchema } from "../types/validation";
+import { signUpSchema, type TSignUpSchema } from "../types";
 
 function SignUpForm() {
   const methods = useForm<TSignUpSchema>({
