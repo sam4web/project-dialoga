@@ -17,7 +17,7 @@ function Button({ children, varient, className, ...props }: Props) {
     <button
       title={children?.toString()}
       className={cx(
-        "w-full text-center cursor-pointer py-2.5 rounded-lg hover:opacity-90 hover:-translate-y-1 font-foreground font-medium",
+        "w-full text-center cursor-pointer py-2.5 rounded-lg hover:opacity-85 hover:-translate-y-0.5 font-foreground font-medium",
         varientStyles[varient],
         className ? className : ""
       )}

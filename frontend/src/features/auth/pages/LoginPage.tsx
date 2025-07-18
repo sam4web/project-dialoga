@@ -1,9 +1,8 @@
 import useTitle from "@/hooks/useTitle";
-import InputField from "../components/InputField";
-import Button from "@/components/shared/Button";
-import { Link } from "react-router-dom";
 import { cx } from "@/lib/utils";
 import { useState } from "react";
+import SignInForm from "../components/SignInForm";
+import SignUpForm from "../components/SignUpForm";
 
 type TFormType = "sign-in" | "sign-up";
 
@@ -47,16 +46,7 @@ function LoginPage() {
             ))}
           </div>
 
-          <div className="space-y-4 sm:space-y-4.5">
-            <InputField title="Email" type="email" name="email" placeholder="Enter your email" />
-            <InputField title="Password" type="password" name="password" placeholder="Enter your password" />
-          </div>
-          <Link to="/" className="block text-primary font-medium">
-            Forgot password?
-          </Link>
-          <Button type="submit" className="" varient="primary">
-            Sign In
-          </Button>
+          {formType === "sign-in" ? <SignInForm /> : <SignUpForm />}
         </div>
       </div>
     </main>
