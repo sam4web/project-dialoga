@@ -30,7 +30,7 @@ function SignInForm() {
         <Link to="/" className="block text-primary font-medium">
           Forgot password?
         </Link>
-        <Button type="submit" varient="primary">
+        <Button type="submit" varient="primary" className="w-full">
           Sign In
         </Button>
       </form>

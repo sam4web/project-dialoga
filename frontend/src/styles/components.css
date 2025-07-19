@@ -1,6 +1,13 @@
-.input-toggle-btn {
-  @apply flex-1 rounded-md py-[7px] text-sm font-medium text-gray-600 cursor-pointer;
-}
-.input-toggle-btn.active {
-  @apply bg-white text-gray-800;
+@layer components {
+  .container {
+    @apply min-h-dvh px-3 py-4;
+  }
+
+  .input-toggle-btn {
+    @apply flex-1 rounded-md py-[7px] text-sm font-medium text-gray-600 cursor-pointer;
+  }
+
+  .input-toggle-btn.active {
+    @apply bg-white text-gray-800;
+  }
 }
