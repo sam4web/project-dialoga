@@ -10,7 +10,7 @@ function BaseLayout() {
 
   return (
     <>
-      <main className="size-full min-h-dvh bg-primary-light/70">
+      <main className="size-full min-h-dvh bg-primary-light/70 dark:bg-slate-900">
         <Outlet />
       </main>
     </>

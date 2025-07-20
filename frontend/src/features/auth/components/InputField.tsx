@@ -24,7 +24,7 @@ function InputField<T extends FieldValues>({ title, type, label, className, ...p
 
   return (
     <div className="flex flex-col gap-1">
-      <label htmlFor={label} className="text-gray-800 font-medium">
+      <label htmlFor={label} className="text-gray-800 dark:text-primary-light font-medium">
         {title}
       </label>
 
@@ -34,7 +34,7 @@ function InputField<T extends FieldValues>({ title, type, label, className, ...p
           type={!type ? "text" : isPasswordField && showPassword ? "text" : type}
           title={label}
           className={cx(
-            "font-foreground text-gray-800 border-2 border-gray-400/30 rounded-lg focus:outline-2 outline-primary transition px-3 py-2.5 focus:placeholder:text-transparent w-full",
+            "font-foreground text-gray-800 dark:text-primary-light dark:placeholder:text-gray-500 border-2 border-gray-400/30 rounded-lg focus:outline-2 outline-primary transition px-3 py-2.5 focus:placeholder:text-transparent w-full",
             fieldError ? "border-red-400 outline-red-300" : "",
             className ? className : ""
           )}

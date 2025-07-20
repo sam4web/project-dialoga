@@ -9,7 +9,7 @@ type Props = {
 function Button({ children, varient, className, title, ...props }: Props) {
   const varientStyles = {
     primary: "bg-primary text-primary-light hover:opacity-85 hover:-translate-y-0.5 py-2.5 px-4",
-    icon: "text-grey-200 bg-transparent [&>svg]:size-5 [&>svg]:text-gray-700 p-2 border-2 border-gray-500/40 hover:bg-orange-200/10 hover:text-slate-700 hover:border-primary/35",
+    icon: "text-grey-200 bg-transparent [&>svg]:size-4.5 p-2.5 border-0 border-transparent hover:border-gray-500/40 hover:bg-orange-200/40 dark:hover:bg-slate-50/10 [&>svg]:text-gray-700 dark:[&>svg]:text-gray-200 dark:hover:[&>svg]:text-primary-light hover:[&>svg]:text-slate-800",
   };
 
   return (

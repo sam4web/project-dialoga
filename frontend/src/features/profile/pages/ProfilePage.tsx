@@ -7,7 +7,10 @@ function ProfilePage() {
   return (
     <>
       <Header title="Profile" />
-      <div className="container space-y-5 sm:space-y-7">Profile Page</div>;
+      <div className="container space-y-5 sm:space-y-7">
+        <h3 className="text-gray-800 dark:text-primary-light font-semibold text-2xl">Profile Page</h3>
+      </div>
+      ;
     </>
   );
 }
