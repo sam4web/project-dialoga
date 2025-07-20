@@ -1,6 +1,7 @@
 import { ArrowLeft } from "lucide-react";
 import Button from "../ui/Button";
 import { useNavigate } from "react-router-dom";
+import ThemeToggler from "../ui/ThemeToggler";
 
 type Props = {
   title: string;
@@ -17,8 +18,14 @@ function BackButton() {
 
 function Header({ title }: Props) {
   return (
-    <header>
-      <BackButton />
+    <header className="border-b border-gray-400/30">
+      <div className="flex-between py-3 px-7 ">
+        <div className="flex-center gap-2">
+          <BackButton />
+          <h3 className="text-xl font-medium text-gray-700 dark:text-primary-light">{title}</h3>
+        </div>
+        <ThemeToggler />
+      </div>
     </header>
   );
 }
