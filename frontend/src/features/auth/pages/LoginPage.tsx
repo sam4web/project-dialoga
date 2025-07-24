@@ -27,12 +27,11 @@ function LoginPage() {
         </div>
       </div>
 
-      <div className="bg-white dark:bg-gray-800 shadow-md rounded-xl max-w-md sm:max-w-lg w-full mx-auto px-3 sm:px-6 py-4 sm:py-7 space-y-4 sm:space-y-6">
+      <div className="bg-white dark:bg-gray-800 max-w-md sm:max-w-lg w-full mx-auto card">
         <div className="text-center">
           <h3 className="header-text text-2xl">Welcome</h3>
           <p className="text-color-light">Sign in to your account or create a new one</p>
         </div>
-
         <div className="flex bg-gray-200/80 dark:bg-gray-700/80 p-1 rounded-lg">
           {formOptions.map((option) => (
             <button
@@ -47,7 +46,6 @@ function LoginPage() {
             </button>
           ))}
         </div>
-
         {formType === "sign-in" ? <SignInForm /> : <SignUpForm />}
       </div>
     </div>

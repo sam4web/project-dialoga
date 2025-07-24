@@ -11,7 +11,7 @@ function UpdateProfileCard() {
     console.log(data);
   };
   return (
-    <div className="profile-card">
+    <div className="card profile-card">
       <ProfileCardTitle title="Profile Information" icon={User} />
 
       <div className="flex items-center space-x-4">
