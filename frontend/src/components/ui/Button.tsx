@@ -10,7 +10,7 @@ const variantStyles = {
   danger: `bg-red-500 border-red-500 text-white ${baseStyles}`,
   outline: `border-slate-300 text-color-primary ${baseStyles}`,
   icon: `hover:[&>svg]:text-slate-800 dark:hover:[&>svg]:text-primary-light hover:bg-gray-300/40 ${baseIconStyles}`,
-  "icon-colored": `hover:bg-orange-100/70 hover:[&>svg]:text-primary  ${baseIconStyles}`,
+  "icon-colored": `hover:bg-orange-100/50 hover:[&>svg]:text-primary  ${baseIconStyles}`,
 };
 
 type Props = {
