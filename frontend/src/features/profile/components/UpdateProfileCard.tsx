@@ -36,7 +36,7 @@ function UpdateProfileCard() {
             </div>
             <Input title="Status Message" label="status message" spacing={"sm"} />
           </div>
-          <Button type="submit" varient="primary" className="w-full">
+          <Button type="submit" variant="primary" className="w-full">
             Update Profile
           </Button>
         </form>

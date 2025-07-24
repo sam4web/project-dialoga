@@ -25,7 +25,7 @@ function SignInForm() {
         <Link to="/" className="block text-primary font-medium">
           Forgot password?
         </Link>
-        <Button type="submit" varient="primary" className="w-full">
+        <Button type="submit" variant="primary" className="w-full">
           Sign In
         </Button>
       </form>

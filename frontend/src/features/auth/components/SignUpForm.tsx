@@ -28,7 +28,7 @@ function SignUpForm() {
             placeholder="Confirm your password"
           />
         </div>
-        <Button type="submit" varient="primary" className="w-full">
+        <Button type="submit" variant="primary" className="w-full">
           Create Account
         </Button>
       </form>

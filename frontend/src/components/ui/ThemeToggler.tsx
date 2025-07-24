@@ -12,7 +12,7 @@ function ThemeToggler() {
   };
 
   return (
-    <Button varient="icon" title="Toggle theme" onClick={handleToggle} className="[&>svg]:!size-5 ">
+    <Button variant="icon" title="Toggle theme" onClick={handleToggle} className="[&>svg]:!size-5 ">
       {theme === "light" ? <Sun /> : <Moon />}
     </Button>
   );
