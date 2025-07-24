@@ -1,17 +1,22 @@
 import { Camera, User } from "lucide-react";
 import ProfileCardTitle from "./ProfileCardTitle";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
+import { TUpdateProfileSchema, updateProfileSchema } from "../types";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 function UpdateProfileCard() {
-  const methods = useForm({ mode: "onBlur" });
+  const methods = useForm<TUpdateProfileSchema>({
+    resolver: zodResolver(updateProfileSchema),
+    mode: "onBlur",
+  });
 
-  const onSubmit = (data) => {
+  const onSubmit: SubmitHandler<TUpdateProfileSchema> = (data) => {
     console.log(data);
   };
   return (
-    <div className="card profile-card">
+    <div className="card section-card">
       <ProfileCardTitle title="Profile Information" icon={User} />
 
       <div className="flex items-center space-x-4">
@@ -34,11 +39,11 @@ function UpdateProfileCard() {
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <div className="space-y-2 sm:space-y-4.5 mb-4 sm:mb-6">
-            <div className="flex-center space-x-3">
-              <Input title="Full Name" label="full name" spacing={"sm"} />
+            <div className="flex space-x-3 items-start">
+              <Input title="Full Name" label="fullname" spacing={"sm"} />
               <Input title="Email" label="email" type="email" spacing={"sm"} />
             </div>
-            <Input title="Status Message" label="status message" spacing={"sm"} />
+            <Input title="Status Message" label="statusMessage" spacing={"sm"} />
           </div>
           <Button type="submit" variant="primary" className="w-full">
             Update Profile

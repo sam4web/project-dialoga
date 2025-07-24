@@ -9,8 +9,8 @@ const variantStyles = {
   secondary: `bg-secondary border-secondary text-slate-800 ${baseStyles}`,
   danger: `bg-red-500 border-red-500 text-white ${baseStyles}`,
   outline: `border-slate-300 text-color-primary ${baseStyles}`,
-  icon: `hover:[&>svg]:text-slate-800 dark:hover:[&>svg]:text-primary-light hover:bg-gray-300/40 ${baseIconStyles}`,
-  "icon-colored": `hover:bg-orange-100/50 hover:[&>svg]:text-primary  ${baseIconStyles}`,
+  icon: `hover:[&>svg]:text-slate-800 dark:hover:[&>svg]:text-primary-light hover:bg-primary/30 ${baseIconStyles}`,
+  "icon-secondary": `hover:[&>svg]:text-primary hover:bg-gray-200/60 ${baseIconStyles}`,
 };
 
 type Props = {

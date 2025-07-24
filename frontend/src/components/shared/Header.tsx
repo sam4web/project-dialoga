@@ -9,7 +9,7 @@ type Props = {
 function BackButton() {
   const navigate = useNavigate();
   return (
-    <Button variant="icon-colored" title="Go Back" onClick={() => navigate(-1)}>
+    <Button variant="icon-secondary" title="Go Back" onClick={() => navigate(-1)}>
       <ArrowLeft />
     </Button>
   );
