@@ -1,0 +1,21 @@
+import { Moon, Sun } from "lucide-react";
+import Button from "./Button";
+import { useDispatch, useSelector } from "react-redux";
+import { selectCurrentTheme, toggleTheme } from "@/features/theme/slice";
+
+function ThemeToggler() {
+  const theme = useSelector(selectCurrentTheme);
+  const dispatch = useDispatch();
+
+  const handleToggle = () => {
+    dispatch(toggleTheme());
+  };
+
+  return (
+    <Button varient="icon" title="Toggle theme" onClick={handleToggle} className="[&>svg]:!size-5 ">
+      {theme === "light" ? <Sun /> : <Moon />}
+    </Button>
+  );
+}
+
+export default ThemeToggler;

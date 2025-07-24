@@ -1,7 +1,7 @@
 import { ArrowLeft } from "lucide-react";
 import Button from "../ui/Button";
 import { useNavigate } from "react-router-dom";
-import ThemeToggle from "../ui/ThemeToggle";
+import ThemeToggler from "../ui/ThemeToggler";
 
 type Props = {
   title: string;
@@ -24,7 +24,7 @@ function Header({ title }: Props) {
           <BackButton />
           <h3 className="font-semibold text-xl text-gray-700 dark:text-primary-light">{title}</h3>
         </div>
-        <ThemeToggle />
+        <ThemeToggler />
       </div>
     </header>
   );
