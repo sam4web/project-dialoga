@@ -10,7 +10,7 @@ type Props = {
 function BackButton() {
   const navigate = useNavigate();
   return (
-    <Button varient="icon" title="Go Back" className="hover:[&>svg]:text-primary" onClick={() => navigate(-1)}>
+    <Button varient="icon" title="Go Back" className="hover:[&>svg]:!text-primary" onClick={() => navigate(-1)}>
       <ArrowLeft />
     </Button>
   );
@@ -18,11 +18,11 @@ function BackButton() {
 
 function Header({ title }: Props) {
   return (
-    <header className="border-b border-gray-400/30">
+    <header className="border-b border-gray-400/30 shadow-sm">
       <div className="flex-between py-3 px-7 ">
         <div className="flex-center gap-2">
           <BackButton />
-          <h3 className="text-xl font-medium text-gray-700 dark:text-primary-light">{title}</h3>
+          <h3 className="font-semibold text-xl text-gray-700 dark:text-primary-light">{title}</h3>
         </div>
         <ThemeToggle />
       </div>

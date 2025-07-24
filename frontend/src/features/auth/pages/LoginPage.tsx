@@ -16,21 +16,21 @@ function LoginPage() {
   ];
 
   return (
-    <div className="container flex flex-center flex-col space-y-5 sm:space-y-7">
+    <div className="container flex-center flex-col space-y-5 sm:space-y-7">
       <div className="text-center space-y-2 sm:space-y-4">
         <div className="bg-orange-50 dark:bg-gray-800 inline-block rounded-xl p-2.5 sm:p-4 shadow-sm">
           <img src="/logo-transparent.png" alt="dialoga logo" className="size-16 sm:size-20" />
         </div>
         <div className="space-y-1.5">
-          <h2 className="text-gray-800 dark:text-primary-light font-semibold text-3xl">Dialoga</h2>
-          <p className="text-gray-500 dark:text-gray-200 text-lg">Connect with friends instantly</p>
+          <h2 className="header-text text-3xl">Dialoga</h2>
+          <p className="text-color-light text-lg">Connect with friends instantly</p>
         </div>
       </div>
 
       <div className="bg-white dark:bg-gray-800 shadow-md rounded-xl max-w-md sm:max-w-lg w-full mx-auto px-3 sm:px-6 py-4 sm:py-7 space-y-4 sm:space-y-6">
         <div className="text-center">
-          <h3 className="text-gray-800 dark:text-primary-light font-semibold text-2xl">Welcome</h3>
-          <p className="text-gray-500 dark:text-gray-200">Sign in to your account or create a new one</p>
+          <h3 className="header-text text-2xl">Welcome</h3>
+          <p className="text-color-light">Sign in to your account or create a new one</p>
         </div>
 
         <div className="flex bg-gray-200/80 dark:bg-gray-700/80 p-1 rounded-lg">
