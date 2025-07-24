@@ -12,7 +12,7 @@ function SettingProfileCard() {
     <div className="card profile-card">
       <ProfileCardTitle title="Privacy & Settings" icon={Settings} />
 
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between space-x-3">
         <div className="space-y-0.5">
           <p className="text-color-primary font-medium">Dark Mode</p>
           <p className="text-color-light text-sm">Currently using {theme} theme</p>
@@ -20,7 +20,7 @@ function SettingProfileCard() {
         <ThemeToggler />
       </div>
 
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between space-x-3">
         <div className="space-y-0.5">
           <p className="text-color-primary font-medium">Read Receipts</p>
           <p className="text-color-light text-sm">Let others know when you've read their messages</p>
@@ -28,7 +28,7 @@ function SettingProfileCard() {
         <Switch onChange={(value) => console.log(value)} value={true} />
       </div>
 
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between space-x-3">
         <div className="space-y-0.5">
           <p className="text-color-primary font-medium">Online Status</p>
           <p className="text-color-light text-sm">Show when you're online to your contacts</p>
@@ -36,7 +36,7 @@ function SettingProfileCard() {
         <Switch onChange={(value) => console.log(value)} />
       </div>
 
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between space-x-3">
         <div className="space-y-0.5">
           <p className="text-color-primary font-medium">Typing Indicators</p>
           <p className="text-color-light text-sm">Show typing indicators when composing messages</p>
