@@ -3,15 +3,11 @@
     @apply min-h-dvh size-full px-3 py-4;
   }
 
-  .card {
-    @apply shadow-sm rounded-xl px-3 sm:px-6 py-4 sm:py-7 space-y-4 sm:space-y-6;
-  }
-
-  .section-card {
-    @apply border border-gray-400/30 space-y-5 sm:space-y-6;
+  .container-card {
+    @apply shadow-xs rounded-xl px-3 sm:px-6 py-4 sm:py-7 space-y-4 sm:space-y-6 bg-white dark:bg-zinc-800/80 border-2 border-zinc-200/50 dark:border-zinc-700;
   }
 
   .input-field {
-    @apply font-foreground text-gray-800 dark:text-primary-light dark:placeholder:text-gray-500 border-2 border-gray-400/30 focus:outline-2 outline-primary transition-all duration-100 focus:placeholder:text-transparent w-full;
+    @apply font-foreground text-zinc-800 dark:text-primary-light dark:placeholder:text-zinc-500 border-2 border-zinc-500/30 dark:border-zinc-700 focus:outline-2 outline-primary transition-all duration-100 focus:placeholder:text-transparent w-full;
   }
 }

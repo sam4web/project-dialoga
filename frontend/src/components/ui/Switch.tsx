@@ -20,7 +20,7 @@ function Switch({ value = false, onChange, className, ...props }: Props) {
       onClick={handleClick}
       className={cx(
         "p-1 max-w-10 w-full rounded-full cursor-pointer",
-        checked ? "bg-primary" : "bg-gray-300 dark:bg-gray-700",
+        checked ? "bg-primary" : "bg-zinc-300 dark:bg-zinc-700",
         className ? className : ""
       )}
       {...props}

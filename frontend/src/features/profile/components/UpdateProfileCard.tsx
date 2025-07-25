@@ -16,7 +16,7 @@ function UpdateProfileCard() {
     console.log(data);
   };
   return (
-    <div className="card section-card">
+    <div className="container-card">
       <ProfileCardTitle title="Profile Information" icon={User} />
 
       <div className="flex items-center space-x-4">
@@ -26,7 +26,7 @@ function UpdateProfileCard() {
             alt="profile image"
             className="size-16 sm:size-20 shadow-sm rounded-full"
           />
-          <button className="absolute -bottom-1 -right-1 bg-gray-50/90 dark:bg-gray-700 p-1.5 rounded-full cursor-pointer">
+          <button className="absolute -bottom-1 -right-1 bg-zinc-50/90 dark:bg-zinc-700 p-1.5 rounded-full cursor-pointer">
             <Camera className="text-color-primary size-5" />
           </button>
         </div>

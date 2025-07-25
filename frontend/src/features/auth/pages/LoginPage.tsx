@@ -18,7 +18,7 @@ function LoginPage() {
   return (
     <div className="container flex-center flex-col space-y-5 sm:space-y-7">
       <div className="text-center space-y-2 sm:space-y-4">
-        <div className="bg-orange-50 dark:bg-gray-800 inline-block rounded-xl p-2.5 sm:p-4 shadow-sm">
+        <div className="bg-orange-50 dark:bg-zinc-800 inline-block rounded-xl p-2.5 sm:p-4 shadow-sm">
           <img src="/logo-transparent.png" alt="dialoga logo" className="size-16 sm:size-20" />
         </div>
         <div className="space-y-1.5">
@@ -27,18 +27,18 @@ function LoginPage() {
         </div>
       </div>
 
-      <div className="bg-white dark:bg-gray-800 max-w-md sm:max-w-lg w-full mx-auto card">
+      <div className="max-w-md sm:max-w-lg w-full mx-auto container-card">
         <div className="text-center">
           <h3 className="header-text text-2xl">Welcome</h3>
           <p className="text-color-light">Sign in to your account or create a new one</p>
         </div>
-        <div className="flex bg-gray-200/80 dark:bg-gray-700/80 p-1 rounded-lg">
+        <div className="flex bg-zinc-200/60 dark:bg-zinc-700/60 p-1 rounded-lg">
           {formOptions.map((option) => (
             <button
               key={option.type}
               className={cx(
-                "flex-1 rounded-md py-[7px] text-sm font-medium text-gray-600 dark:text-gray-400 cursor-pointer",
-                formType === option.type ? "bg-white dark:bg-slate-800 text-gray-800 dark:text-white" : ""
+                "flex-1 rounded-md py-[7px] text-sm font-medium text-zinc-600 dark:text-zinc-400 cursor-pointer",
+                formType === option.type ? "bg-white dark:bg-zinc-800 text-zinc-800 dark:text-white" : ""
               )}
               onClick={() => setFormType(option.type)}
             >

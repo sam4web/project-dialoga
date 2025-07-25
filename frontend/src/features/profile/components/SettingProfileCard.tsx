@@ -9,7 +9,7 @@ function SettingProfileCard() {
   const theme = useSelector(selectCurrentTheme);
 
   return (
-    <div className="card section-card">
+    <div className="container-card">
       <ProfileCardTitle title="Privacy & Settings" icon={Settings} />
 
       <div className="flex items-center justify-between space-x-3">

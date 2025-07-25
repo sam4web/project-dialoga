@@ -7,7 +7,7 @@ function NotFoundPage() {
 
   return (
     <div className="container flex-center mx-auto">
-      <div className="bg-white dark:bg-gray-800 max-w-md sm:max-w-lg w-full mx-auto card text-center py-10 sm:py-14">
+      <div className="container-card max-w-md sm:max-w-lg w-full text-center py-10 sm:py-14">
         <div className="space-y-3.5 mb-4 sm:mb-6">
           <div className="space-y-2">
             <h3 className="text-primary font-semibold text-6xl">404</h3>
