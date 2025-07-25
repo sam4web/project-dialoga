@@ -6,4 +6,16 @@
   .flex-between {
     @apply flex items-center justify-between;
   }
+
+  .header-text {
+    @apply text-gray-800 dark:text-primary-light font-semibold;
+  }
+
+  .text-color-primary {
+    @apply text-gray-800 dark:text-primary-light;
+  }
+
+  .text-color-light {
+    @apply text-gray-500 dark:text-gray-200;
+  }
 }

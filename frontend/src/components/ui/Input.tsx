@@ -35,7 +35,7 @@ function Input<T extends FieldValues>({ title, type, label, className, spacing, 
           type={!type ? "text" : isPasswordField && showPassword ? "text" : type}
           title={label}
           className={cx(
-            "font-foreground text-color-primary dark:placeholder:text-gray-500 border-2 border-gray-400/30 focus:outline-2 outline-primary transition focus:placeholder:text-transparent w-full",
+            "input-field",
             spacing === "sm" ? "py-1 px-2 rounded-md" : "py-2.5 px-3 rounded-lg",
             fieldError ? "border-red-400 outline-red-300" : "",
             className ? className : ""
