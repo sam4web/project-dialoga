@@ -1,16 +1,16 @@
 import { Settings } from "lucide-react";
-import ProfileCardTitle from "./ProfileCardTitle";
 import ThemeToggler from "@/components/ui/ThemeToggler";
 import { selectCurrentTheme } from "@/features/theme/slice";
 import { useSelector } from "react-redux";
 import Switch from "@/components/ui/Switch";
+import CardTitle from "@/components/shared/CardTitlte";
 
 function SettingProfileCard() {
   const theme = useSelector(selectCurrentTheme);
 
   return (
     <div className="container-card">
-      <ProfileCardTitle title="Privacy & Settings" icon={Settings} />
+      <CardTitle title="Privacy & Settings" icon={Settings} />
 
       <div className="flex items-center justify-between space-x-3">
         <div className="space-y-0.5">

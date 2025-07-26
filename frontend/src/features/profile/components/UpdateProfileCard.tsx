@@ -1,5 +1,5 @@
 import { Camera, User } from "lucide-react";
-import ProfileCardTitle from "./ProfileCardTitle";
+import CardTitle from "@/components/shared/CardTitlte";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
@@ -17,7 +17,7 @@ function UpdateProfileCard() {
   };
   return (
     <div className="container-card">
-      <ProfileCardTitle title="Profile Information" icon={User} />
+      <CardTitle title="Profile Information" icon={User} />
 
       <div className="flex items-center space-x-4">
         <div className="relative">

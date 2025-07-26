@@ -1,0 +1,76 @@
+import CardTitle from "@/components/shared/CardTitlte";
+import Header from "@/components/shared/Header";
+import useTitle from "@/hooks/useTitle";
+import { Image, User } from "lucide-react";
+
+function ChatInfoPage() {
+  useTitle({ title: "Contact Info", template: true });
+
+  return (
+    <>
+      <Header title="Contact Info" />
+      <div className="container min-h-full max-w-2xl mx-auto mt-5 space-y-5 sm:space-y-7">
+        <div className="container-card">
+          <div className="flex-center flex-col space-y-4">
+            <div className="relative">
+              <img
+                src="https://i.pravatar.cc/150?img=1"
+                alt="profile image"
+                className="size-20 shadow-sm rounded-full"
+              />
+              <div className="absolute bottom-0 right-0 bg-green-500 size-5 rounded-full flex-center">
+                <div className="size-2.5 bg-zinc-50 rounded-full" />
+              </div>
+            </div>
+            <div className="sm:space-y-0.5">
+              <h3 className="header-text text-xl sm:text-2xl">Alice Johnson</h3>
+              <div className="flex-center gap-2">
+                <div className="bg-green-500 size-3 rounded-full" />
+                <p className="text-color-primary font-medium">Online now</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex bg-zinc-200/70 dark:bg-zinc-700/60 p-2.5 rounded-lg gap-3">
+            <div className="flex-1 rounded-md py-3 px-2 bg-white dark:bg-zinc-800 text-center">
+              <p className="header-text text-xl sm:text-2xl font-semibold">127</p>
+              <p className="text-color-primary font-medium text-sm sm:text-base">Messages</p>
+            </div>
+            <div className="flex-1 rounded-md py-3 px-2 bg-white dark:bg-zinc-800 text-center">
+              <p className="header-text text-xl sm:text-2xl font-semibold">3</p>
+              <p className="text-color-primary font-medium text-sm sm:text-base">Media</p>
+            </div>
+            <div className="flex-1 rounded-md py-3 px-2 bg-white dark:bg-zinc-800 text-center">
+              <p className="header-text text-xl sm:text-2xl font-semibold">5</p>
+              <p className="text-color-primary font-medium text-sm sm:text-base">Days</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="container-card">
+          <CardTitle title="Contact Detail" icon={User} />
+          <div className="space-y-0.5">
+            <p className="text-color-light font-medium text-base sm:text-lg">Phone</p>
+            <p className="text-color-primary font-medium text-sm sm:text-base">+1 (555) 123-4567</p>
+          </div>
+          <div className="space-y-0.5">
+            <p className="text-color-light font-medium text-base sm:text-lg">Email</p>
+            <p className="text-color-primary font-medium text-sm sm:text-base">alicejohnson@example.com</p>
+          </div>
+        </div>
+
+        <div className="container-card">
+          <CardTitle title="Shared Media" icon={Image} />
+
+          <div className="shared-media-grid">
+            <img src="https://picsum.photos/501/500" alt="" className="shared-item " />
+            <img src="https://picsum.photos/502/500" alt="" className="shared-item " />
+            <img src="https://picsum.photos/503/500" alt="" className="shared-item " />
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default ChatInfoPage;
