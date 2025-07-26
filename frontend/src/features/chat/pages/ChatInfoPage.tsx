@@ -2,9 +2,10 @@ import CardTitle from "@/components/shared/CardTitlte";
 import Header from "@/components/shared/Header";
 import useTitle from "@/hooks/useTitle";
 import { Image, User } from "lucide-react";
+import ChatInfoCard from "../components/ChatInfoCard";
 
 function ChatInfoPage() {
-  useTitle({ title: "Contact Info", template: true });
+  useTitle({ title: "[Contact Name]'s Profile", template: true });
 
   return (
     <>
@@ -32,18 +33,9 @@ function ChatInfoPage() {
           </div>
 
           <div className="flex bg-zinc-200/70 dark:bg-zinc-700/60 p-2.5 rounded-lg gap-3">
-            <div className="flex-1 rounded-md py-3 px-2 bg-white dark:bg-zinc-800 text-center">
-              <p className="header-text text-xl sm:text-2xl font-semibold">127</p>
-              <p className="text-color-primary font-medium text-sm sm:text-base">Messages</p>
-            </div>
-            <div className="flex-1 rounded-md py-3 px-2 bg-white dark:bg-zinc-800 text-center">
-              <p className="header-text text-xl sm:text-2xl font-semibold">3</p>
-              <p className="text-color-primary font-medium text-sm sm:text-base">Media</p>
-            </div>
-            <div className="flex-1 rounded-md py-3 px-2 bg-white dark:bg-zinc-800 text-center">
-              <p className="header-text text-xl sm:text-2xl font-semibold">5</p>
-              <p className="text-color-primary font-medium text-sm sm:text-base">Days</p>
-            </div>
+            <ChatInfoCard value={127} label={"Messages"} />
+            <ChatInfoCard value={3} label={"Media"} />
+            <ChatInfoCard value={5} label={"Days"} />
           </div>
         </div>
 

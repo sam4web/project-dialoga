@@ -3,7 +3,7 @@ import useTitle from "@/hooks/useTitle";
 import { Link } from "react-router-dom";
 
 function NotFoundPage() {
-  useTitle({ title: "Page Not Found" });
+  useTitle({ title: "Page Not Found", template: true });
 
   return (
     <div className="container flex-center mx-auto">

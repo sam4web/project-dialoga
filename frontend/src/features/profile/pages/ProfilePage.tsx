@@ -5,7 +5,7 @@ import SettingProfileCard from "../components/SettingProfileCard";
 import ActionProfileCard from "../components/ActionProfileCard";
 
 function ProfilePage() {
-  useTitle({ title: "Profile", template: true });
+  useTitle({ title: "My Profile", template: true });
 
   return (
     <>

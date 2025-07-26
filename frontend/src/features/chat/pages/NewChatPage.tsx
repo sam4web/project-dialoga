@@ -38,7 +38,7 @@ const mockContactList = [
 ];
 
 function NewChatPage() {
-  useTitle({ title: "New Chat", template: true });
+  useTitle({ title: "Find Contacts", template: true });
 
   return (
     <>
