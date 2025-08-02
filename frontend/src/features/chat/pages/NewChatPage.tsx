@@ -81,7 +81,7 @@ function NewChatPage() {
                 </div>
               </div>
 
-              <Button variant="icon" title={`Chat with ${contact.fullName}`}>
+              <Button variant="icon" className="[&>svg]:size-5" title={`Chat with ${contact.fullName}`}>
                 <MessageCircle />
               </Button>
             </div>
