@@ -1,5 +1,11 @@
+import ContactListSidebar from "../components/ContactListSidebar";
+
 function MainChatPage() {
-  return <div>MainChatPage</div>;
+  return (
+    <>
+      <ContactListSidebar />
+    </>
+  );
 }
 
 export default MainChatPage;

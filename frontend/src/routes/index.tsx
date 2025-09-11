@@ -14,7 +14,6 @@ const AppRouter = createBrowserRouter(
         <Route index element={<Navigate to="/chat" replace />} />
         <Route path="/chat" element={<MainChatPage />} />
         <Route path="/chat/new" element={<NewChatPage />} />
-        {/* <Route path="/chat/:chatId" element={<SpecificChatPage />} /> */}
         <Route path="/chat/:chatId/info" element={<ChatInfoPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/login" element={<LoginPage />} />

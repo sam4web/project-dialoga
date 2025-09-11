@@ -17,7 +17,7 @@ function SettingProfileCard() {
           <p className="text-color-primary font-medium">Dark Mode</p>
           <p className="text-color-light text-sm">Currently using {theme} theme</p>
         </div>
-        <ThemeToggler />
+        <ThemeToggler className="[&>svg]:!size-5" />
       </div>
 
       <div className="flex items-center justify-between space-x-3">
