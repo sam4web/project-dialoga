@@ -44,10 +44,10 @@ const mockContactList = [
 ];
 function ContactListSidebar() {
   return (
-    <aside className="max-w-sm w-full h-dvh border-r border-zinc-400/50 dark:border-zinc-700 shadow-xs">
+    <aside className="w-full h-dvh border-r border-zinc-400/50 dark:border-zinc-700 shadow-xs">
       <div className="space-y-5">
         <div className="border-b border-zinc-400/50 dark:border-zinc-700 shadow-xs">
-          <div className="py-3.5 md:py-4 px-2.5 md:px-4 flex items-center justify-between space-x-1 md:space-x-3">
+          <div className="py-4 px-3.5 md:px-2.5 lg:px-3.5 flex items-center justify-between space-x-1 md:space-x-3">
             <p className="font-medium text-lg md:text-xl text-gray-700 dark:text-primary-light">Chats</p>
 
             <div className="space-x-0.5">
@@ -66,7 +66,7 @@ function ContactListSidebar() {
           </div>
         </div>
 
-        <form className="space-x-2 px-2.5 md:px-4 pt-1">
+        <form className="space-x-2 px-3.5 md:px-2.5 lg:px-3.5 pt-1">
           <div className="input-field py-2.5 px-3 rounded-lg flex items-center space-x-2 group focus-within:outline-2">
             <label htmlFor="search">
               <Search className="text-color-primary size-5" />
@@ -79,33 +79,32 @@ function ContactListSidebar() {
           </div>
         </form>
 
-        <div className="px-2.5 md:px-4 space-y-2">
+        <div className="px-3.5 md:px-2.5 lg:px-3.5 space-y-2">
           {mockContactList.map((contact) => (
-            <div
-              key={contact.id}
-              className="hover:bg-zinc-200/70 dark:hover:bg-zinc-400/15 cursor-pointer rounded-xl px-3.5 py-3"
-            >
-              <div className="flex items-center space-x-2 sm:space-x-2.5">
-                <div className="relative">
-                  <img
-                    src={contact.profileImg}
-                    alt={`${contact.fullName} profile image`}
-                    className="size-13 shadow-sm rounded-full object-cover object-center"
-                  />
-                  {contact.lastOnline === 0 && (
-                    <div className="absolute bottom-0 right-0 bg-green-500 size-3 rounded-full" />
-                  )}
-                </div>
-
-                <div className="flex-1">
-                  <div className="flex justify-between">
-                    <p className="header-text text-base sm:text-lg">{contact.fullName}</p>
-                    <p className="text-color-light text-xs">{ms(contact.lastOnline)}</p>
+            <Link to={`/chat/${contact.id}`} key={contact.id}>
+              <div className="hover:bg-zinc-200/70 dark:hover:bg-zinc-400/15 cursor-pointer rounded-xl px-3 md:px-2.5 lg:px-3 py-3">
+                <div className="flex items-center space-x-2 sm:space-x-2.5">
+                  <div className="relative">
+                    <img
+                      src={contact.profileImg}
+                      alt={`${contact.fullName} profile image`}
+                      className="size-13 shadow-sm rounded-full object-cover object-center"
+                    />
+                    {contact.lastOnline === 0 && (
+                      <div className="absolute bottom-0 right-0 bg-green-500 size-3 rounded-full" />
+                    )}
                   </div>
-                  <p className="text-color-light text-sm">{truncate(contact.lastMessage, 30)}</p>
+
+                  <div className="flex-1">
+                    <div className="flex justify-between">
+                      <p className="header-text text-base sm:text-lg">{contact.fullName}</p>
+                      <p className="text-color-light text-xs">{ms(contact.lastOnline)}</p>
+                    </div>
+                    <p className="text-color-light text-sm">{truncate(contact.lastMessage, 30)}</p>
+                  </div>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

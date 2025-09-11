@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 function ChatPlaceholderSection() {
   useTitle({ title: "Welcome", template: true });
+
   return (
     <section className="w-full h-dvh flex-center">
       <WelcomeMessage

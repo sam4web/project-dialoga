@@ -15,7 +15,7 @@ function WelcomeMessage({ title, subtitle, className, children }: Props) {
       </div>
       <div className="space-y-1.5">
         <h2 className="header-text text-3xl">{title}</h2>
-        <p className="text-color-light text-lg">{subtitle}</p>
+        <p className="text-color-light text-base lg:text-lg">{subtitle}</p>
       </div>
       <div>{children}</div>
     </div>
