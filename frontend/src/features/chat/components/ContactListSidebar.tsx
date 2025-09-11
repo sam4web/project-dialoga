@@ -1,7 +1,7 @@
 import Button from "@/components/ui/Button";
 import { Plus, Search, Settings } from "lucide-react";
 import ThemeToggler from "@/components/ui/ThemeToggler";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ms from "ms";
 import { truncate } from "../../../lib/utils";
 
@@ -43,8 +43,6 @@ const mockContactList = [
   },
 ];
 function ContactListSidebar() {
-  const navigate = useNavigate();
-
   return (
     <aside className="max-w-sm w-full h-dvh border-r border-zinc-400/50 dark:border-zinc-700 shadow-xs">
       <div className="space-y-5">
@@ -53,12 +51,16 @@ function ContactListSidebar() {
             <p className="font-medium text-lg md:text-xl text-gray-700 dark:text-primary-light">Chats</p>
 
             <div className="space-x-0.5">
-              <Button variant="icon" title="New Chat" onClick={() => navigate("/chat/new")}>
-                <Plus />
-              </Button>
-              <Button variant="icon" onClick={() => navigate("/profile")}>
-                <Settings />
-              </Button>
+              <Link to={"/chat/new"} title="New Chat">
+                <Button variant="icon" title="New Chat">
+                  <Plus />
+                </Button>
+              </Link>
+              <Link to={"/settings"} title="Settings and Profile">
+                <Button variant="icon" title="Settings and Profile">
+                  <Settings />
+                </Button>
+              </Link>
               <ThemeToggler />
             </div>
           </div>

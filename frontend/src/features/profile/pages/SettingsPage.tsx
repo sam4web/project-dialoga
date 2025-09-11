@@ -4,12 +4,12 @@ import UpdateProfileCard from "../components/UpdateProfileCard";
 import SettingProfileCard from "../components/SettingProfileCard";
 import ActionProfileCard from "../components/ActionProfileCard";
 
-function ProfilePage() {
+function SettingsPage() {
   useTitle({ title: "My Profile", template: true });
 
   return (
     <>
-      <Header title="Profile" />
+      <Header title="Settings & Profile" />
       <div className="container min-h-full max-w-2xl mx-auto mt-5 space-y-5 sm:space-y-7">
         <UpdateProfileCard />
         <SettingProfileCard />
@@ -19,4 +19,4 @@ function ProfilePage() {
   );
 }
 
-export default ProfilePage;
+export default SettingsPage;

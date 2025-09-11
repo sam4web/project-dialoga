@@ -3,7 +3,7 @@ import { cx } from "@/lib/utils";
 import { useState } from "react";
 import SignInForm from "../components/SignInForm";
 import SignUpForm from "../components/SignUpForm";
-import LogoImg from "@/components/shared/LogoImg";
+import WelcomeMessage from "@/components/shared/WelcomeMessage";
 
 type TFormType = "sign-in" | "sign-up";
 
@@ -18,13 +18,7 @@ function LoginPage() {
 
   return (
     <div className="container flex-center flex-col space-y-5 sm:space-y-7">
-      <div className="text-center space-y-2 sm:space-y-4">
-        <LogoImg />
-        <div className="space-y-1.5">
-          <h2 className="header-text text-3xl">Dialoga</h2>
-          <p className="text-color-light text-lg">Connect with friends instantly</p>
-        </div>
-      </div>
+      <WelcomeMessage title="Dialoga" subtitle="Connect with friends instantly" />
 
       <div className="max-w-md sm:max-w-lg w-full mx-auto container-card">
         <div className="text-center">
