@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import Switch from "@/components/ui/Switch";
 import CardTitle from "@/components/shared/CardTitlte";
 
-function SettingProfileCard() {
+function ProfileSettingCard() {
   const theme = useSelector(selectCurrentTheme);
 
   return (
@@ -47,4 +47,4 @@ function SettingProfileCard() {
   );
 }
 
-export default SettingProfileCard;
+export default ProfileSettingCard;

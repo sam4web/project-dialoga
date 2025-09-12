@@ -27,4 +27,8 @@
   [&::-webkit-scrollbar-thumb]:bg-zinc-400/65
   dark:[&::-webkit-scrollbar-thumb]:bg-zinc-700/70;
   }
+
+  .overlay {
+    @apply fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-dvh z-[5] bg-zinc-300/60 dark:bg-zinc-900/80 dark:shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-[1px] animate-appear;
+  }
 }

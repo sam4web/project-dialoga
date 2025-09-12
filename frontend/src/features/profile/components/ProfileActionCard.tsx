@@ -1,0 +1,20 @@
+import Button from "@/components/ui/Button";
+import { useDispatch } from "react-redux";
+import { showChangePasswordModal } from "../slice";
+
+function ProfileActionCard() {
+  const dispatch = useDispatch();
+
+  return (
+    <div className="container-card space-y-0 flex gap-4 flex-wrap sm:flex-nowrap">
+      <Button variant="outline" className="w-full" onClick={() => dispatch(showChangePasswordModal())}>
+        Change Password
+      </Button>
+      <Button variant="danger" className="w-full">
+        Sign out
+      </Button>
+    </div>
+  );
+}
+
+export default ProfileActionCard;

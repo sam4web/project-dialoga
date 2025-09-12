@@ -23,6 +23,8 @@ function Input<T extends FieldValues>({ title, type, label, className, spacing, 
   const fieldValue = isPasswordField ? watch(label) : undefined;
   const fieldError = errors[label]?.message as string | undefined;
 
+  const PassEyeIcon = showPassword ? Eye : EyeOff;
+
   return (
     <div className="flex flex-col gap-1 w-full">
       <label htmlFor={label} className={cx("text-color-primary font-medium", spacing === "sm" ? "text-sm" : "")}>
@@ -51,7 +53,9 @@ function Input<T extends FieldValues>({ title, type, label, className, spacing, 
             className="absolute top-1/2 -translate-y-1/2 right-3.5 cursor-pointer"
             onClick={() => setShowPassword((prev) => !prev)}
           >
-            <span className="text-gray-500/80">{showPassword ? <Eye size={22} /> : <EyeOff size={22} />}</span>
+            <span className="text-gray-500/80">
+              <PassEyeIcon className={cx(spacing === "sm" ? "size-5" : "size-6")} />
+            </span>
           </button>
         )}
       </div>

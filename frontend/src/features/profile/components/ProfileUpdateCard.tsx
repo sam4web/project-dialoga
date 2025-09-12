@@ -6,7 +6,7 @@ import Button from "@/components/ui/Button";
 import { TUpdateProfileSchema, updateProfileSchema } from "../types";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-function UpdateProfileCard() {
+function ProfileUpdateCard() {
   const methods = useForm<TUpdateProfileSchema>({
     resolver: zodResolver(updateProfileSchema),
     mode: "onBlur",
@@ -40,10 +40,10 @@ function UpdateProfileCard() {
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <div className="space-y-2 sm:space-y-4.5 mb-4 sm:mb-6">
             <div className="flex space-x-3 items-start">
-              <Input title="Full Name" label="fullname" spacing={"sm"} />
-              <Input title="Email" label="email" type="email" spacing={"sm"} />
+              <Input<TUpdateProfileSchema> title="Full Name" label="fullname" spacing={"sm"} />
+              <Input<TUpdateProfileSchema> title="Email" label="email" type="email" spacing={"sm"} />
             </div>
-            <Input title="Status Message" label="statusMessage" spacing={"sm"} />
+            <Input<TUpdateProfileSchema> title="Status Message" label="statusMessage" spacing={"sm"} />
           </div>
           <Button type="submit" variant="primary" className="w-full">
             Update Profile
@@ -54,4 +54,4 @@ function UpdateProfileCard() {
   );
 }
 
-export default UpdateProfileCard;
+export default ProfileUpdateCard;
