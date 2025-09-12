@@ -42,12 +42,12 @@ function ChatInfoPage() {
         <div className="container-card">
           <CardTitle title="Contact Detail" icon={User} />
           <div className="space-y-0.5">
-            <p className="text-color-light font-medium text-base sm:text-lg">Phone</p>
-            <p className="text-color-primary font-medium text-sm sm:text-base">+1 (555) 123-4567</p>
-          </div>
-          <div className="space-y-0.5">
             <p className="text-color-light font-medium text-base sm:text-lg">Email</p>
             <p className="text-color-primary font-medium text-sm sm:text-base">alicejohnson@example.com</p>
+          </div>
+          <div className="space-y-0.5">
+            <p className="text-color-light font-medium text-base sm:text-lg">Status</p>
+            <p className="text-color-primary font-medium text-sm sm:text-base">Hey, I'm using Dialoga</p>
           </div>
         </div>
 

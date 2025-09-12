@@ -12,7 +12,7 @@ function ChatMessageBubble({ message, sentTime, self }: ChatMessageBubbleProps) 
   return (
     <div
       className={cx(
-        "clear-both py-1.5 px-2.5 rounded-md max-w-xs lg:max-w-lg text-wrap",
+        "clear-both py-1.5 px-2 sm:px-2.5 rounded-md max-w-64 sm:max-w-xs lg:max-w-lg text-wrap",
         self ? "float-right bg-primary" : "float-left bg-zinc-200/70 dark:bg-zinc-700/55"
       )}
     >

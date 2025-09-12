@@ -1,6 +1,7 @@
 import useTitle from "@/hooks/useTitle";
 import ChatMessageHeader from "./ChatMessageHeader";
 import ChatMessageBubble from "./ChatMessageBubble";
+import ChatMessageInput from "./ChatMessageInput";
 
 const messageDummyData = {
   profile: {
@@ -179,16 +180,18 @@ function ChatMessageSection() {
   useTitle({ title: "[Contact Name] Chat", template: true });
 
   return (
-    <section>
+    <section className="relative h-full">
       <ChatMessageHeader {...messageDummyData.profile} />
 
       <div className="h-[90dvh] overflow-y-hidden">
-        <div className="space-y-4 overflow-y-auto h-full chat-container-scrollbar px-2 md:px-5 py-5">
+        <div className="space-y-4 overflow-y-auto h-full chat-container-scrollbar px-2.5 lg:px-5 py-5">
           {messageDummyData.messages.map((messageObj) => (
             <ChatMessageBubble key={messageObj.id} {...messageObj} self={messageObj.sentBy === "self"} />
           ))}
         </div>
       </div>
+
+      <ChatMessageInput />
     </section>
   );
 }

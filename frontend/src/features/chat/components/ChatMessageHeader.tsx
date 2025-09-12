@@ -12,7 +12,7 @@ type ChatMessageHeaderProps = {
 function ChatMessageHeader({ id, profileImg, fullname, status }: ChatMessageHeaderProps) {
   return (
     <header className="border-b border-zinc-400/50 dark:border-zinc-700 shadow-xs">
-      <div className="flex items-center justify-between w-full py-[11px] md:py-[13px] px-2 md:pl-5 md:pr-3.5">
+      <div className="flex items-center justify-between w-full py-[11px] md:py-[13px] px-2.5 lg:pl-5 lg:pr-3.5">
         <div className="flex items-center space-x-2.5">
           <Link to={`/chat`} className="block md:hidden">
             <Button variant="icon" title="Contact List">
