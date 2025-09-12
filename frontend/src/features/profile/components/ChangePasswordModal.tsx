@@ -1,5 +1,5 @@
 import Button from "@/components/ui/Button";
-import { Lock } from "lucide-react";
+import { Lock, X } from "lucide-react";
 import { closeChangePasswordModal } from "../slice";
 import { useDispatch } from "react-redux";
 import Input from "@/components/ui/Input";
@@ -20,7 +20,17 @@ function ChangePasswordModal() {
   };
 
   return (
-    <div className="container-card max-w-md w-full bg-white dark:bg-zinc-800 !space-y-5">
+    <div className="container-card max-w-md w-full bg-white dark:bg-zinc-800 !space-y-5 relative">
+      <Button
+        variant="icon"
+        title="Close Modal"
+        className="absolute right-2.5 top-2.5"
+        type="button"
+        onClick={() => dispatch(closeChangePasswordModal())}
+      >
+        <X />
+      </Button>
+
       <div>
         <h3 className="header-text text-lg sm:text-xl flex items-center gap-2">
           <Lock className="size-5 sm:size-6" /> Change Password
@@ -65,7 +75,7 @@ function ChangePasswordModal() {
             </ul>
           </div>
 
-          <div className="text-right space-x-3">
+          <div className="text-right space-x-3 pt-0.5">
             <Button
               variant="outline"
               type="button"
