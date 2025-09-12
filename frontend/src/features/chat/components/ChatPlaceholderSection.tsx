@@ -7,7 +7,7 @@ function ChatPlaceholderSection() {
   useTitle({ title: "Welcome", template: true });
 
   return (
-    <section className="w-full h-dvh flex-center">
+    <section className="w-full h-dvh flex-center  px-5">
       <WelcomeMessage
         title="Welcome to Dialoga"
         subtitle="Start a new conversation to connect with someone, or simply select a contact from the sidebar to continue your chat."

@@ -19,4 +19,12 @@
   .shared-item {
     @apply rounded-lg;
   }
+
+  .chat-container-scrollbar {
+    @apply [&::-webkit-scrollbar]:w-2
+  [&::-webkit-scrollbar-thumb]:rounded-full 
+  [&::-webkit-scrollbar-track]:bg-transparent
+  [&::-webkit-scrollbar-thumb]:bg-zinc-400/65
+  dark:[&::-webkit-scrollbar-thumb]:bg-zinc-700/70;
+  }
 }

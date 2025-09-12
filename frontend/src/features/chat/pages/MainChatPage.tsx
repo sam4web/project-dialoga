@@ -9,10 +9,10 @@ function MainChatPage() {
 
   return (
     <div className="flex">
-      <div className={cx("md:max-w-sm", chatId ? "hidden md:block w-full" : "flex-1")}>
+      <div className={cx("md:max-w-sm w-full", chatId ? "hidden md:block" : "flex-1")}>
         <ContactListSidebar />
       </div>
-      <div className={cx("flex-1 w-full px-5 block", !chatId ? "hidden md:block" : "")}>
+      <div className={cx("flex-1 w-full", !chatId ? "hidden md:block" : "")}>
         {chatId ? <ChatMessageSection /> : <ChatPlaceholderSection />}
       </div>
     </div>
