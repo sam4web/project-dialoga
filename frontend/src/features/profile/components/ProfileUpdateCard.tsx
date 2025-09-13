@@ -5,8 +5,11 @@ import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import { TUpdateProfileSchema, updateProfileSchema } from "../types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useDispatch } from "react-redux";
+import { showUpdateProfileImageModal } from "../slice";
 
 function ProfileUpdateCard() {
+  const dispatch = useDispatch();
   const methods = useForm<TUpdateProfileSchema>({
     resolver: zodResolver(updateProfileSchema),
     mode: "onBlur",
@@ -26,7 +29,11 @@ function ProfileUpdateCard() {
             alt="profile image"
             className="size-16 sm:size-20 shadow-sm rounded-full"
           />
-          <button className="absolute -bottom-1 -right-1 bg-zinc-50/90 dark:bg-zinc-700 p-1.5 rounded-full cursor-pointer">
+          <button
+            className="absolute -bottom-1 -right-1 bg-zinc-50/90 dark:bg-zinc-700 p-1.5 rounded-full cursor-pointer"
+            title="Update profile image"
+            onClick={() => dispatch(showUpdateProfileImageModal())}
+          >
             <Camera className="text-color-primary size-5" />
           </button>
         </div>

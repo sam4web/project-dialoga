@@ -2,7 +2,9 @@ export const COPYRIGHT_YEAR = new Date().getFullYear();
 
 export const API_TIMEOUT_MS = 30000;
 
-export const MAX_FILE_UPLOAD_SIZE_MB = 5;
+export const MAX_FILE_UPLOAD_SIZE_MB = 1000000; // 1MB
+
+export const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
 
 export enum HttpStatus {
   OK = 200,

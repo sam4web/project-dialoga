@@ -1,11 +1,12 @@
 import Button from "@/components/ui/Button";
-import { Lock, X } from "lucide-react";
 import { closeChangePasswordModal } from "../slice";
 import { useDispatch } from "react-redux";
 import Input from "@/components/ui/Input";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { changePasswordSchema, TChangePasswordSchema } from "../types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import ModalWrapper from "@/components/shared/ModalWrapper";
+import { Lock } from "lucide-react";
 
 function ChangePasswordModal() {
   const dispatch = useDispatch();
@@ -20,24 +21,13 @@ function ChangePasswordModal() {
   };
 
   return (
-    <div className="container-card max-w-md w-full bg-white dark:bg-zinc-800 !space-y-5 relative">
-      <Button
-        variant="icon"
-        title="Close Modal"
-        className="absolute right-2.5 top-2.5"
-        type="button"
-        onClick={() => dispatch(closeChangePasswordModal())}
-      >
-        <X />
-      </Button>
-
-      <div>
-        <h3 className="header-text text-lg sm:text-xl flex items-center gap-2">
-          <Lock className="size-5 sm:size-6" /> Change Password
-        </h3>
-        <p className="text-color-light mt-2.5">Update your password to keep your account secure.</p>
-      </div>
-
+    <ModalWrapper
+      icon={Lock}
+      handleCloseAction={() => dispatch(closeChangePasswordModal())}
+      title="Change Password"
+      subtitle="Update your password to keep your account secure."
+      iconSmall
+    >
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-3">
@@ -90,7 +80,7 @@ function ChangePasswordModal() {
           </div>
         </form>
       </FormProvider>
-    </div>
+    </ModalWrapper>
   );
 }
 
