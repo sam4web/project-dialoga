@@ -29,9 +29,10 @@ function FileUploadModal({ handleFileSubmit }: Props) {
     handleSubmit,
     setValue,
     watch,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<TFileSchema>({
     resolver: zodResolver(fileSchema),
+    mode: "onChange",
   });
 
   const onSubmit: SubmitHandler<TFileSchema> = (data) => {
@@ -41,6 +42,7 @@ function FileUploadModal({ handleFileSubmit }: Props) {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) setValue("image", file, { shouldValidate: true });
+    console.log(errors.image?.message);
   };
 
   const imageFile = watch("image");
@@ -61,7 +63,15 @@ function FileUploadModal({ handleFileSubmit }: Props) {
             Choose file
           </Button>
 
-          {fileName && <p className="text-color-light opacity-75 mt-3.5 text-sm italic">File Selected: {fileName}</p>}
+          {fileName && (
+            <p className="opacity-80 mt-3.5 text-sm italic">
+              {isValid ? (
+                <span className="text-color-light ">File Selected: {fileName}</span>
+              ) : (
+                <span className="text-red-500">Invalid File</span>
+              )}
+            </p>
+          )}
           <input
             type="file"
             id="file-upload"
@@ -74,7 +84,7 @@ function FileUploadModal({ handleFileSubmit }: Props) {
       </div>
       <p className="text-red-500 text-sm pt-1.5"> {errors.image && (errors.image.message as string)}</p>
       <div className="text-right mt-3">
-        <Button variant="primary" type="submit" className="!py-1.5 !px-2" disabled={!imageFile}>
+        <Button variant="primary" type="submit" className="!py-1.5 !px-2" disabled={!imageFile || !isValid}>
           Upload Image
         </Button>
       </div>
