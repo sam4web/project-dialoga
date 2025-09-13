@@ -16,8 +16,8 @@
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   }
 
-  .shared-item {
-    @apply rounded-lg;
+  .image-message {
+    @apply rounded-lg shadow-xs object-cover aspect-square;
   }
 
   .chat-container-scrollbar {

@@ -55,9 +55,9 @@ function ChatInfoPage() {
           <CardTitle title="Shared Media" icon={Image} />
 
           <div className="shared-media-grid">
-            <img src="https://picsum.photos/501/500" alt="" className="shared-item " />
-            <img src="https://picsum.photos/502/500" alt="" className="shared-item " />
-            <img src="https://picsum.photos/503/500" alt="" className="shared-item " />
+            <img src="https://picsum.photos/501/500" alt="" className="image-message" />
+            <img src="https://picsum.photos/502/500" alt="" className="image-message" />
+            <img src="https://picsum.photos/503/500" alt="" className="image-message" />
           </div>
         </div>
       </div>

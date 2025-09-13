@@ -2,6 +2,7 @@ import useTitle from "@/hooks/useTitle";
 import ChatMessageHeader from "./ChatMessageHeader";
 import ChatMessageBubble from "./ChatMessageBubble";
 import ChatMessageInput from "./ChatMessageInput";
+import { TMessage } from "../types";
 
 const messageDummyData = {
   profile: {
@@ -13,164 +14,145 @@ const messageDummyData = {
   messages: [
     {
       id: "msg_1",
-      message: "Hello there!",
-      sentTime: "2023-03-15T10:00:00Z",
+      message: "Hey, are we still on for the project meeting later?",
+      type: "text",
+      sentTime: "2025-09-14T10:00:00Z",
       sentBy: "self",
     },
     {
       id: "msg_2",
-      message: "Hi! How are you?",
-      sentTime: "2023-03-15T10:01:00Z",
+      message: "Yep! Everything's all set on my end. How's your progress?",
+      type: "text",
+      sentTime: "2025-09-14T10:01:35Z",
       sentBy: "other",
     },
     {
       id: "msg_3",
-      message: "I'm doing well, thanks. Just wanted to check in.",
-      sentTime: "2023-03-15T10:02:00Z",
+      message: "Going well. I just finished the final design mockups.",
+      type: "text",
+      sentTime: "2025-09-14T10:02:15Z",
       sentBy: "self",
     },
     {
       id: "msg_4",
-      message: "That's nice of you. I'm doing good too.",
-      sentTime: "2023-03-15T10:03:00Z",
-      sentBy: "other",
-    },
-    {
-      id: "msg_5",
-      message: "Have you seen the new movie?",
-      sentTime: "2023-03-15T10:04:00Z",
+      message:
+        "https://images.pexels.com/photos/10368560/pexels-photo-10368560.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      type: "image",
+      sentTime: "2025-09-14T10:03:00Z",
       sentBy: "self",
     },
     {
-      id: "msg_6",
-      message: "Not yet. Is it any good?",
-      sentTime: "2023-03-15T10:05:00Z",
+      id: "msg_5",
+      message: "Looks great! That's exactly the feel we were going for.",
+      type: "text",
+      sentTime: "2025-09-14T10:03:55Z",
       sentBy: "other",
     },
     {
+      id: "msg_6",
+      message: "Thanks! I also found some inspiration images.",
+      type: "text",
+      sentTime: "2025-09-14T10:04:30Z",
+      sentBy: "self",
+    },
+    {
       id: "msg_7",
-      message: "I really enjoyed it. You should check it out.",
-      sentTime: "2023-03-15T10:06:00Z",
+      message:
+        "https://images.pexels.com/photos/1097456/pexels-photo-1097456.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+      type: "image",
+      sentTime: "2025-09-14T10:05:00Z",
       sentBy: "self",
     },
     {
       id: "msg_8",
-      message: "Okay, I'll add it to my list.",
-      sentTime: "2023-03-15T10:07:00Z",
+      message: "Nice! I'll add these to the mood board.",
+      type: "text",
+      sentTime: "2025-09-14T10:05:40Z",
       sentBy: "other",
     },
     {
       id: "msg_9",
-      message: "What are you up to this weekend?",
-      sentTime: "2023-03-15T10:08:00Z",
-      sentBy: "self",
+      message: "What time are you thinking for the meeting?",
+      type: "text",
+      sentTime: "2025-09-14T10:07:00Z",
+      sentBy: "other",
     },
     {
       id: "msg_10",
-      message: "Just relaxing at home. Maybe some gardening.",
-      sentTime: "2023-03-15T10:09:00Z",
-      sentBy: "other",
-    },
-    {
-      id: "msg_11",
-      message: "Sounds peaceful.",
-      sentTime: "2023-03-15T10:10:00Z",
+      message: "Around 2 PM? I have a free slot then.",
+      type: "text",
+      sentTime: "2025-09-14T10:07:35Z",
       sentBy: "self",
     },
     {
-      id: "msg_12",
-      message: "It is. How about you?",
-      sentTime: "2023-03-15T10:11:00Z",
+      id: "msg_11",
+      message: "Sounds good to me. See you then!",
+      type: "text",
+      sentTime: "2025-09-14T10:08:00Z",
       sentBy: "other",
     },
     {
+      id: "msg_12",
+      message: "Just saw this cool meme about code reviews, haha.",
+      type: "text",
+      sentTime: "2025-09-14T10:15:20Z",
+      sentBy: "self",
+    },
+    {
       id: "msg_13",
-      message: "I have some plans with family.",
-      sentTime: "2023-03-15T10:12:00Z",
+      message:
+        "https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&dpr=2",
+      type: "image",
+      sentTime: "2025-09-14T10:15:50Z",
       sentBy: "self",
     },
     {
       id: "msg_14",
-      message: "Nice! Enjoy your time with them.",
-      sentTime: "2023-03-15T10:13:00Z",
+      message: "Haha, so relatable! That's exactly how it feels sometimes.",
+      type: "text",
+      sentTime: "2025-09-14T10:16:30Z",
       sentBy: "other",
     },
     {
       id: "msg_15",
-      message: "Thanks, you too!",
-      sentTime: "2023-03-15T10:14:00Z",
+      message: "I know, right? 😂",
+      type: "text",
+      sentTime: "2025-09-14T10:17:00Z",
       sentBy: "self",
     },
     {
       id: "msg_16",
-      message: "Did you finish the report?",
-      sentTime: "2023-03-15T10:15:00Z",
+      message: "Hey, I've got to run to another meeting. Talk later!",
+      type: "text",
+      sentTime: "2025-09-14T10:30:10Z",
       sentBy: "other",
     },
     {
       id: "msg_17",
-      message: "Yes, just sent it over.",
-      sentTime: "2023-03-15T10:16:00Z",
+      message: "Sounds good. Catch you later.",
+      type: "text",
+      sentTime: "2025-09-14T10:30:45Z",
       sentBy: "self",
     },
     {
       id: "msg_18",
-      message: "Got it. Thanks for the quick turnaround.",
-      sentTime: "2023-03-15T10:17:00Z",
-      sentBy: "other",
+      message: "Just had a thought about the landing page header.",
+      type: "text",
+      sentTime: "2025-09-14T11:05:00Z",
+      sentBy: "self",
     },
     {
       id: "msg_19",
-      message: "No problem! Let me know if you need any revisions.",
-      sentTime: "2023-03-15T10:18:00Z",
+      message: "Maybe we should add a subtle animation to the hero image.",
+      type: "text",
+      sentTime: "2025-09-14T11:05:30Z",
       sentBy: "self",
     },
     {
       id: "msg_20",
-      message: "Will do.",
-      sentTime: "2023-03-15T10:19:00Z",
-      sentBy: "other",
-    },
-    {
-      id: "msg_21",
-      message: "I'm heading out for lunch. Want to join?",
-      sentTime: "2023-03-15T12:00:00Z",
-      sentBy: "self",
-    },
-    {
-      id: "msg_22",
-      message: "I wish I could, but I have a meeting.",
-      sentTime: "2023-03-15T12:01:00Z",
-      sentBy: "other",
-    },
-    {
-      id: "msg_23",
-      message: "Okay, another time then.",
-      sentTime: "2023-03-15T12:02:00Z",
-      sentBy: "self",
-    },
-    {
-      id: "msg_24",
-      message: "Enjoy your meal!",
-      sentTime: "2023-03-15T12:03:00Z",
-      sentBy: "other",
-    },
-    {
-      id: "msg_25",
-      message: "Did you hear the news?",
-      sentTime: "2023-03-15T14:00:00Z",
-      sentBy: "self",
-    },
-    {
-      id: "msg_26",
-      message: "What news?",
-      sentTime: "2023-03-15T14:01:00Z",
-      sentBy: "other",
-    },
-    {
-      id: "msg_27",
-      message: "The new product launch is ahead of schedule!",
-      sentTime: "2023-03-1",
+      message: "I'll mock it up and send it to you after the meeting.",
+      type: "text",
+      sentTime: "2025-09-13T11:06:00Z",
       sentBy: "self",
     },
   ],
@@ -183,10 +165,10 @@ function ChatMessageSection() {
     <section className="relative h-full">
       <ChatMessageHeader {...messageDummyData.profile} />
 
-      <div className="h-[90dvh] overflow-y-hidden">
+      <div className="h-[86dvh] overflow-y-hidden">
         <div className="space-y-4 overflow-y-auto h-full chat-container-scrollbar px-2.5 lg:px-5 py-5">
-          {messageDummyData.messages.map((messageObj) => (
-            <ChatMessageBubble key={messageObj.id} {...messageObj} self={messageObj.sentBy === "self"} />
+          {messageDummyData.messages.map((message: TMessage) => (
+            <ChatMessageBubble key={message.id} {...message} />
           ))}
         </div>
       </div>
