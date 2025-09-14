@@ -4,7 +4,7 @@ import z from "zod";
 
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 
-const configSchema = z.object({
+const envSchema = z.object({
   PORT: z.coerce
     .number({
       error: (issue) => (issue.input === undefined ? "PORT is required." : "PORT must be a number."),
@@ -61,9 +61,9 @@ const configSchema = z.object({
     ),
 });
 
-const config = (() => {
+const env = (() => {
   try {
-    return configSchema.parse(process.env);
+    return envSchema.parse(process.env);
   } catch (error) {
     if (error instanceof z.ZodError) {
       console.error("Invalid environment variables");
@@ -74,4 +74,4 @@ const config = (() => {
   }
 })();
 
-export default config;
+export default env;

@@ -1,5 +1,5 @@
 import { API_TIMEOUT_MS } from "@/config/constants";
-import config from "@/config";
+import config from "@/config/env";
 import axios from "axios";
 
 const api = axios.create({

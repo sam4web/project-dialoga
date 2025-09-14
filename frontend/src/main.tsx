@@ -3,11 +3,11 @@ import { createRoot } from "react-dom/client";
 import { disableReactDevTools } from "@fvilers/disable-react-devtools";
 import { Provider } from "react-redux";
 import App from "@/App";
-import config from "@/config";
+import env from "@/config/env";
 import "@/styles/index.css";
 import { store } from "./store";
 
-if (config.VITE_NODE_ENV === "production") {
+if (env.VITE_NODE_ENV === "production") {
   disableReactDevTools();
 }
 
