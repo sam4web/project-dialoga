@@ -1,5 +1,5 @@
 {
-  "name": "mern-frontend",
+  "name": "dialoga-backend",
   "main": "src/server.ts",
   "scripts": {
     "start": "node ./dist/server.js",

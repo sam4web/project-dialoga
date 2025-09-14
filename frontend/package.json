@@ -1,5 +1,5 @@
 {
-  "name": "mern-frontend",
+  "name": "dialoga-frontend",
   "type": "module",
   "scripts": {
     "dev": "vite",

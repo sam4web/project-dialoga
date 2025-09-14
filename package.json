@@ -1,5 +1,5 @@
 {
-  "name": "mern-starter",
+  "name": "project-dialoga",
   "author": "",
   "scripts": {
     "server": "npm run dev --prefix backend",
