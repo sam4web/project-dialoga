@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { registerUser, loginUser, refreshAccessToken } from "../services/auth.service";
 import ms from "ms";
-import ApiError from "../lib/utils/api-error";
+import ApiError from "../../../lib/errors/ApiError";
 
 // @route /api/auth/login
 // @method POST

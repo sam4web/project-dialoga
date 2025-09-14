@@ -6,21 +6,21 @@ import mongoose from "mongoose";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
-import corsOptions from "./lib/utils/cors-options";
-import connectDB from "./lib/utils/connect-db";
+import connectDatabase from "./config/database";
+import corsOptions from "./config/corsOptions";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-import logger, { logEvents } from "./middlewares/logger.middleware";
-import errorHandler from "./middlewares/error-handler.middleware";
+import errorHandler from "./middlewares/errorHandler";
+
+import logger, { logEvents } from "./config/logger";
 
 // routes
-import indexRoutes from "./routes/index.route";
-import authRoutes from "./routes/auth.route";
+import authRoutes from "./modules/auth/routes/auth.route";
 
 // connect to MongoDB
-connectDB();
+connectDatabase();
 
 app.use(logger);
 app.use(cors(corsOptions));
@@ -29,7 +29,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // routes
-app.use("/api", indexRoutes);
 app.use("/api/auth", authRoutes);
 
 // catch 404 and forward to error handler

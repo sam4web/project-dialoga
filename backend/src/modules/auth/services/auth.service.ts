@@ -1,9 +1,9 @@
-import { type IUser } from "../types/models";
 import jwt from "jsonwebtoken";
 import ms from "ms";
-import User from "../models/user.model";
-import { LoginUserProps, RegisterUserProps, TokenReturnType } from "../types/services";
-import ApiError from "../lib/utils/api-error";
+import User from "../../../database/models/User";
+import { LoginUserProps, RegisterUserProps, TokenReturnType } from "../../../types/services";
+import ApiError from "../../../lib/errors/ApiError";
+import { IUser } from "../../../types/models";
 
 export const loginUser = async ({ username, password }: LoginUserProps): TokenReturnType => {
   const user = await User.findOne({ username });

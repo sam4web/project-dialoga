@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const connectDB = async () => {
+const connectDatabase = async (): Promise<void> => {
   mongoose.set("strictQuery", true);
   try {
     await mongoose.connect(process.env.DATABASE_URI as string);
@@ -9,4 +9,4 @@ const connectDB = async () => {
   }
 };
 
-export default connectDB;
+export default connectDatabase;

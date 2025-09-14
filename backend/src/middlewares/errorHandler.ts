@@ -1,6 +1,6 @@
-import ApiError from "../lib/utils/api-error";
-import { logEvents } from "./logger.middleware";
 import { NextFunction, Request, Response } from "express";
+import { logEvents } from "../config/logger";
+import ApiError from "../lib/errors/ApiError";
 
 const errorHandler = (error: Error, request: Request, response: Response, next: NextFunction) => {
   logEvents(
