@@ -1,13 +1,13 @@
 import z from "zod";
 
-const envSchema = z.object({
-  VITE_NODE_ENV: z.string().default("development"),
+const configSchema = z.object({
+  VITE_NODE_CONFIG: z.string().default("development"),
   VITE_API_BASE_URL: z.url({ message: "VITE_API_BASE_URL must be a valid URL" }),
 });
 
-const env = (() => {
+const config = (() => {
   try {
-    return envSchema.parse(import.meta.env);
+    return configSchema.parse(import.meta.env);
   } catch (error) {
     if (error instanceof z.ZodError) {
       console.error("Invalid environment variables");
@@ -17,4 +17,4 @@ const env = (() => {
   }
 })();
 
-export default env;
+export default config;
