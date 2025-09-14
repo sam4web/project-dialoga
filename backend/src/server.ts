@@ -2,17 +2,16 @@ import express, { Application, Request, Response } from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import morgan from "morgan";
 
-import config from "./config";
-
+import env from "./config/env";
 import connectDatabase from "./config/database";
 import corsOptions from "./config/corsOptions";
+import logger from "./config/logger";
 
 const app: Application = express();
 
 import errorHandler from "./middlewares/errorHandler";
-
-// import logger, { logEvents } from "./config/logger";
 
 // routes
 import authRoutes from "./modules/auth/routes/auth.route";
@@ -20,7 +19,14 @@ import authRoutes from "./modules/auth/routes/auth.route";
 // connect to MongoDB
 connectDatabase();
 
-// app.use(logger);
+app.use(
+  morgan("tiny", {
+    stream: {
+      write: (message: string) => logger.info(message.trim()),
+    },
+  })
+);
+
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -45,7 +51,7 @@ app.use(errorHandler);
 // connect to mongoDB
 mongoose.connection.once("open", () => {
   console.log("Connected to MongoDB.");
-  app.listen(config.PORT, () => console.log(`Server running on port ${config.PORT}.`));
+  app.listen(env.PORT, () => console.log(`Server running on port ${env.PORT}.`));
 });
 
 // if any connection error occurs
