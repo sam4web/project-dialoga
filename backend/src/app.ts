@@ -52,8 +52,6 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 // pass any unhandled errors to the error handler
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  errorHandler(err, req, res, next);
-});
+app.use(errorHandler);
 
 export default app;
