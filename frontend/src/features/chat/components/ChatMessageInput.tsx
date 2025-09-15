@@ -13,12 +13,14 @@ function ChatMessageInput() {
     <>
       {fileUploadModalState && (
         <ModalWrapper handleCloseAction={() => dispatch(closeFileUploadModal())}>
-          <FileUploadModal
-            handleFileSubmit={(image) => {
-              console.log(image);
-              dispatch(closeFileUploadModal());
-            }}
-          />
+          <div className="mt-9 sm:mt-7">
+            <FileUploadModal
+              handleFileSubmit={(image) => {
+                console.log(image);
+                dispatch(closeFileUploadModal());
+              }}
+            />
+          </div>
         </ModalWrapper>
       )}
 
