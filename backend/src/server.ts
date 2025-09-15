@@ -15,10 +15,18 @@ import errorHandler from "./middlewares/errorHandler";
 
 // routes
 import authRoutes from "./modules/auth/routes/auth.route";
+import helmet from "helmet";
 
 // connect to MongoDB
 connectDatabase();
 
+// MIDDLEWARE SETUP
+app.use(helmet());
+app.use(cors(corsOptions));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+// http request logger
 app.use(
   morgan("tiny", {
     stream: {
@@ -27,13 +35,19 @@ app.use(
   })
 );
 
-app.use(cors(corsOptions));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+// API ROUTES
+app.get("/health", (req: Request, res: Response) => {
+  res.status(200).json({
+    success: true,
+    message: "Server is healthy!",
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString(),
+  });
+});
 
-// routes
 app.use("/api/auth", authRoutes);
+
+//  ERROR HANDLIGN
 
 // catch 404 and forward to error handler
 app.all("/*splat", (request: Request, response: Response) => {
@@ -52,10 +66,4 @@ app.use(errorHandler);
 mongoose.connection.once("open", () => {
   console.log("Connected to MongoDB.");
   app.listen(env.PORT, () => console.log(`Server running on port ${env.PORT}.`));
-});
-
-// if any connection error occurs
-mongoose.connection.on("error", (err) => {
-  console.error(err.message);
-  // logEvents(err.message, "mongo-error.log");
 });

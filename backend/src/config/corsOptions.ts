@@ -1,15 +1,27 @@
 import cors from "cors";
+import env from "./env";
+import logger from "./logger";
 
-const allowedOrigins = new Set(process.env.ALLOWED_ORIGINS?.split(",") || []);
+const dynamicOriginCheck = (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
+  if (env.NODE_ENV === "development") {
+    callback(null, true);
+  } else {
+    if (env.NODE_ENV === "production")
+      if (!origin || env.ALLOWED_ORIGINS.has(origin)) {
+        callback(null, true);
+      } else {
+        logger.warn(`CORS: Blocked access from unknown origin: ${origin}`);
+        callback(new Error("Not allowed by CORS."));
+      }
+  }
+};
 
 const corsOptions: cors.CorsOptions = {
-  origin: (origin, callback) => {
-    const isAllowed = !origin || allowedOrigins.has(origin);
-    if (isAllowed) callback(null, true);
-    else callback(new Error("Not allowed by CORS."));
-  },
+  origin: dynamicOriginCheck,
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "Authorization"],
   credentials: true,
-  optionsSuccessStatus: 200,
+  optionsSuccessStatus: 24,
 };
 
 export default corsOptions;

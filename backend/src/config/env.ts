@@ -12,13 +12,13 @@ const envSchema = z.object({
     .int()
     .positive("PORT must be a positive integer."),
 
-  NODE_ENV: z.enum(["development", "production", "test"], {
+  NODE_ENV: z.enum(["development", "production"], {
     error: (issue) =>
       issue.input === undefined ? "NODE_ENV is required." : "NODE_ENV must be 'development' or 'production'.",
   }),
 
-  DATABASE_URI: z.url({
-    error: (issue) => (issue.input === undefined ? "DATABASE_URI is required." : "DATABASE_URI must be a valid URL."),
+  MONGO_URI: z.url({
+    error: (issue) => (issue.input === undefined ? "MONGO_URI is required." : "MONGO_URI must be a valid URL."),
   }),
 
   ALLOWED_ORIGINS: z
