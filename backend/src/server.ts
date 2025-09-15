@@ -24,7 +24,7 @@ const bootstrap = async () => {
 
     // --- Database Connection ---
     logger.info("Attempting to connect to database...");
-    await connectDatabase();
+    connectDatabase();
     logger.info("Database connection established.");
 
     // --- Initialize Socket.IO ---
@@ -34,5 +34,26 @@ const bootstrap = async () => {
     server.listen(config.PORT, () => {
       logger.info(`Server listening on port ${config.PORT} in ${config.ENV} mode.`);
     });
-  } catch (err) {}
+  } catch (error) {
+    logger.error("Failed to start server:", error);
+    process.exit(1);
+  }
 };
+
+server.on("error", (error: NodeJS.ErrnoException) => {
+  if (error.syscall !== "listen") throw error;
+
+  const bind = typeof config.PORT === "string" ? "Pipe " : "Port" + config.PORT;
+  switch (error.code) {
+    case "EACCES":
+      logger.error(`${bind} requires elevated privileges.`);
+      process.exit(1);
+    case "EADDRINUSE":
+      logger.error(`${bind} is already in use.`);
+      process.exit(1);
+    default:
+      throw error;
+  }
+});
+
+bootstrap();
