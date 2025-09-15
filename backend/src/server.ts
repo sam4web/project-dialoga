@@ -1,26 +1,25 @@
-import express, { Application, Request, Response } from "express";
-import mongoose from "mongoose";
+import express, { Application, NextFunction, Request, Response } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
 
 import env from "./config/env";
-import connectDatabase from "./config/database";
 import corsOptions from "./config/corsOptions";
 import logger from "./config/logger";
-
-const app: Application = express();
 
 import errorHandler from "./middlewares/errorHandler";
 
 // routes
-import authRoutes from "./modules/auth/routes/auth.route";
+// import authRoutes from "./modules/auth/routes/auth.route";
 import helmet from "helmet";
+import ApiError from "./lib/errors/ApiError";
+
+const app: Application = express();
 
 // connect to MongoDB
-connectDatabase();
+// connectDatabase();
 
-// MIDDLEWARE SETUP
+// -- MIDDLEWARE SETUP --
 app.use(helmet());
 app.use(cors(corsOptions));
 app.use(express.json());
@@ -35,7 +34,7 @@ app.use(
   })
 );
 
-// API ROUTES
+// -- API ROUTES --
 app.get("/health", (req: Request, res: Response) => {
   res.status(200).json({
     success: true,
@@ -45,25 +44,18 @@ app.get("/health", (req: Request, res: Response) => {
   });
 });
 
-app.use("/api/auth", authRoutes);
+// app.use("/api/auth", authRoutes);
 
-//  ERROR HANDLIGN
+//  -- ERROR HANDLING --
 
-// catch 404 and forward to error handler
-app.all("/*splat", (request: Request, response: Response) => {
-  response.status(404);
-  if (request.accepts("text")) {
-    response.type("text").send("Resource not found. Please check the URL.");
-    return;
-  }
-  response.json({ message: "Resource not found" });
+// catch-all for undefined routes (404 Not Found)
+app.use((req: Request, res: Response, next: NextFunction) => {
+  next(ApiError.notFound(`Route not found: ${req.originalUrl}`));
 });
 
 // pass any unhandled errors to the error handler
-app.use(errorHandler);
-
-// connect to mongoDB
-mongoose.connection.once("open", () => {
-  console.log("Connected to MongoDB.");
-  app.listen(env.PORT, () => console.log(`Server running on port ${env.PORT}.`));
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  errorHandler(err, req, res, next);
 });
+
+app.listen(env.PORT, () => console.log(`Server running on port ${env.PORT}.`));
