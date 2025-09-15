@@ -1,4 +1,4 @@
-import config from "@/config/env";
+import config from "@/config";
 import axios from "axios";
 import { API_TIMEOUT_MS } from "@shared/constants";
 

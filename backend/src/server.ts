@@ -1,61 +1,36 @@
-import express, { Application, NextFunction, Request, Response } from "express";
-import cors from "cors";
-import cookieParser from "cookie-parser";
-import morgan from "morgan";
+import http from "http";
 
-import env from "./config/env";
-import corsOptions from "./config/corsOptions";
+import app from "./app";
+import config from "./config";
 import logger from "./config/logger";
+import connectDatabase from "./config/database";
 
-import errorHandler from "./middlewares/errorHandler";
+const server = http.createServer(app);
 
-// routes
-// import authRoutes from "./modules/auth/routes/auth.route";
-import helmet from "helmet";
-import ApiError from "./lib/errors/ApiError";
-
-const app: Application = express();
-
-// connect to MongoDB
-// connectDatabase();
-
-// -- MIDDLEWARE SETUP --
-app.use(helmet());
-app.use(cors(corsOptions));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
-// http request logger
-app.use(
-  morgan("tiny", {
-    stream: {
-      write: (message: string) => logger.info(message.trim()),
-    },
-  })
-);
-
-// -- API ROUTES --
-app.get("/health", (req: Request, res: Response) => {
-  res.status(200).json({
-    success: true,
-    message: "Server is healthy!",
-    uptime: process.uptime(),
-    timestamp: new Date().toISOString(),
+const handleProcessEvents = () => {
+  process.on("uncaughtException", (error: Error) => {
+    logger.error(`Uncaught Exception: ${error.message}`, { stack: error.stack });
+    process.exit(1);
   });
-});
+  process.on("unhandledRejection", (reason: Error | any) => {
+    logger.error(`Unhandled Rejection: ${reason.message || reason}`, { stack: reason.stack });
+    process.exit(1);
+  });
+};
 
-// app.use("/api/auth", authRoutes);
+const bootstrap = async () => {
+  try {
+    handleProcessEvents();
 
-//  -- ERROR HANDLING --
+    // --- Database Connection ---
+    logger.info("Attempting to connect to database...");
+    await connectDatabase();
+    logger.info("Database connection established.");
 
-// catch-all for undefined routes (404 Not Found)
-app.use((req: Request, res: Response, next: NextFunction) => {
-  next(ApiError.notFound(`Route not found: ${req.originalUrl}`));
-});
+    // --- Initialize Socket.IO ---
+    // here...
 
-// pass any unhandled errors to the error handler
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  errorHandler(err, req, res, next);
-});
-
-app.listen(env.PORT, () => console.log(`Server running on port ${env.PORT}.`));
+    // --- Start HTTP Server ---
+    server.listen(config.PORT);
+  } catch (err) {}
+};
