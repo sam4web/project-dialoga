@@ -1,13 +1,13 @@
 import cors from "cors";
-import env from "./env";
 import logger from "./logger";
+import config from ".";
 
 const dynamicOriginCheck = (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
-  if (env.NODE_ENV === "development") {
+  if (config.ENV === "development") {
     callback(null, true);
   } else {
-    if (env.NODE_ENV === "production")
-      if (!origin || env.ALLOWED_ORIGINS.has(origin)) {
+    if (config.ENV === "production")
+      if (!origin || config.ALLOWED_ORIGINS.has(origin)) {
         callback(null, true);
       } else {
         logger.warn(`CORS: Blocked access from unknown origin: ${origin}`);

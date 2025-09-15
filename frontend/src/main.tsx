@@ -7,7 +7,7 @@ import config from "@/config";
 import "@/styles/index.css";
 import { store } from "./store";
 
-if (config.VITE_NODE_ENV === "production") {
+if (config.VITE_ENV === "production") {
   disableReactDevTools();
 }
 

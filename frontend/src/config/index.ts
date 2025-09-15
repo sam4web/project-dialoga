@@ -1,7 +1,7 @@
 import z from "zod";
 
 const configSchema = z.object({
-  VITE_NODE_ENV: z.string().default("development"),
+  VITE_ENV: z.string().default("development"),
   VITE_API_BASE_URL: z.url({ message: "VITE_API_BASE_URL must be a valid URL" }),
 });
 

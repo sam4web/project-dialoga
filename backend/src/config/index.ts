@@ -12,9 +12,8 @@ const configSchema = z.object({
     .int()
     .positive("PORT must be a positive integer."),
 
-  NODE_ENV: z.enum(["development", "production"], {
-    error: (issue) =>
-      issue.input === undefined ? "NODE_ENV is required." : "NODE_ENV must be 'development' or 'production'.",
+  ENV: z.enum(["development", "production"], {
+    error: (issue) => (issue.input === undefined ? "ENV is required." : "ENV must be 'development' or 'production'."),
   }),
 
   MONGO_URI: z.url({

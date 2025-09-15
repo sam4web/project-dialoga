@@ -31,6 +31,8 @@ const bootstrap = async () => {
     // here...
 
     // --- Start HTTP Server ---
-    server.listen(config.PORT);
+    server.listen(config.PORT, () => {
+      logger.info(`Server listening on port ${config.PORT} in ${config.ENV} mode.`);
+    });
   } catch (err) {}
 };

@@ -1,11 +1,12 @@
 import winston from "winston";
 import fs from "fs";
-import env from "./env";
+import config from ".";
+import path from "path";
 
-const logDir = "logs";
+const logDir = path.join(__dirname, "..", "..", "logs");
 
 const logger = winston.createLogger({
-  level: env.NODE_ENV === "development" ? "debug" : "info",
+  level: config.ENV === "development" ? "debug" : "info",
   defaultMeta: { service: "dialoga-backend" },
   transports: [
     new winston.transports.Console({
@@ -16,7 +17,7 @@ const logger = winston.createLogger({
           (info) => `${info.timestamp} ${info.level}: ${info.message} ${info.stack ? `\n${info.stack}` : ""}`
         )
       ),
-      level: env.NODE_ENV === "production" ? "error" : "debug",
+      level: config.ENV === "production" ? "error" : "debug",
     }),
     new winston.transports.File({
       filename: "logs/combined.log",
@@ -25,7 +26,7 @@ const logger = winston.createLogger({
         winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
         winston.format.json()
       ),
-      maxsize: 5242880, // 5MB
+      maxsize: 3 * 1024 * 1024, // 3MB
       maxFiles: 5,
     }),
     new winston.transports.File({
@@ -35,7 +36,7 @@ const logger = winston.createLogger({
         winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
         winston.format.json()
       ),
-      maxsize: 5242880, // 5MB
+      maxsize: 3 * 1024 * 1024, // 3MB
       maxFiles: 5,
     }),
   ],
@@ -44,7 +45,7 @@ const logger = winston.createLogger({
   exitOnError: false,
 });
 
-if (env.NODE_ENV !== "production") {
+if (config.ENV !== "production") {
   logger.add(
     new winston.transports.Console({
       format: winston.format.combine(
