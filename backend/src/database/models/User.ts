@@ -1,6 +1,19 @@
 import { model, Schema } from "mongoose";
 import bcrypt from "bcrypt";
-import { IUser, UserModel } from "../../types/models";
+import { Model } from "mongoose";
+
+export interface IUser {
+  _id: string;
+  username: string;
+  email: string;
+  password: string;
+}
+
+export interface IUserMethods {
+  doesPasswordMatch(password: string): Promise<boolean>;
+}
+
+export type TUserModel = Model<IUser, {}, IUserMethods>;
 
 const userSchema = new Schema<IUser>(
   {
@@ -35,6 +48,6 @@ userSchema.methods.doesPasswordMatch = async function (password: string) {
   return await bcrypt.compare(password, this.password);
 };
 
-const User = model<IUser, UserModel>("User", userSchema);
+const User = model<IUser, TUserModel>("User", userSchema);
 
 export default User;
