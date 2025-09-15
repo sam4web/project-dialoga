@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
-import { ACCEPTED_IMAGE_TYPES, MAX_FILE_UPLOAD_SIZE_MB } from "@/config/constants";
+import { FILE_UPLOAD_CONSTANTS } from "@shared/constants";
 
 type Props = {
   handleFileSubmit: (image: File) => void;
@@ -13,9 +13,9 @@ type Props = {
 const fileSchema = z.object({
   image: z
     .instanceof(File)
-    .refine((file) => file.size <= MAX_FILE_UPLOAD_SIZE_MB, "Max image size is 1MB.")
+    .refine((file) => file.size <= FILE_UPLOAD_CONSTANTS.MAX_SIZE_MB, "Max image size is 1MB.")
     .refine(
-      (file) => ACCEPTED_IMAGE_TYPES.includes(file.type),
+      (file) => FILE_UPLOAD_CONSTANTS.ACCEPTED_IMAGE_TYPES.includes(file.type),
       "Only .jpg, .jpeg, .png and .webp formats are supported."
     ),
 });
