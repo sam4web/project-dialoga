@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import ApiError from "../lib/errors/ApiError";
 import logger from "../config/logger";
+import ApiError from "../lib/errors/ApiError";
 
 const errorHandler = (error: Error, request: Request, response: Response, next: NextFunction) => {
   if (error instanceof ApiError) {

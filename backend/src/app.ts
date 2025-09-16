@@ -6,9 +6,8 @@ import helmet from "helmet";
 
 import corsOptions from "./config/corsOptions";
 import logger from "./config/logger";
-
-import errorHandler from "./middlewares/errorHandler";
 import ApiError from "./lib/errors/ApiError";
+import errorHandler from "./middlewares/error.middleware";
 
 // import authRoutes from "./modules/auth/routes/auth.route";
 
