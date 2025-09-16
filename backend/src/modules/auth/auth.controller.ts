@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import ApiError from "../../lib/errors/ApiError";
 import authService, { ILoginDTO, IRegisterDTO } from "./auth.service";
-import { HTTP_STATUS } from "../../constants";
+import { HTTP_STATUS } from "../../../../shared/constants";
 import ms from "ms";
 import config from "../../config";
 

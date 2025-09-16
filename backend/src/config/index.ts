@@ -65,8 +65,6 @@ const config = (() => {
     return configSchema.parse(process.env);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      console.error("Invalid environment variables");
-      error.issues.map((err) => console.error(`${String(err.path[0])}: ${err.message}`));
       throw new Error("Environment variable validation failed. Please check your .env files.");
     }
     throw error;

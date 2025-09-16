@@ -2,7 +2,7 @@
   "name": "dialoga-backend",
   "main": "src/server.ts",
   "scripts": {
-    "start": "node ./dist/server.js",
+    "start": "node ./dist/backend/src/server.js",
     "build": "rm -rf ./dist & tsc --build ",
     "dev": "npx nodemon"
   },
