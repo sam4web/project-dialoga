@@ -1,118 +1,81 @@
-import { Request, Response } from "express";
-import { registerUser, loginUser, refreshAccessToken } from "../services/auth.service";
+import { NextFunction, Request, Response } from "express";
+import ApiError from "../../lib/errors/ApiError";
+import authService, { ILoginDTO, IRegisterDTO } from "./auth.service";
+import { HTTP_STATUS } from "../../constants";
 import ms from "ms";
-import ApiError from "../../../lib/errors/ApiError";
+import config from "../../config";
 
-// @route /api/auth/login
-// @method POST
-export const login = async (request: Request, response: Response) => {
-  const { username, password } = request.body;
-  if (!username || !password) {
-    response.status(400).json({ error: "All fields are required" });
-    return;
-  }
-
-  try {
-    const { accessToken, refreshToken } = await loginUser({ username, password });
-
-    // add refresh token on response cookie
-    response.cookie("token", refreshToken, {
-      httpOnly: true,
-      maxAge: ms(process.env.REFRESH_TOKEN_EXPIRY_TIME as ms.StringValue),
-      sameSite: process.env.NODE_ENV === "development" ? "strict" : "none",
-      secure: process.env.NODE_ENV !== "development",
-    });
-
-    response.status(200).json(accessToken);
-    return;
-  } catch (error) {
-    if (error instanceof Error) {
-      const statusCode = error instanceof ApiError ? error.statusCode : 400;
-      response.status(statusCode).json({ message: error.message, isError: true });
+export class AuthController {
+  public async login(request: Request, response: Response, next: NextFunction) {
+    const credentials: ILoginDTO = (request as any).validatedBody;
+    try {
+      const { accessToken, refreshToken } = await authService.login(credentials);
+      response.cookie("token", refreshToken, {
+        httpOnly: true,
+        maxAge: ms(config.REFRESH_TOKEN_EXPIRY_TIME as ms.StringValue),
+        sameSite: config.ENV === "development" ? "strict" : "none",
+        secure: config.ENV !== "development",
+      });
+      response.status(HTTP_STATUS.OK).json(accessToken);
       return;
+    } catch (error) {
+      next(error);
     }
   }
-};
 
-// @route /api/auth/register
-// @method POST
-export const register = async (request: Request, response: Response) => {
-  const { username, email, password } = request.body;
-  if (!username || !email || !password) {
-    response.status(400).json({ error: "All fields are required" });
-    return;
-  }
-
-  try {
-    const { accessToken, refreshToken } = await registerUser({ username, email, password });
-
-    // add refresh token on response cookie
-    response.cookie("token", refreshToken, {
-      httpOnly: true,
-      maxAge: ms(process.env.REFRESH_TOKEN_EXPIRY_TIME as ms.StringValue),
-      sameSite: process.env.NODE_ENV === "development" ? "strict" : "none",
-      secure: process.env.NODE_ENV !== "development",
-    });
-
-    response.status(200).json(accessToken);
-    return;
-  } catch (error) {
-    if (error instanceof Error) {
-      const statusCode = error instanceof ApiError ? error.statusCode : 400;
-      response.status(statusCode).json({ message: error.message, isError: true });
+  public async register(request: Request, response: Response, next: NextFunction) {
+    const credentials: IRegisterDTO = (request as any).validatedBody;
+    try {
+      const { accessToken, refreshToken } = await authService.register(credentials);
+      response.cookie("token", refreshToken, {
+        httpOnly: true,
+        maxAge: ms(config.REFRESH_TOKEN_EXPIRY_TIME as ms.StringValue),
+        sameSite: config.ENV === "development" ? "strict" : "none",
+        secure: config.ENV !== "development",
+      });
+      response.status(HTTP_STATUS.OK).json(accessToken);
       return;
+    } catch (error) {
+      next(error);
     }
   }
-};
 
-// @route /api/auth/refresh
-// @method POST
-export const refreshToken = async (request: Request, response: Response) => {
-  const token = request.cookies?.token;
-  if (!token) {
-    response.status(401).json({ message: "Refresh token must be provided.", isError: true });
-    return;
-  }
+  public async refresh(request: Request, response: Response, next: NextFunction) {
+    const token = request.cookies?.token;
+    if (!token) {
+      throw ApiError.unauthorized("Authentication failed: Refresh token not provided.");
+    }
 
-  try {
-    const { accessToken, refreshToken } = await refreshAccessToken(token);
-
-    // add refresh token on response cookie
-    response.cookie("token", refreshToken, {
-      httpOnly: true,
-      maxAge: ms(process.env.REFRESH_TOKEN_EXPIRY_TIME as ms.StringValue),
-      sameSite: process.env.NODE_ENV === "development" ? "strict" : "none",
-      secure: process.env.NODE_ENV !== "development",
-    });
-    response.status(200).json(accessToken);
-    return;
-  } catch (error) {
-    if (error instanceof Error) {
-      const statusCode = error instanceof ApiError ? error.statusCode : 400;
-      response.status(statusCode).json({ message: error.message, isError: true });
+    try {
+      const { accessToken, refreshToken } = await authService.register(token);
+      response.cookie("token", refreshToken, {
+        httpOnly: true,
+        maxAge: ms(config.REFRESH_TOKEN_EXPIRY_TIME as ms.StringValue),
+        sameSite: config.ENV === "development" ? "strict" : "none",
+        secure: config.ENV !== "development",
+      });
+      response.status(HTTP_STATUS.OK).json(accessToken);
       return;
+    } catch (error) {
+      next(error);
     }
   }
-};
 
-// @route /api/auth/logout
-// @method POST
-export const logout = async (request: Request, response: Response) => {
-  try {
-    // remove refresh token on response cookie
-    response.clearCookie("token", {
-      httpOnly: true,
-      sameSite: process.env.NODE_ENV === "development" ? "strict" : "none",
-      secure: process.env.NODE_ENV !== "development",
-    });
-    response.status(200);
-    response.end();
-    return;
-  } catch (error) {
-    if (error instanceof Error) {
-      const statusCode = error instanceof ApiError ? error.statusCode : 400;
-      response.status(statusCode).json({ message: error.message, isError: true });
+  public async logout(request: Request, response: Response, next: NextFunction) {
+    try {
+      response.clearCookie("token", {
+        httpOnly: true,
+        sameSite: config.ENV === "development" ? "strict" : "none",
+        secure: config.ENV !== "development",
+      });
+      response.status(200);
+      response.end();
       return;
+    } catch (error) {
+      next(error);
     }
   }
-};
+}
+
+const authController = new AuthController();
+export default authController;

@@ -1,0 +1,57 @@
+import ApiError from "../../lib/errors/ApiError";
+import User, { ICreateUserDTO, IUpdateUserDTO, IUser } from "../models/User";
+
+export interface IUserRepository {
+  create(userData: ICreateUserDTO): Promise<IUser>;
+  findById(id: string): Promise<IUser | null>;
+  findByEmail(email: string): Promise<IUser | null>;
+  update(id: string, updatedData: IUpdateUserDTO): Promise<IUser | null>;
+  delete(id: string): Promise<boolean>;
+}
+
+export default class UserRepository implements IUserRepository {
+  public async create(userData: ICreateUserDTO): Promise<IUser> {
+    try {
+      const newUser = await User.create(userData);
+      return newUser;
+    } catch (error) {
+      throw ApiError.internal("Failed to create user.");
+    }
+  }
+
+  public async findById(id: string): Promise<IUser | null> {
+    try {
+      const user = await User.findById(id).lean();
+      return user;
+    } catch (error) {
+      throw ApiError.internal("Failed to find user.");
+    }
+  }
+
+  public async findByEmail(email: string): Promise<IUser | null> {
+    try {
+      const user = await User.findOne({ email }).lean();
+      return user;
+    } catch (error) {
+      throw ApiError.internal("Failed to find user.");
+    }
+  }
+
+  public async update(id: string, updatedData: IUpdateUserDTO): Promise<IUser | null> {
+    try {
+      const updatedUser = await User.findByIdAndUpdate(id, updatedData, { new: true }).lean();
+      return updatedUser as IUser | null;
+    } catch (error) {
+      throw ApiError.internal("Failed to update user.");
+    }
+  }
+
+  public async delete(id: string): Promise<boolean> {
+    try {
+      const result = await User.deleteOne({ _id: id }).lean();
+      return result.deletedCount > 0;
+    } catch (error) {
+      throw ApiError.internal("Failed to delete user.");
+    }
+  }
+}

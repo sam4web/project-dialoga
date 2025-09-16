@@ -1,6 +1,6 @@
 import z from "zod";
 
-export const signInSchema = z.object({
+export const loginSchema = z.object({
   email: z.email("Please enter a valid email address.").min(1, "Email is required."),
   password: z
     .string()
@@ -12,7 +12,7 @@ export const signInSchema = z.object({
     .regex(/[!@#$%^&*(),.?":{}|<>]/, "Password must contain at least one special character."),
 });
 
-export const signUpSchema = signInSchema
+export const registerSchema = loginSchema
   .extend({
     fullname: z.string().min(1, "Fullname is required."),
     confirmPassword: z.string().min(1, "Confirm password is required."),
@@ -21,6 +21,3 @@ export const signUpSchema = signInSchema
     message: "Passwords do not match",
     path: ["confirmPassword"],
   });
-
-export type TSignInSchema = z.infer<typeof signInSchema>;
-export type TSignUpSchema = z.infer<typeof signUpSchema>;

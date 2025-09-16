@@ -3,7 +3,10 @@ import jwt from "jsonwebtoken";
 import ApiError from "../errors/ApiError";
 import ms from "ms";
 
-interface IJwtPayload extends IUser {}
+interface IJwtPayload {
+  id: string;
+  email: string;
+}
 
 export const generateToken = (payload: IJwtPayload, secret: string, expiresIn: string = "1h"): string => {
   try {

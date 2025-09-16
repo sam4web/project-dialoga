@@ -27,6 +27,10 @@ class ApiError extends Error {
     return new ApiError(HTTP_STATUS.NOT_FOUND, message);
   }
 
+  static conflict(message: string): ApiError {
+    return new ApiError(HTTP_STATUS.CONFLICT, message);
+  }
+
   static internal(message: string, errors?: string[] | object[]): ApiError {
     return new ApiError(HTTP_STATUS.INTERNAL_SERVER_ERROR, message, errors);
   }

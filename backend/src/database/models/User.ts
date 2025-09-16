@@ -1,25 +1,32 @@
-import { model, Schema } from "mongoose";
+import {} from "mongoose";
 import bcrypt from "bcrypt";
-import { Model } from "mongoose";
+import { Document, Model, Schema, model } from "mongoose";
 
-export interface IUser {
+export interface IUser extends Document {
   _id: string;
-  username: string;
+  fullname: string;
+  email: string;
+  password: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface ICreateUserDTO {
+  fullname: string;
   email: string;
   password: string;
 }
 
-export interface IUserMethods {
-  doesPasswordMatch(password: string): Promise<boolean>;
+export interface IUpdateUserDTO {
+  fullname?: string;
+  email?: string;
+  password?: string;
 }
-
-export type TUserModel = Model<IUser, {}, IUserMethods>;
 
 const userSchema = new Schema<IUser>(
   {
-    username: {
+    fullname: {
       type: String,
-      unique: true,
       required: true,
     },
     email: {
@@ -44,10 +51,6 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-userSchema.methods.doesPasswordMatch = async function (password: string) {
-  return await bcrypt.compare(password, this.password);
-};
-
-const User = model<IUser, TUserModel>("User", userSchema);
+const User = model<IUser>("User", userSchema);
 
 export default User;

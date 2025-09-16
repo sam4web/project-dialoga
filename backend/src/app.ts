@@ -9,7 +9,7 @@ import logger from "./config/logger";
 import ApiError from "./lib/errors/ApiError";
 import errorHandler from "./middlewares/error.middleware";
 
-// import authRoutes from "./modules/auth/routes/auth.route";
+import authRoutes from "./modules/auth/auth.route";
 
 const app: Application = express();
 
@@ -42,7 +42,7 @@ app.get("/health", (request: Request, response: Response) => {
 });
 
 // register module routes
-// app.use("/api/auth", authRoutes);
+app.use("/api/auth", authRoutes);
 
 //  --- ERROR HANDLING ---
 // catch-all for undefined routes (404 Not Found)

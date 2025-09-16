@@ -1,23 +1,12 @@
-import express from "express";
-import { validateLogin, validateRegister } from "../../../middlewares/validate-auth.middleware";
-import { register, login, logout, refreshToken } from "../controllers/auth.controller";
+import { Router } from "express";
+import { validate } from "../../middlewares/validation.middleware";
+import { loginSchema, registerSchema } from "./auth.schema";
+import authController from "./auth.controller";
 
-const router = express.Router();
+const authRouter = Router();
 
-// @route /api/auth/login
-// @method POST
-router.post("/login", validateLogin, login);
+authRouter.post("/login", validate(loginSchema, "body"), authController.login);
+authRouter.post("/register", validate(registerSchema, "body"), authController.register);
+authRouter.post("/refresh", validate(registerSchema, "body"), authController.refresh);
 
-// @route /api/auth/register
-// @method POST
-router.post("/register", validateRegister, register);
-
-// @route /api/auth/refresh
-// @method POST
-router.post("/refresh", refreshToken);
-
-// @route /api/auth/logout
-// @method POST
-router.post("/logout", logout);
-
-export default router;
+export default authRouter;
