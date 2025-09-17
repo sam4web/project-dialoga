@@ -21,6 +21,6 @@ export const verifyToken = (token: string, secret: string): IJwtPayload => {
     const payload = jwt.verify(token, secret) as IJwtPayload;
     return payload;
   } catch (error) {
-    throw ApiError.unauthorized("Invalid or expired token.");
+    throw ApiError.unauthorized("Token is not valid or has expired.");
   }
 };

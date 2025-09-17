@@ -41,13 +41,12 @@ export class AuthController {
   }
 
   public async refresh(request: Request, response: Response, next: NextFunction) {
-    const token = request.cookies?.token;
+    const token: string = request.cookies?.token;
     if (!token) {
       throw ApiError.unauthorized("Authentication failed: Refresh token not provided.");
     }
-
     try {
-      const { accessToken, refreshToken } = await authService.register(token);
+      const { accessToken, refreshToken } = await authService.refresh(token);
       response.cookie("token", refreshToken, {
         httpOnly: true,
         maxAge: ms(config.REFRESH_TOKEN_EXPIRY_TIME as ms.StringValue),

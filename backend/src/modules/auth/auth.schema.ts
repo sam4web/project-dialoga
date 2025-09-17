@@ -16,10 +16,19 @@ export const loginSchema = z.object({
 
 export const registerSchema = loginSchema
   .extend({
-    fullname: z.string().min(1, "Fullname is required."),
-    confirmPassword: z.string().min(1, "Confirm password is required."),
+    fullname: z
+      .string({
+        error: (issue) => (issue.input === undefined ? "Fullname is required." : "Fullname must be a valid string."),
+      })
+      .min(1, "Fullname is required."),
+    confirmPassword: z
+      .string({
+        error: (issue) =>
+          issue.input === undefined ? "Confirm password is required." : "Confirm password must be a valid string.",
+      })
+      .min(1, "Confirm password is required."),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
+    message: "Password and confirm password must match.",
     path: ["confirmPassword"],
   });

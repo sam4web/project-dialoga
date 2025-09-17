@@ -24,11 +24,11 @@ export class AuthService {
   public async login({ email, password }: ILoginDTO): Promise<IAuthResponse> {
     const user = await this.userRepository.findByEmail(email);
     if (!user) {
-      throw ApiError.conflict("User with provided username does not exists.");
+      throw ApiError.conflict("User with provided email does not exists.");
     }
     const doesPassMatch = await bcrypt.compare(password, user.password);
     if (!doesPassMatch) {
-      throw ApiError.unauthorized("Password does not match.");
+      throw ApiError.unauthorized("Invalid credentials.");
     }
     const payload = { id: user._id, email: user.email };
     const accessToken = generateToken(payload, config.ACCESS_TOKEN_SECRET, config.ACCESS_TOKEN_EXPIRY_TIME);
@@ -39,7 +39,7 @@ export class AuthService {
   public async register({ fullname, email, password }: IRegisterDTO): Promise<IAuthResponse> {
     const existingUser = await this.userRepository.findByEmail(email);
     if (existingUser) {
-      throw ApiError.conflict("Email already in use.");
+      throw ApiError.conflict("An account with this email already exists.");
     }
     const user = await this.userRepository.create({ fullname, email, password });
     const payload = { id: user._id, email: user.email };
