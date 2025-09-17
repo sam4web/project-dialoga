@@ -1,6 +1,5 @@
-import {} from "mongoose";
 import bcrypt from "bcrypt";
-import { Document, Model, Schema, model } from "mongoose";
+import { Document, Schema, model } from "mongoose";
 
 export interface IUser extends Document {
   _id: string;
@@ -25,23 +24,11 @@ export interface IUpdateUserDTO {
 
 const userSchema = new Schema<IUser>(
   {
-    fullname: {
-      type: String,
-      required: true,
-    },
-    email: {
-      type: String,
-      unique: true,
-      required: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
+    fullname: { type: String, required: true },
+    email: { type: String, unique: true, required: true },
+    password: { type: String, required: true },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
 userSchema.pre("save", async function (next) {
