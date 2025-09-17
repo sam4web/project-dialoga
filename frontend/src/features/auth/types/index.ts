@@ -1,7 +1,9 @@
 import z from "zod";
 
 export const signInSchema = z.object({
-  email: z.email("Please enter a valid email address.").min(1, "Email is required."),
+  email: z.email({
+    error: (issue) => (issue.input === undefined ? "Email is required." : "Please enter a valid email address."),
+  }),
   password: z
     .string()
     .min(8, "Password must be between 8 and 20 characters.")
