@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import ApiError from "../../lib/errors/ApiError";
-import authService, { ILoginDTO, IRegisterDTO } from "./auth.service";
+import { IChangePassReqDTO, ILoginDTO, IRegisterDTO } from "./auth.types";
+import authService from "./auth.service";
 import { HTTP_STATUS } from "../../../../shared/constants";
 import ms from "ms";
 import config from "../../config";
@@ -67,8 +68,20 @@ export class AuthController {
         sameSite: config.ENV === "development" ? "strict" : "none",
         secure: config.ENV !== "development",
       });
-      response.status(200);
+      response.status(HTTP_STATUS.NO_CONTENT);
       response.end();
+      return;
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  public async changePassword(request: Request, response: Response, next: NextFunction) {
+    try {
+      const credentials: IChangePassReqDTO = (request as any).validatedBody;
+      const userId: string = (request as any).userId;
+      await authService.changePassword({ ...credentials, userId });
+      response.status(HTTP_STATUS.NO_CONTENT);
       return;
     } catch (error) {
       next(error);

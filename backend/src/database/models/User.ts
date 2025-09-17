@@ -5,7 +5,7 @@ export interface IUser extends Document {
   _id: string;
   fullname: string;
   email: string;
-  status: string;
+  statusMessage: string;
   password: string;
   createdAt: Date;
   updatedAt: Date;
@@ -20,14 +20,14 @@ export interface ICreateUserDTO {
 export interface IUpdateUserDTO {
   fullname?: string;
   email?: string;
-  status?: string;
+  statusMessage?: string;
   password?: string;
 }
 
 const userSchema = new Schema<IUser>(
   {
     fullname: { type: String, required: true },
-    status: { type: String },
+    statusMessage: { type: String },
     email: { type: String, unique: true, required: true },
     password: { type: String, required: true },
   },

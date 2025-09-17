@@ -1,19 +1,9 @@
-import { ICreateUserDTO } from "../../database/models/User";
 import ApiError from "../../lib/errors/ApiError";
 import { generateToken, verifyToken } from "../../lib/auth/jwt";
 import config from "../../config";
 import bcrypt from "bcrypt";
 import UserRepository, { IUserRepository } from "../../database/repositories/UserRepository";
-
-export interface IRegisterDTO extends ICreateUserDTO {}
-export interface ILoginDTO {
-  email: string;
-  password: string;
-}
-interface IAuthResponse {
-  accessToken: string;
-  refreshToken: string;
-}
+import { IAuthResponse, ILoginDTO, IRegisterDTO, IChangePassServiceDTO } from "./auth.types";
 
 export class AuthService {
   private userRepository: IUserRepository;
@@ -58,6 +48,18 @@ export class AuthService {
     const accessToken = generateToken(newPayload, config.ACCESS_TOKEN_SECRET, config.ACCESS_TOKEN_EXPIRY_TIME);
     const refreshToken = generateToken(newPayload, config.REFRESH_TOKEN_SECRET, config.REFRESH_TOKEN_EXPIRY_TIME);
     return { accessToken, refreshToken };
+  }
+
+  public async changePassword({ currentPassword, newPassword, userId }: IChangePassServiceDTO): Promise<void> {
+    const user = await this.userRepository.findById(userId);
+    if (!user) {
+      throw ApiError.conflict("User does not exists.");
+    }
+    const doesPassMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!doesPassMatch) {
+      throw ApiError.unauthorized("Invalid credentials.");
+    }
+    this.userRepository.update(userId, { password: newPassword });
   }
 }
 
