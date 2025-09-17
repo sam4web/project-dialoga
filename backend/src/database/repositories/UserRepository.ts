@@ -39,7 +39,10 @@ export default class UserRepository implements IUserRepository {
 
   public async update(id: string, updatedData: IUpdateUserDTO): Promise<IUser | null> {
     try {
-      const updatedUser = await User.findByIdAndUpdate(id, updatedData, { new: true }).lean();
+      const updatedUser = await User.findByIdAndUpdate(id, updatedData, {
+        new: true,
+        runValidators: true,
+      }).lean();
       return updatedUser as IUser | null;
     } catch (error) {
       throw ApiError.internal("Failed to update user.");
