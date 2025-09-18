@@ -32,7 +32,7 @@ export default class UserRepository implements IUserRepository {
 
   public async findById(id: string): Promise<IUser | null> {
     try {
-      const user = await User.findById(id).select("-password -__v").lean();
+      const user = await User.findById(id).select("-__v").lean();
       return user;
     } catch (error) {
       throw ApiError.internal("Failed to find user.");
@@ -41,7 +41,7 @@ export default class UserRepository implements IUserRepository {
 
   public async findByEmail(email: string): Promise<IUser | null> {
     try {
-      const user = await User.findOne({ email }).select("-password -__v").lean();
+      const user = await User.findOne({ email }).select("-__v").lean();
       return user;
     } catch (error) {
       throw ApiError.internal("Failed to find user.");

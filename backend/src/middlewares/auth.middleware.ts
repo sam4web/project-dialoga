@@ -2,16 +2,24 @@ import { NextFunction, Request, Response } from "express";
 import ApiError from "../lib/errors/ApiError";
 import { verifyToken } from "../lib/auth/jwt";
 import config from "../config";
+import mongoose from "mongoose";
+import User from "../database/models/User";
 
-const authorize = (request: Request, response: Response, next: NextFunction) => {
+const authorize = async (request: Request, response: Response, next: NextFunction) => {
   const token = request.headers.authorization;
   if (!token || !token.includes("Bearer ")) {
-    next(ApiError.unauthorized("Unauthorized: Access is denied due to invalid credentials."));
-    return;
+    return next(ApiError.unauthorized("Unauthorized: Access is denied due to invalid credentials."));
   }
   const authToken = token.replace("Bearer ", "");
-  const decoded = verifyToken(authToken, config.ACCESS_TOKEN_SECRET);
-  (request as any).userId = decoded.id;
+  const { id: decodedId } = verifyToken(authToken, config.ACCESS_TOKEN_SECRET);
+  if (!decodedId || !mongoose.Types.ObjectId.isValid(decodedId)) {
+    return next(ApiError.unauthorized("Unauthorized: Access is denied due to invalid credentials."));
+  }
+  const user = await User.findById(decodedId).lean();
+  if (!user) {
+    return next(ApiError.unauthorized("Unauthorized: Access is denied due to invalid credentials."));
+  }
+  (request as any).userId = decodedId;
   next();
 };
 

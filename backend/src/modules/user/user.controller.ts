@@ -25,10 +25,6 @@ class UserController {
       return;
     }
     const updatedUser = await this.userRepository.update(userId, { ...updateData });
-    if (!updatedUser) {
-      next(ApiError.conflict("An error occurred while updating your data. Please try again."));
-      return;
-    }
     response.status(HTTP_STATUS.OK).json(updatedUser);
     return;
   };
