@@ -1,13 +1,32 @@
 import bcrypt from "bcrypt";
 import { Schema, UpdateQuery, model } from "mongoose";
-import { IUser } from "../types/UserTypes";
+import { IUser, IUserProfileImage, IUserSettings } from "../types/UserTypes";
+
+const profileImageSchema = new Schema<IUserProfileImage>(
+  {
+    name: { type: String, default: "" },
+    data: { type: String, default: "" },
+  },
+  { _id: false }
+);
+
+const settingsSchema = new Schema<IUserSettings>(
+  {
+    readReceipts: { type: Boolean, default: true },
+    onlineStatus: { type: Boolean, default: true },
+    typingIndicator: { type: Boolean, default: false },
+  },
+  { _id: false }
+);
 
 const userSchema = new Schema<IUser>(
   {
     fullname: { type: String, required: true },
-    statusMessage: { type: String },
+    statusMessage: { type: String, default: "" },
     email: { type: String, unique: true, required: true },
     password: { type: String, required: true },
+    settings: { type: settingsSchema, default: () => ({}) },
+    profileImage: { type: profileImageSchema, default: () => ({}) },
   },
   { timestamps: true }
 );

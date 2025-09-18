@@ -59,6 +59,8 @@ export default class UserRepository implements IUserRepository {
         .lean();
       return updatedUser as IUser | null;
     } catch (error) {
+      console.log(error);
+
       throw ApiError.internal("Failed to update user.");
     }
   }

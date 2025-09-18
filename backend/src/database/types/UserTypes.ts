@@ -8,6 +8,19 @@ export interface IUser extends Document {
   password: string;
   createdAt: Date;
   updatedAt: Date;
+  settings: IUserSettings;
+  profileImage: IUserProfileImage;
+}
+
+export interface IUserProfileImage {
+  name: string;
+  data: string;
+}
+
+export interface IUserSettings {
+  readReceipts: boolean;
+  onlineStatus: boolean;
+  typingIndicator: boolean;
 }
 
 export interface ICreateUserDTO {
