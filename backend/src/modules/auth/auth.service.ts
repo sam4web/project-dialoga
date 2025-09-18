@@ -5,7 +5,7 @@ import bcrypt from "bcrypt";
 import UserRepository, { IUserRepository } from "../../database/repositories/UserRepository";
 import { IAuthResponse, ILoginDTO, IRegisterDTO, IChangePassServiceDTO } from "./auth.types";
 
-export class AuthService {
+class AuthService {
   private userRepository: IUserRepository;
   constructor(userRepository: IUserRepository = new UserRepository()) {
     this.userRepository = userRepository;
@@ -57,7 +57,7 @@ export class AuthService {
     }
     const doesPassMatch = await bcrypt.compare(currentPassword, user.password);
     if (!doesPassMatch) {
-      throw ApiError.unauthorized("Invalid credentials.");
+      throw ApiError.badRequest("Incorrect password. Please enter your current password to continue.");
     }
     this.userRepository.update(userId, { password: newPassword });
   }

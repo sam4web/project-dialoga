@@ -5,6 +5,10 @@ import ApiError from "../lib/errors/ApiError";
 export const validate = (schema: ZodType, source: "body" | "query" | "params" = "body") => {
   return (request: Request, response: Response, next: NextFunction) => {
     try {
+      if (!request[source]) {
+        next(ApiError.badRequest(`The request ${source} is either empty or not sent.`));
+        return;
+      }
       const parsedData = schema.parse(request[source]);
       (request as any)[`validated${source.charAt(0).toUpperCase() + source.slice(1)}`] = parsedData;
       next();

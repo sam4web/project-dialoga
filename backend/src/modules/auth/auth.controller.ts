@@ -6,7 +6,7 @@ import { HTTP_STATUS } from "../../../../shared/constants";
 import ms from "ms";
 import config from "../../config";
 
-export class AuthController {
+class AuthController {
   public async login(request: Request, response: Response, next: NextFunction) {
     const credentials: ILoginDTO = (request as any).validatedBody;
     try {
@@ -82,6 +82,7 @@ export class AuthController {
       const userId: string = (request as any).userId;
       await authService.changePassword({ ...credentials, userId });
       response.status(HTTP_STATUS.NO_CONTENT);
+      response.end();
       return;
     } catch (error) {
       next(error);
