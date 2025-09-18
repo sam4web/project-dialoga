@@ -1,4 +1,3 @@
-import { IUser } from "../../database/models/User";
 import jwt from "jsonwebtoken";
 import ApiError from "../errors/ApiError";
 import ms from "ms";

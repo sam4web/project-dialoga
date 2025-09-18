@@ -1,5 +1,6 @@
 import ApiError from "../../lib/errors/ApiError";
-import Message, { ICreateMessageDTO, IMessage } from "../models/Message";
+import Message from "../models/Message";
+import { ICreateMessageDTO, IMessage } from "../types/MessageTypes";
 
 export interface IMessageRepository {
   create(messageData: ICreateMessageDTO): Promise<IMessage>;

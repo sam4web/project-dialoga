@@ -1,5 +1,6 @@
 import ApiError from "../../lib/errors/ApiError";
-import User, { ICreateUserDTO, IUpdateUserDTO, IUser } from "../models/User";
+import User from "../models/User";
+import { ICreateUserDTO, IUpdateUserDTO, IUser } from "../types/UserTypes";
 
 export interface IUserRepository {
   getAll(): Promise<IUser[]>;
@@ -31,7 +32,7 @@ export default class UserRepository implements IUserRepository {
 
   public async findById(id: string): Promise<IUser | null> {
     try {
-      const user = await User.findById(id).lean();
+      const user = await User.findById(id).select("-password -__v").lean();
       return user;
     } catch (error) {
       throw ApiError.internal("Failed to find user.");
@@ -40,7 +41,7 @@ export default class UserRepository implements IUserRepository {
 
   public async findByEmail(email: string): Promise<IUser | null> {
     try {
-      const user = await User.findOne({ email }).lean();
+      const user = await User.findOne({ email }).select("-password -__v").lean();
       return user;
     } catch (error) {
       throw ApiError.internal("Failed to find user.");
@@ -53,6 +54,7 @@ export default class UserRepository implements IUserRepository {
         new: true,
         runValidators: true,
       })
+        .sort({ createdAt: 1 })
         .select("-password -__v")
         .lean();
       return updatedUser as IUser | null;
