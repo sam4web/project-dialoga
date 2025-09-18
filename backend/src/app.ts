@@ -10,11 +10,9 @@ import ApiError from "./lib/errors/ApiError";
 import errorHandler from "./middlewares/error.middleware";
 
 import authRoutes from "./modules/auth/auth.route";
+import userRoutes from "./modules/user/user.route";
 
 const app: Application = express();
-
-// connect to MongoDB
-// connectDatabase();
 
 // --- MIDDLEWARE SETUP ---
 app.use(helmet());
@@ -43,6 +41,7 @@ app.get("/health", (request: Request, response: Response) => {
 
 // register module routes
 app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
 
 //  --- ERROR HANDLING ---
 // catch-all for undefined routes (404 Not Found)

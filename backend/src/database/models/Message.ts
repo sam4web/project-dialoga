@@ -2,8 +2,8 @@ import { model, Schema } from "mongoose";
 
 export interface IMessage extends Document {
   _id: string;
-  author: string;
-  receiver: string;
+  author: Schema.Types.ObjectId;
+  receiver: Schema.Types.ObjectId;
   message: string;
   type: "image" | "text";
   createdAt: Date;
@@ -19,8 +19,16 @@ export interface ICreateMessageDTO {
 
 const messageSchema = new Schema<IMessage>(
   {
-    author: { type: String, required: true },
-    receiver: { type: String, required: true },
+    author: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    receiver: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     message: { type: String, required: true },
     type: { type: String, enum: ["image", "text"], required: true },
   },

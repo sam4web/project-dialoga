@@ -2,6 +2,7 @@ import ApiError from "../../lib/errors/ApiError";
 import User, { ICreateUserDTO, IUpdateUserDTO, IUser } from "../models/User";
 
 export interface IUserRepository {
+  getAll(): Promise<IUser[]>;
   create(userData: ICreateUserDTO): Promise<IUser>;
   findById(id: string): Promise<IUser | null>;
   findByEmail(email: string): Promise<IUser | null>;
@@ -10,6 +11,15 @@ export interface IUserRepository {
 }
 
 export default class UserRepository implements IUserRepository {
+  public async getAll(): Promise<IUser[]> {
+    try {
+      const users = await User.find({}).select("-password -__v").lean();
+      return users;
+    } catch (error) {
+      throw ApiError.internal("Failed to get users.");
+    }
+  }
+
   public async create(userData: ICreateUserDTO): Promise<IUser> {
     try {
       const newUser = await User.create(userData);
@@ -42,7 +52,9 @@ export default class UserRepository implements IUserRepository {
       const updatedUser = await User.findByIdAndUpdate(id, updatedData, {
         new: true,
         runValidators: true,
-      }).lean();
+      })
+        .select("-password -__v")
+        .lean();
       return updatedUser as IUser | null;
     } catch (error) {
       throw ApiError.internal("Failed to update user.");
