@@ -20,7 +20,7 @@ class AuthService {
     if (!doesPassMatch) {
       throw ApiError.unauthorized("Invalid credentials.");
     }
-    const payload = { id: user._id, email: user.email };
+    const payload = { id: user._id.toString(), email: user.email };
     const accessToken = generateToken(payload, config.ACCESS_TOKEN_SECRET, config.ACCESS_TOKEN_EXPIRY_TIME);
     const refreshToken = generateToken(payload, config.REFRESH_TOKEN_SECRET, config.REFRESH_TOKEN_EXPIRY_TIME);
     return { accessToken, refreshToken };
@@ -32,7 +32,7 @@ class AuthService {
       throw ApiError.conflict("An account with this email already exists.");
     }
     const user = await this.userRepository.create({ fullname, email, password });
-    const payload = { id: user._id, email: user.email };
+    const payload = { id: user._id.toString(), email: user.email };
     const accessToken = generateToken(payload, config.ACCESS_TOKEN_SECRET, config.ACCESS_TOKEN_EXPIRY_TIME);
     const refreshToken = generateToken(payload, config.REFRESH_TOKEN_SECRET, config.REFRESH_TOKEN_EXPIRY_TIME);
     return { accessToken, refreshToken };
@@ -44,7 +44,7 @@ class AuthService {
     if (!user) {
       throw ApiError.unauthorized("User not found or token invalid.");
     }
-    const newPayload = { id: user.id, email: user.email };
+    const newPayload = { id: user._id.toString(), email: user.email };
     const accessToken = generateToken(newPayload, config.ACCESS_TOKEN_SECRET, config.ACCESS_TOKEN_EXPIRY_TIME);
     const refreshToken = generateToken(newPayload, config.REFRESH_TOKEN_SECRET, config.REFRESH_TOKEN_EXPIRY_TIME);
     return { accessToken, refreshToken };

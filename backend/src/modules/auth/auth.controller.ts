@@ -15,7 +15,7 @@ class AuthController {
         httpOnly: true,
         maxAge: ms(config.REFRESH_TOKEN_EXPIRY_TIME as ms.StringValue),
         sameSite: config.ENV === "development" ? "strict" : "none",
-        secure: config.ENV !== "development",
+        secure: config.ENV === "production",
       });
       response.status(HTTP_STATUS.OK).json(accessToken);
       return;
@@ -32,7 +32,7 @@ class AuthController {
         httpOnly: true,
         maxAge: ms(config.REFRESH_TOKEN_EXPIRY_TIME as ms.StringValue),
         sameSite: config.ENV === "development" ? "strict" : "none",
-        secure: config.ENV !== "development",
+        secure: config.ENV === "production",
       });
       response.status(HTTP_STATUS.OK).json(accessToken);
       return;
@@ -52,7 +52,7 @@ class AuthController {
         httpOnly: true,
         maxAge: ms(config.REFRESH_TOKEN_EXPIRY_TIME as ms.StringValue),
         sameSite: config.ENV === "development" ? "strict" : "none",
-        secure: config.ENV !== "development",
+        secure: config.ENV === "production",
       });
       response.status(HTTP_STATUS.OK).json(accessToken);
       return;
@@ -66,7 +66,7 @@ class AuthController {
       response.clearCookie("token", {
         httpOnly: true,
         sameSite: config.ENV === "development" ? "strict" : "none",
-        secure: config.ENV !== "development",
+        secure: config.ENV === "production",
       });
       response.status(HTTP_STATUS.NO_CONTENT);
       response.end();
