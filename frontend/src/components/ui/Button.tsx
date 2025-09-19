@@ -20,7 +20,7 @@ function Button({ children, variant, className, title, ...props }: Props) {
     <button
       title={title ? title : children?.toString()}
       className={cx(
-        "text-center cursor-pointer rounded-lg font-foreground font-medium disabled:opacity-75 disabled:cursor-not-allowed disabled:translate-y-0!",
+        "text-center cursor-pointer rounded-lg font-foreground font-medium disabled:opacity-75 disabled:translate-y-0!",
         variantStyles[variant],
         className ? className : ""
       )}

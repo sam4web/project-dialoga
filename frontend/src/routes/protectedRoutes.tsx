@@ -1,8 +1,12 @@
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
+import { isUserAuthenticated } from "@/features/auth/slice/authSlice";
+import { useSelector } from "react-redux";
 
 function ProtectedRoutes() {
-  // if not logged in redirect to login page
-
+  const isAuthenticated = useSelector(isUserAuthenticated);
+  if (!isAuthenticated) {
+    return <Navigate to={"/login"} replace />;
+  }
   return <Outlet />;
 }
 

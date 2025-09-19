@@ -4,15 +4,28 @@ import { Link } from "react-router-dom";
 import Button from "@/components/ui/Button";
 import { signInSchema, type TSignInSchema } from "../types";
 import Input from "@/components/ui/Input";
+import { sendLoginRequest } from "../slice";
+import { useAppDispatch } from "@/store/hooks";
+import { toast } from "react-toastify";
 
 function SignInForm() {
+  const dispatch = useAppDispatch();
   const methods = useForm<TSignInSchema>({
     resolver: zodResolver(signInSchema),
     mode: "onBlur",
   });
+  const { isSubmitting, isValid } = methods.formState;
 
-  const onSubmit: SubmitHandler<TSignInSchema> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<TSignInSchema> = async (data) => {
+    try {
+      const toastId = toast.info("Logging in, please wait...");
+      await dispatch(sendLoginRequest(data)).unwrap();
+      toast.dismiss(toastId);
+      toast.success("Successfully logged in.");
+    } catch (error) {
+      toast.dismiss();
+      toast.error(error);
+    }
   };
 
   return (
@@ -25,7 +38,7 @@ function SignInForm() {
         <Link to="/" className="block text-primary font-medium">
           Forgot password?
         </Link>
-        <Button type="submit" variant="primary" className="w-full">
+        <Button disabled={isSubmitting || !isValid} type="submit" variant="primary" className="w-full">
           Sign In
         </Button>
       </form>

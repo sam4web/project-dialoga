@@ -1,0 +1,29 @@
+import { Outlet } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { sendRefreshTokenRequest } from "@/features/auth/slice";
+import { useAppDispatch } from "@/store/hooks";
+import Spinner from "@/components/common/Spinner";
+
+const AuthPersist = () => {
+  const dispatch = useAppDispatch();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchToken = async () => {
+      await dispatch(sendRefreshTokenRequest()).unwrap();
+      setLoading(false);
+    };
+    fetchToken();
+  }, [dispatch]);
+
+  if (loading)
+    return (
+      <div className="w-full h-dvh flex-center">
+        <Spinner />
+      </div>
+    );
+
+  return <Outlet />;
+};
+
+export default AuthPersist;

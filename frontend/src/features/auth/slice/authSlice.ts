@@ -1,6 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
+import { sendLoginRequest, sendRefreshTokenRequest } from "./authThunks";
+import { RootState } from "@/store";
 
-interface AuthState {
+export interface AuthState {
   token: null | string;
 }
 
@@ -12,7 +14,13 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {},
+  extraReducers: (builder) => {
+    builder.addMatcher(isAnyOf(sendLoginRequest.fulfilled, sendRefreshTokenRequest.fulfilled), (state, action) => {
+      state.token = action.payload;
+    });
+  },
 });
 
-// export const {} = authSlice.actions;
+export const isUserAuthenticated = (state: RootState) => Boolean(state.auth.token);
+
 export const authReducer = authSlice.reducer;

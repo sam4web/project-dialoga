@@ -4,6 +4,9 @@ import { useState } from "react";
 import SignInForm from "../components/SignInForm";
 import SignUpForm from "../components/SignUpForm";
 import WelcomeMessage from "@/components/shared/WelcomeMessage";
+import { Navigate } from "react-router-dom";
+import { isUserAuthenticated } from "../slice";
+import { useSelector } from "react-redux";
 
 type TFormType = "sign-in" | "sign-up";
 
@@ -15,6 +18,11 @@ function LoginPage() {
     { label: "Sign In", type: "sign-in" },
     { label: "Sign Up", type: "sign-up" },
   ];
+
+  const isAuthenticated = useSelector(isUserAuthenticated);
+  if (isAuthenticated) {
+    return <Navigate to={"/chat"} replace />;
+  }
 
   return (
     <div className="container flex-center flex-col space-y-5 sm:space-y-7">

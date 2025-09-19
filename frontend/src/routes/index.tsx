@@ -7,11 +7,12 @@ import NewChatPage from "@/features/chat/pages/NewChatPage";
 import ChatInfoPage from "@/features/chat/pages/ChatInfoPage";
 import SettingsPage from "@/features/profile/pages/SettingsPage";
 import ProtectedRoutes from "./ProtectedRoutes";
+import AuthPersist from "./AuthPersist";
 
 const AppRouter = createBrowserRouter(
   createRoutesFromElements(
-    <Route>
-      <Route path="/" element={<BaseLayout />}>
+    <Route path="/" element={<BaseLayout />}>
+      <Route element={<AuthPersist />}>
         <Route index element={<Navigate to="/chat" replace />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="/settings" element={<SettingsPage />} />
