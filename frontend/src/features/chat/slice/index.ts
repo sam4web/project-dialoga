@@ -1,28 +1,5 @@
-import { RootState } from "@/store";
-import { createSlice } from "@reduxjs/toolkit";
+import { chatReducer } from "./chatSlice";
 
-interface ProfileState {
-  fileUploadModalState: boolean;
-}
+export { chatReducer };
 
-const initialState: ProfileState = {
-  fileUploadModalState: false,
-};
-
-const chatSlice = createSlice({
-  name: "profile",
-  initialState,
-  reducers: {
-    showFileUploadModal: (state) => {
-      state.fileUploadModalState = true;
-    },
-    closeFileUploadModal: (state) => {
-      state.fileUploadModalState = false;
-    },
-  },
-});
-
-export const selectFileUploadModalState = (state: RootState) => state.chat.fileUploadModalState;
-
-export const { showFileUploadModal, closeFileUploadModal } = chatSlice.actions;
-export default chatSlice.reducer;
+export * from "./chatSlice";
