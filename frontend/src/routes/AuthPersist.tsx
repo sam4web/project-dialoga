@@ -10,8 +10,12 @@ const AuthPersist = () => {
 
   useEffect(() => {
     const fetchToken = async () => {
-      await dispatch(sendRefreshTokenRequest()).unwrap();
-      setLoading(false);
+      try {
+        await dispatch(sendRefreshTokenRequest()).unwrap();
+      } catch (err) {
+      } finally {
+        setLoading(false);
+      }
     };
     fetchToken();
   }, [dispatch]);

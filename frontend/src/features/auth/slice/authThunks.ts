@@ -1,9 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { loginApi, refreshApi } from "../api";
-import { LoginRequestDTO, Token } from "../api/types";
+import { loginApi, refreshApi, registerApi } from "../api";
+import { IRegisterRequestDTO, ILoginRequestDTO, Token } from "../api/types";
 import { AxiosError } from "axios";
 
-export const sendLoginRequest = createAsyncThunk<Token, LoginRequestDTO>(
+export const sendLoginRequest = createAsyncThunk<Token, ILoginRequestDTO>(
   "auth/login",
   async (credentials, { rejectWithValue }) => {
     try {
@@ -14,6 +14,21 @@ export const sendLoginRequest = createAsyncThunk<Token, LoginRequestDTO>(
         return rejectWithValue(error.response?.data?.message);
       }
       return rejectWithValue("Login failed, Please try again.");
+    }
+  }
+);
+
+export const sendRegisterRequest = createAsyncThunk<Token, IRegisterRequestDTO>(
+  "auth/register",
+  async (credentials, { rejectWithValue }) => {
+    try {
+      const token = await registerApi(credentials);
+      return token;
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        return rejectWithValue(error.response?.data?.message);
+      }
+      return rejectWithValue("Register failed, Please try again.");
     }
   }
 );
