@@ -4,13 +4,13 @@ import Button from "@/components/ui/Button";
 import { signUpSchema, type TSignUpSchema } from "../types";
 import Input from "@/components/ui/Input";
 import { sendRegisterRequest } from "../slice/authThunks";
-import { toast } from "react-toastify";
-import { useAppDispatch } from "@/store/hooks";
 import { useNavigate } from "react-router-dom";
+import useActionWithToast from "@/hooks/useActionWithToast";
+import { IRegisterRequestDTO } from "../api/types";
 
 function SignUpForm() {
+  const { executeAction } = useActionWithToast<string, IRegisterRequestDTO>();
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const methods = useForm<TSignUpSchema>({
     resolver: zodResolver(signUpSchema),
     mode: "onBlur",
@@ -18,16 +18,12 @@ function SignUpForm() {
   const { isSubmitting } = methods.formState;
 
   const onSubmit: SubmitHandler<TSignUpSchema> = async (data) => {
-    try {
-      const toastId = toast.info("Logging in, please wait...");
-      await dispatch(sendRegisterRequest(data)).unwrap();
-      toast.dismiss(toastId);
-      toast.success("Successfully logged in.");
-      navigate("/chat", { replace: true });
-    } catch (error) {
-      toast.dismiss();
-      toast.error(error);
-    }
+    executeAction({
+      action: sendRegisterRequest(data),
+      loadingMessage: "Registering your account, please wait...",
+      successMessage: "Successfully registered user.",
+    });
+    navigate("/chat", { replace: true });
   };
 
   return (

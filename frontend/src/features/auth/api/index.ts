@@ -15,3 +15,7 @@ export const refreshApi = async (): Promise<Token> => {
   const response = await api.post("/api/auth/refresh");
   return response.data;
 };
+
+export const signoutApi = async (): Promise<void> => {
+  await api.post("/api/auth/logout");
+};

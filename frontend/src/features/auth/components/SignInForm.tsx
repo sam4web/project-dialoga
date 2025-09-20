@@ -5,11 +5,11 @@ import Button from "@/components/ui/Button";
 import { signInSchema, type TSignInSchema } from "../types";
 import Input from "@/components/ui/Input";
 import { sendLoginRequest } from "../slice";
-import { useAppDispatch } from "@/store/hooks";
-import { toast } from "react-toastify";
+import useActionWithToast from "@/hooks/useActionWithToast";
+import { ILoginRequestDTO } from "../api/types";
 
 function SignInForm() {
-  const dispatch = useAppDispatch();
+  const { executeAction } = useActionWithToast<string, ILoginRequestDTO>();
   const navigate = useNavigate();
   const methods = useForm<TSignInSchema>({
     resolver: zodResolver(signInSchema),
@@ -18,16 +18,12 @@ function SignInForm() {
   const { isSubmitting } = methods.formState;
 
   const onSubmit: SubmitHandler<TSignInSchema> = async (data) => {
-    try {
-      const toastId = toast.info("Registering your account, please wait...");
-      await dispatch(sendLoginRequest(data)).unwrap();
-      toast.dismiss(toastId);
-      toast.success("Successfully registered user.");
-      navigate("/chat", { replace: true });
-    } catch (error) {
-      toast.dismiss();
-      toast.error(error);
-    }
+    executeAction({
+      action: sendLoginRequest(data),
+      loadingMessage: "Logging in, please wait...",
+      successMessage: "Successfully logged in.",
+    });
+    navigate("/chat", { replace: true });
   };
 
   return (

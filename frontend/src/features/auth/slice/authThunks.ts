@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { loginApi, refreshApi, registerApi } from "../api";
+import { loginApi, refreshApi, registerApi, signoutApi } from "../api";
 import { IRegisterRequestDTO, ILoginRequestDTO, Token } from "../api/types";
 import { AxiosError } from "axios";
 
@@ -13,7 +13,7 @@ export const sendLoginRequest = createAsyncThunk<Token, ILoginRequestDTO>(
       if (error instanceof AxiosError) {
         return rejectWithValue(error.response?.data?.message);
       }
-      return rejectWithValue("Login failed, Please try again.");
+      return rejectWithValue("Authentication failed. Please try logging in again.");
     }
   }
 );
@@ -28,7 +28,7 @@ export const sendRegisterRequest = createAsyncThunk<Token, IRegisterRequestDTO>(
       if (error instanceof AxiosError) {
         return rejectWithValue(error.response?.data?.message);
       }
-      return rejectWithValue("Register failed, Please try again.");
+      return rejectWithValue("Registration unsuccessful. Please try again in a few moments.");
     }
   }
 );
@@ -41,6 +41,17 @@ export const sendRefreshTokenRequest = createAsyncThunk<Token>("auth/refresh", a
     if (error instanceof AxiosError) {
       return rejectWithValue(error.response?.data?.message);
     }
-    return rejectWithValue("Login failed, Please try again.");
+    return rejectWithValue("Could not refresh your session. Please log in to continue.");
+  }
+});
+
+export const sendSignOutRequest = createAsyncThunk<void>("auth/signOut", async (_, { rejectWithValue }) => {
+  try {
+    await signoutApi();
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      return rejectWithValue(error.response?.data?.message);
+    }
+    return rejectWithValue("Failed to log out. For security, please clear your cookies or close your browser.");
   }
 });

@@ -12,7 +12,8 @@ const AuthPersist = () => {
     const fetchToken = async () => {
       try {
         await dispatch(sendRefreshTokenRequest()).unwrap();
-      } catch (err) {
+      } catch (error) {
+        console.error(error);
       } finally {
         setLoading(false);
       }
