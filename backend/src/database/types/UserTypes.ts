@@ -12,6 +12,8 @@ export interface IUser extends Document {
   profileImage: IUserProfileImage;
 }
 
+export type TUserWithoutPassword = Omit<IUser, "password">;
+
 export interface IUserProfileImage {
   name: string;
   data: string;

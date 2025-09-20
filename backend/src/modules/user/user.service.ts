@@ -1,5 +1,5 @@
 import UserRepository, { IUserRepository } from "../../database/repositories/UserRepository";
-import { IUpdateUserDTO } from "../../database/types/UserTypes";
+import { IUpdateUserDTO, TUserWithoutPassword } from "../../database/types/UserTypes";
 import ApiError from "../../lib/errors/ApiError";
 
 class UserService {
@@ -19,7 +19,8 @@ class UserService {
         "Failed to get profile. Either an invalid token was provided, or the user does not exist."
       );
     }
-    return user;
+    const { password, ...userWithoutPassword } = user;
+    return userWithoutPassword as TUserWithoutPassword;
   }
 
   public async updateUserProfile(userId: string, updateData: IUpdateUserDTO) {
@@ -27,7 +28,8 @@ class UserService {
     if (!updatedUser) {
       throw ApiError.unauthorized("Profile update failed. Could not verify your identity. Please log in again.");
     }
-    return updatedUser;
+    const { password, ...userWithoutPassword } = updatedUser;
+    return userWithoutPassword as TUserWithoutPassword;
   }
 }
 
