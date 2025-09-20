@@ -5,19 +5,27 @@ import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import { TUpdateProfileSchema, updateProfileSchema } from "../types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useDispatch } from "react-redux";
-import { showUpdateProfileImageModal } from "../slice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUserData, showUpdateProfileImageModal } from "../slice";
 
 function ProfileUpdateCard() {
+  const user = useSelector(selectUserData);
   const dispatch = useDispatch();
   const methods = useForm<TUpdateProfileSchema>({
     resolver: zodResolver(updateProfileSchema),
     mode: "onBlur",
+    defaultValues: {
+      email: user?.email || "",
+      fullname: user?.fullname || "",
+      statusMessage: user?.statusMessage || "",
+    },
   });
+  const { isDirty } = methods.formState;
 
   const onSubmit: SubmitHandler<TUpdateProfileSchema> = (data) => {
     console.log(data);
   };
+
   return (
     <div className="container-card">
       <CardTitle title="Profile Information" icon={User} />
@@ -52,7 +60,7 @@ function ProfileUpdateCard() {
             </div>
             <Input<TUpdateProfileSchema> title="Status Message" label="statusMessage" spacing={"sm"} />
           </div>
-          <Button type="submit" variant="primary" className="w-full">
+          <Button type="submit" variant="primary" className="w-full" disabled={!isDirty}>
             Update Profile
           </Button>
         </form>

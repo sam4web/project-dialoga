@@ -26,3 +26,17 @@ export const signUpSchema = signInSchema
 
 export type TSignInSchema = z.infer<typeof signInSchema>;
 export type TSignUpSchema = z.infer<typeof signUpSchema>;
+
+export type Token = string;
+
+export interface ILoginRequestDTO {
+  email: string;
+  password: string;
+}
+
+export interface IRegisterRequestDTO {
+  fullname: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}

@@ -1,9 +1,10 @@
 import { useAppDispatch } from "@/store/hooks";
+import { ThunkApiConfig } from "@/store/types";
 import { AsyncThunkAction } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 
 interface IExecuteActionProps<TResponse, TArgs> {
-  action: AsyncThunkAction<TResponse, TArgs, object>;
+  action: AsyncThunkAction<TResponse, TArgs, ThunkApiConfig>;
   loadingMessage: string;
   successMessage: string;
 }

@@ -1,5 +1,5 @@
 import api from "@/lib/axios";
-import { ILoginRequestDTO, IRegisterRequestDTO, Token } from "./types";
+import { ILoginRequestDTO, IRegisterRequestDTO, Token } from "../types";
 
 export const loginApi = async (credentials: ILoginRequestDTO): Promise<Token> => {
   const response = await api.post("/api/auth/login", credentials);

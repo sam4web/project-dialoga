@@ -6,7 +6,7 @@ import Input from "@/components/ui/Input";
 import { sendRegisterRequest } from "../slice/authThunks";
 import { useNavigate } from "react-router-dom";
 import useActionWithToast from "@/hooks/useActionWithToast";
-import { IRegisterRequestDTO } from "../api/types";
+import { IRegisterRequestDTO } from "../types";
 
 function SignUpForm() {
   const { executeAction } = useActionWithToast<string, IRegisterRequestDTO>();

@@ -1,14 +1,18 @@
 import { RootState } from "@/store";
 import { createSlice } from "@reduxjs/toolkit";
+import { fetchUserProfile } from "./profileThunks";
+import { IUser } from "../types";
 
 interface ProfileState {
   changePasswordModalState: boolean;
   updateProfileImageModalState: boolean;
+  userProfile: IUser | null;
 }
 
 const initialState: ProfileState = {
   changePasswordModalState: false,
   updateProfileImageModalState: false,
+  userProfile: null,
 };
 
 const profileSlice = createSlice({
@@ -28,10 +32,16 @@ const profileSlice = createSlice({
       state.updateProfileImageModalState = false;
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(fetchUserProfile.fulfilled, (state, action) => {
+      state.userProfile = action.payload;
+    });
+  },
 });
 
 export const selectChangePasswordModalState = (state: RootState) => state.profile.changePasswordModalState;
 export const selectUpdateProfileImageModalState = (state: RootState) => state.profile.updateProfileImageModalState;
+export const selectUserData = (state: RootState) => state.profile.userProfile;
 
 export const {
   closeChangePasswordModal,

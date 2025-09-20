@@ -20,3 +20,25 @@ export const changePasswordSchema = z
 
 export type TUpdateProfileSchema = z.infer<typeof updateProfileSchema>;
 export type TChangePasswordSchema = z.infer<typeof changePasswordSchema>;
+
+export interface IUserProfileImage {
+  name: string;
+  data: string;
+}
+
+export interface IUserSettings {
+  readReceipts: boolean;
+  onlineStatus: boolean;
+  typingIndicator: boolean;
+}
+
+export interface IUser {
+  _id: string;
+  fullname: string;
+  email: string;
+  statusMessage: string;
+  createdAt: Date;
+  updatedAt: Date;
+  settings: IUserSettings;
+  profileImage: IUserProfileImage;
+}

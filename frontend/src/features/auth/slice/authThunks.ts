@@ -1,9 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { loginApi, refreshApi, registerApi, signoutApi } from "../api";
-import { IRegisterRequestDTO, ILoginRequestDTO, Token } from "../api/types";
+import { IRegisterRequestDTO, ILoginRequestDTO, Token } from "../types";
 import { AxiosError } from "axios";
+import { ThunkApiConfig } from "@/store/types";
 
-export const sendLoginRequest = createAsyncThunk<Token, ILoginRequestDTO>(
+export const sendLoginRequest = createAsyncThunk<Token, ILoginRequestDTO, ThunkApiConfig>(
   "auth/login",
   async (credentials, { rejectWithValue }) => {
     try {
@@ -18,7 +19,7 @@ export const sendLoginRequest = createAsyncThunk<Token, ILoginRequestDTO>(
   }
 );
 
-export const sendRegisterRequest = createAsyncThunk<Token, IRegisterRequestDTO>(
+export const sendRegisterRequest = createAsyncThunk<Token, IRegisterRequestDTO, ThunkApiConfig>(
   "auth/register",
   async (credentials, { rejectWithValue }) => {
     try {
@@ -33,7 +34,7 @@ export const sendRegisterRequest = createAsyncThunk<Token, IRegisterRequestDTO>(
   }
 );
 
-export const sendRefreshTokenRequest = createAsyncThunk<Token>("auth/refresh", async (_, { rejectWithValue }) => {
+export const sendRefreshTokenRequest = createAsyncThunk<Token, void>("auth/refresh", async (_, { rejectWithValue }) => {
   try {
     const token = await refreshApi();
     return token;

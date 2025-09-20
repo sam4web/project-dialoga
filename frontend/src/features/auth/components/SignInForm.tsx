@@ -6,7 +6,7 @@ import { signInSchema, type TSignInSchema } from "../types";
 import Input from "@/components/ui/Input";
 import { sendLoginRequest } from "../slice";
 import useActionWithToast from "@/hooks/useActionWithToast";
-import { ILoginRequestDTO } from "../api/types";
+import { ILoginRequestDTO } from "../types";
 
 function SignInForm() {
   const { executeAction } = useActionWithToast<string, ILoginRequestDTO>();
