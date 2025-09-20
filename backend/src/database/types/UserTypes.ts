@@ -29,7 +29,7 @@ export interface ICreateUserDTO {
   password: string;
 }
 
-export interface IUpdateUserDTO {
+export interface IUpdateUserDTO extends Partial<IUserProfileImage>, Partial<IUserSettings> {
   fullname?: string;
   email?: string;
   statusMessage?: string;
