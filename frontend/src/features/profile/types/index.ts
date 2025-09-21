@@ -42,3 +42,10 @@ export interface IUser {
   settings: IUserSettings;
   profileImage: IUserProfileImage;
 }
+
+export interface IUpdateUserDTO extends Partial<IUserProfileImage>, Partial<IUserSettings> {
+  fullname?: string;
+  email?: string;
+  statusMessage?: string;
+  password?: string;
+}

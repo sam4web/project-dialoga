@@ -1,15 +1,18 @@
 import { Camera, User } from "lucide-react";
 import CardTitle from "@/components/shared/CardTitlte";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
-import { TUpdateProfileSchema, updateProfileSchema } from "../types";
+import { IUpdateUserDTO, IUser, TUpdateProfileSchema, updateProfileSchema } from "../types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUserData, showUpdateProfileImageModal } from "../slice";
+import useActionWithToast from "@/hooks/useActionWithToast";
+import { sendUpdateUserProfileRequest } from "../slice/profileThunks";
 
 function ProfileUpdateCard() {
   const user = useSelector(selectUserData);
+  const { executeAction } = useActionWithToast<IUser, IUpdateUserDTO>();
   const dispatch = useDispatch();
   const methods = useForm<TUpdateProfileSchema>({
     resolver: zodResolver(updateProfileSchema),
@@ -22,8 +25,12 @@ function ProfileUpdateCard() {
   });
   const { isDirty } = methods.formState;
 
-  const onSubmit: SubmitHandler<TUpdateProfileSchema> = (data) => {
-    console.log(data);
+  const onSubmit = async (data: IUpdateUserDTO) => {
+    await executeAction({
+      action: sendUpdateUserProfileRequest(data),
+      loadingMessage: "Updating your profile...",
+      successMessage: "Success! Profile updated.",
+    });
   };
 
   return (

@@ -1,6 +1,6 @@
 import { RootState } from "@/store";
-import { createSlice } from "@reduxjs/toolkit";
-import { fetchUserProfile } from "./profileThunks";
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
+import { fetchUserProfile, sendUpdateUserProfileRequest } from "./profileThunks";
 import { IUser } from "../types";
 
 interface ProfileState {
@@ -33,7 +33,7 @@ const profileSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchUserProfile.fulfilled, (state, action) => {
+    builder.addMatcher(isAnyOf(fetchUserProfile.fulfilled, sendUpdateUserProfileRequest.fulfilled), (state, action) => {
       state.userProfile = action.payload;
     });
   },
