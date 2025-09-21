@@ -4,6 +4,7 @@ const apiEndpoints = {
     register: "/api/auth/register",
     refresh: "/api/auth/refresh",
     signout: "/api/auth/logout",
+    changePassword: "/api/auth/change-password",
   },
   users: {
     profile: "/api/users/profile",

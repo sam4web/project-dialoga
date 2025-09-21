@@ -1,22 +1,37 @@
 import { createSlice, isAnyOf } from "@reduxjs/toolkit";
-import { sendLoginRequest, sendRefreshTokenRequest, sendRegisterRequest, sendSignOutRequest } from "./authThunks";
+import {
+  sendChangePasswordRequest,
+  sendLoginRequest,
+  sendRefreshTokenRequest,
+  sendRegisterRequest,
+  sendSignOutRequest,
+} from "./authThunks";
 import { RootState } from "@/store";
 
 export interface AuthState {
   token: null | string;
+  changePasswordModalState: boolean;
 }
 
 const initialState: AuthState = {
   token: null,
+  changePasswordModalState: false,
 };
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    showChangePasswordModal: (state) => {
+      state.changePasswordModalState = true;
+    },
+    closeChangePasswordModal: (state) => {
+      state.changePasswordModalState = false;
+    },
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(sendSignOutRequest.fulfilled, (state) => {
+      .addMatcher(isAnyOf(sendSignOutRequest.fulfilled, sendChangePasswordRequest.fulfilled), (state) => {
         state.token = null;
       })
       .addMatcher(
@@ -28,6 +43,9 @@ const authSlice = createSlice({
   },
 });
 
+export const selectChangePasswordModalState = (state: RootState) => state.auth.changePasswordModalState;
 export const isUserAuthenticated = (state: RootState) => Boolean(state.auth.token);
+
+export const { closeChangePasswordModal, showChangePasswordModal } = authSlice.actions;
 
 export const authReducer = authSlice.reducer;

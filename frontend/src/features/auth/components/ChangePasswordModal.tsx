@@ -1,23 +1,31 @@
-import Button from "@/components/ui/Button";
-import { closeChangePasswordModal } from "../slice";
+import { closeChangePasswordModal, sendChangePasswordRequest } from "../slice";
 import { useDispatch } from "react-redux";
-import Input from "@/components/ui/Input";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { changePasswordSchema, TChangePasswordSchema } from "../types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import ModalWrapper from "@/components/shared/ModalWrapper";
 import { Lock } from "lucide-react";
+import { useActionWithToast } from "@/hooks";
+import { useNavigate } from "react-router-dom";
+import { Button, Input, ModalWrapper } from "@/components";
 
 function ChangePasswordModal() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { executeAction } = useActionWithToast<void, TChangePasswordSchema>();
   const methods = useForm<TChangePasswordSchema>({
     resolver: zodResolver(changePasswordSchema),
     mode: "onBlur",
   });
 
-  const onSubmit: SubmitHandler<TChangePasswordSchema> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<TChangePasswordSchema> = async (data) => {
+    await executeAction({
+      action: sendChangePasswordRequest(data),
+      loadingMessage: "Updating your password...",
+      successMessage: "Password updated! Please log in again.",
+    });
     dispatch(closeChangePasswordModal());
+    navigate("/login");
   };
 
   return (

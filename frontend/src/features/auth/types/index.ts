@@ -1,6 +1,6 @@
 import z from "zod";
 
-export const passwordSchema = z
+const passwordSchema = z
   .string()
   .min(8, "Password must be between 8 and 20 characters.")
   .max(20, "Password must be between 8 and 20 characters.")
@@ -24,6 +24,18 @@ export const signUpSchema = signInSchema
     path: ["confirmPassword"],
   });
 
+export const changePasswordSchema = z
+  .object({
+    currentPassword: z.string().min(1, "Password is required."),
+    newPassword: passwordSchema,
+    confirmNewPassword: z.string().min(1, "Confirm password is required."),
+  })
+  .refine((data) => data.newPassword === data.confirmNewPassword, {
+    message: "New password and confirm password must match.",
+    path: ["confirmNewPassword"],
+  });
+
+export type TChangePasswordSchema = z.infer<typeof changePasswordSchema>;
 export type TSignInSchema = z.infer<typeof signInSchema>;
 export type TSignUpSchema = z.infer<typeof signUpSchema>;
 

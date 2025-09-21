@@ -1,5 +1,4 @@
-import { showChangePasswordModal } from "../slice";
-import { sendSignOutRequest } from "@/features/auth/slice";
+import { sendSignOutRequest, showChangePasswordModal } from "@/features/auth/slice";
 import { useNavigate } from "react-router-dom";
 import { useActionWithToast } from "@/hooks";
 import { useDispatch } from "react-redux";

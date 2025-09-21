@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { loginApi, refreshApi, registerApi, signoutApi } from "../api";
-import { IRegisterRequestDTO, ILoginRequestDTO, Token } from "../types";
+import { changePasswordApi, loginApi, refreshApi, registerApi, signoutApi } from "../api";
+import { IRegisterRequestDTO, ILoginRequestDTO, Token, TChangePasswordSchema } from "../types";
 import { AxiosError } from "axios";
 import { ThunkApiConfig } from "@/store/types";
 
@@ -56,3 +56,17 @@ export const sendSignOutRequest = createAsyncThunk<void>("auth/signOut", async (
     return rejectWithValue("Failed to log out. For security, please clear your cookies or close your browser.");
   }
 });
+
+export const sendChangePasswordRequest = createAsyncThunk<void, TChangePasswordSchema, ThunkApiConfig>(
+  "auth/change-password",
+  async (credentials, { getState, rejectWithValue }) => {
+    try {
+      await changePasswordApi(getState, credentials);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        return rejectWithValue(error.response?.data?.message);
+      }
+      return rejectWithValue("Failed to update password. Please check your information and try again.");
+    }
+  }
+);

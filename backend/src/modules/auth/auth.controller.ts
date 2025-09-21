@@ -81,6 +81,11 @@ class AuthController {
       const credentials: IChangePassReqDTO = (request as any).validatedBody;
       const userId: string = (request as any).userId;
       await authService.changePassword({ ...credentials, userId });
+      response.clearCookie("token", {
+        httpOnly: true,
+        sameSite: config.ENV === "development" ? "strict" : "none",
+        secure: config.ENV === "production",
+      });
       response.status(HTTP_STATUS.NO_CONTENT);
       response.end();
       return;
