@@ -7,7 +7,9 @@ import { updateUserSchema } from "./user.schema";
 const userRoutes = Router();
 
 userRoutes.get("/", authorize, userController.getAllUsers);
-userRoutes.get("/profile", authorize, userController.getUserProfile);
-userRoutes.patch("/profile/update", authorize, validate(updateUserSchema, "body"), userController.updateUserProfile);
+userRoutes
+  .route("/profile")
+  .get(authorize, userController.getUserProfile)
+  .patch(authorize, validate(updateUserSchema, "body"), userController.updateUserProfile);
 
 export default userRoutes;
