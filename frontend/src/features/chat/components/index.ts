@@ -5,6 +5,7 @@ import ChatMessageInput from "./ChatMessageInput";
 import ChatMessageSection from "./ChatMessageSection";
 import ChatPlaceholderSection from "./ChatPlaceholderSection";
 import ContactListSidebar from "./ContactListSidebar";
+import NewChatSearchInput from "./NewChatSearchInput";
 
 export {
   ChatInfoCard,
@@ -14,4 +15,5 @@ export {
   ChatMessageSection,
   ChatPlaceholderSection,
   ContactListSidebar,
+  NewChatSearchInput,
 };

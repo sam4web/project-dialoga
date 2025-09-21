@@ -1,7 +1,8 @@
 import { Button, Header } from "@/components";
 import { useTitle } from "@/hooks";
 import { capitalize } from "@/lib/utils";
-import { MessageCircle, Search } from "lucide-react";
+import { MessageCircle } from "lucide-react";
+import { NewChatSearchInput } from "../components";
 
 const mockContactList = [
   {
@@ -43,18 +44,7 @@ function NewChatPage() {
     <>
       <Header title="New Chat" />
       <div className="container min-h-full max-w-2xl mx-auto mt-5 space-y-5 sm:space-y-7">
-        <form className="container-card sm:px-5 sm:py-6 ">
-          <div className="input-field py-2.5 px-3 rounded-lg flex items-center space-x-2 group focus-within:outline-2">
-            <label htmlFor="search">
-              <Search className="text-color-primary size-6" />
-            </label>
-            <input
-              className="outline-none w-full focus:placeholder:text-transparent dark:placeholder:text-gray-200/60 placeholder:text-gray-800/50"
-              id="search"
-              placeholder="Search for contacts..."
-            />
-          </div>
-        </form>
+        <NewChatSearchInput />
 
         <div className="container-card px-1.5 sm:px-3 py-4 space-y-2">
           {mockContactList.map((contact) => (
