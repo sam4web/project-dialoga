@@ -1,9 +1,9 @@
-import Button from "@/components/ui/Button";
 import { showChangePasswordModal } from "../slice";
 import { sendSignOutRequest } from "@/features/auth/slice";
 import { useNavigate } from "react-router-dom";
-import useActionWithToast from "@/hooks/useActionWithToast";
+import { useActionWithToast } from "@/hooks";
 import { useDispatch } from "react-redux";
+import { Button } from "@/components";
 
 function ProfileActionCard() {
   const { executeAction } = useActionWithToast<void, void>();

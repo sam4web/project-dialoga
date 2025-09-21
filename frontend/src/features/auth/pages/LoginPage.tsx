@@ -1,12 +1,11 @@
 import useTitle from "@/hooks/useTitle";
 import { cx } from "@/lib/utils";
 import { useState } from "react";
-import SignInForm from "../components/SignInForm";
-import SignUpForm from "../components/SignUpForm";
-import WelcomeMessage from "@/components/shared/WelcomeMessage";
 import { Navigate } from "react-router-dom";
-import { isUserAuthenticated } from "../slice";
 import { useSelector } from "react-redux";
+import { isUserAuthenticated } from "../slice";
+import { WelcomeMessage } from "@/components";
+import { SignInForm, SignUpForm } from "../components";
 
 type TFormType = "sign-in" | "sign-up";
 

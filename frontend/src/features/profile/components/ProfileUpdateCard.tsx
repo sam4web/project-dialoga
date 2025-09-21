@@ -1,14 +1,11 @@
 import { Camera, User } from "lucide-react";
-import CardTitle from "@/components/shared/CardTitlte";
 import { FormProvider, useForm } from "react-hook-form";
-import Input from "@/components/ui/Input";
-import Button from "@/components/ui/Button";
-import { IUpdateUserDTO, IUser, TUpdateProfileSchema, updateProfileSchema } from "../types";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUserData, showUpdateProfileImageModal } from "../slice";
-import useActionWithToast from "@/hooks/useActionWithToast";
-import { sendUpdateUserProfileRequest } from "../slice/profileThunks";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { IUpdateUserDTO, IUser, TUpdateProfileSchema, updateProfileSchema } from "../types";
+import { selectUserData, sendUpdateUserProfileRequest, showUpdateProfileImageModal } from "../slice";
+import { useActionWithToast } from "@/hooks";
+import { Button, CardTitle, Input } from "@/components";
 
 function ProfileUpdateCard() {
   const user = useSelector(selectUserData);

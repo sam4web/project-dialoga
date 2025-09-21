@@ -1,15 +1,11 @@
 import { useState } from "react";
 import { Settings } from "lucide-react";
-import ThemeToggler from "@/components/ui/ThemeToggler";
 import { selectCurrentTheme } from "@/features/theme/slice";
 import { useSelector } from "react-redux";
-import Switch from "@/components/ui/Switch";
-import CardTitle from "@/components/shared/CardTitlte";
 import { IUpdateUserDTO, IUser, IUserSettings } from "../types";
-import { selectUserData } from "../slice";
-import { sendUpdateUserProfileRequest } from "../slice/profileThunks";
-import useActionWithToast from "@/hooks/useActionWithToast";
-import useDebounceEffect from "@/hooks/useDebounceEffect";
+import { selectUserData, sendUpdateUserProfileRequest } from "../slice";
+import { useActionWithToast, useDebounceEffect } from "@/hooks";
+import { CardTitle, Switch, ThemeToggler } from "@/components";
 
 interface ISettingItem {
   name: keyof IUserSettings;

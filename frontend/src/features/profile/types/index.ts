@@ -47,5 +47,4 @@ export interface IUpdateUserDTO extends Partial<IUserProfileImage>, Partial<IUse
   fullname?: string;
   email?: string;
   statusMessage?: string;
-  password?: string;
 }

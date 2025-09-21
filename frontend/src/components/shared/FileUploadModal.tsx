@@ -1,10 +1,10 @@
 import { CloudUpload } from "lucide-react";
-import Button from "../ui/Button";
 import { useRef } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import { FILE_UPLOAD_CONSTANTS } from "@shared/constants";
+import Button from "../ui/Button";
 
 type Props = {
   handleFileSubmit: (image: File) => void;

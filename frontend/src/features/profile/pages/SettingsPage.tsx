@@ -1,18 +1,15 @@
-import useTitle from "@/hooks/useTitle";
-import ProfileUpdateCard from "../components/ProfileUpdateCard";
-import ProfileSettingCard from "../components/ProfileSettingCard";
-import ProfileActionCard from "../components/ProfileActionCard";
-import { useEffect, useState } from "react";
-import { fetchUserProfile } from "../slice/profileThunks";
-import useActionWithToast from "@/hooks/useActionWithToast";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { IUser } from "../types";
-import Spinner from "@/components/common/Spinner";
-import PageLayout from "../components/PageLayout";
+import { fetchUserProfile, isProfileLoaded } from "../slice";
+import { PageLayout, ProfileActionCard, ProfileSettingCard, ProfileUpdateCard } from "../components";
+import { useActionWithToast, useTitle } from "@/hooks";
+import { Spinner } from "@/components";
 
 function SettingsPage() {
   useTitle({ title: "My Profile", template: true });
   const { executeAction } = useActionWithToast<IUser, void>();
-  const [loading, setLoading] = useState(true);
+  const isLoaded = useSelector(isProfileLoaded);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -21,13 +18,12 @@ function SettingsPage() {
         loadingMessage: "Retrieving your profile details...",
         successMessage: "Profile loaded successfully.",
       });
-      setLoading(false);
     };
-    fetchUserData();
+    if (!isLoaded) fetchUserData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (loading)
+  if (!isLoaded)
     return (
       <PageLayout>
         <div className="h-[60vh] flex-center">

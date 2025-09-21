@@ -1,12 +1,10 @@
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Button from "@/components/ui/Button";
-import { signUpSchema, type TSignUpSchema } from "../types";
-import Input from "@/components/ui/Input";
-import { sendRegisterRequest } from "../slice/authThunks";
 import { useNavigate } from "react-router-dom";
-import useActionWithToast from "@/hooks/useActionWithToast";
-import { IRegisterRequestDTO } from "../types";
+import { useActionWithToast } from "@/hooks";
+import { IRegisterRequestDTO, signUpSchema, TSignUpSchema } from "../types";
+import { sendRegisterRequest } from "../slice";
+import { Button, Input } from "@/components";
 
 function SignUpForm() {
   const { executeAction } = useActionWithToast<string, IRegisterRequestDTO>();

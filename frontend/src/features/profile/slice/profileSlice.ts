@@ -42,6 +42,10 @@ const profileSlice = createSlice({
 export const selectChangePasswordModalState = (state: RootState) => state.profile.changePasswordModalState;
 export const selectUpdateProfileImageModalState = (state: RootState) => state.profile.updateProfileImageModalState;
 export const selectUserData = (state: RootState) => state.profile.userProfile;
+export const isProfileLoaded = (state: RootState) => {
+  if (!state.profile.userProfile) return false;
+  return Object.keys(state.profile.userProfile).length > 0;
+};
 
 export const {
   closeChangePasswordModal,

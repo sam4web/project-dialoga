@@ -1,12 +1,10 @@
 import { useForm, SubmitHandler, FormProvider } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate } from "react-router-dom";
-import Button from "@/components/ui/Button";
-import { signInSchema, type TSignInSchema } from "../types";
-import Input from "@/components/ui/Input";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { sendLoginRequest } from "../slice";
-import useActionWithToast from "@/hooks/useActionWithToast";
-import { ILoginRequestDTO } from "../types";
+import { ILoginRequestDTO, signInSchema, TSignInSchema } from "../types";
+import { Button, Input } from "@/components";
+import { useActionWithToast } from "@/hooks";
 
 function SignInForm() {
   const { executeAction } = useActionWithToast<string, ILoginRequestDTO>();
