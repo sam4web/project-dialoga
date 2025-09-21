@@ -1,8 +1,6 @@
-import ContactListSidebar from "../components/ContactListSidebar";
-import ChatPlaceholderSection from "../components/ChatPlaceholderSection";
 import { useParams } from "react-router-dom";
-import ChatMessageSection from "../components/ChatMessageSection";
 import { cx } from "@/lib/utils";
+import { ChatMessageSection, ChatPlaceholderSection, ContactListSidebar } from "../components";
 
 function MainChatPage() {
   const { chatId } = useParams();

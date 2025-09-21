@@ -1,6 +1,5 @@
-import Header from "@/components/shared/Header";
-import Button from "@/components/ui/Button";
-import useTitle from "@/hooks/useTitle";
+import { Button, Header } from "@/components";
+import { useTitle } from "@/hooks";
 import { capitalize } from "@/lib/utils";
 import { MessageCircle, Search } from "lucide-react";
 

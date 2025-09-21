@@ -1,8 +1,7 @@
-import CardTitle from "@/components/shared/CardTitlte";
-import Header from "@/components/shared/Header";
+import { CardTitle, Header } from "@/components";
 import useTitle from "@/hooks/useTitle";
 import { Image, User } from "lucide-react";
-import ChatInfoCard from "../components/ChatInfoCard";
+import { ChatInfoCard } from "../components";
 
 function ChatInfoPage() {
   useTitle({ title: "[Contact Name]'s Profile", template: true });
