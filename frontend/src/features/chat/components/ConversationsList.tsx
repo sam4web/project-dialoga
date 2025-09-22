@@ -3,7 +3,7 @@ import { Plus, Search, Settings } from "lucide-react";
 import ThemeToggler from "@/components/ui/ThemeToggler";
 import { Link } from "react-router-dom";
 import ms from "ms";
-import { truncate } from "../../../lib/utils";
+import { truncate } from "@/lib/utils";
 
 const mockContactList = [
   {

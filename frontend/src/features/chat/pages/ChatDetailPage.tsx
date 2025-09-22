@@ -3,7 +3,7 @@ import useTitle from "@/hooks/useTitle";
 import { Image, User } from "lucide-react";
 import { ChatInfoCard } from "../components";
 
-function ChatInfoPage() {
+function ChatDetailPage() {
   useTitle({ title: "[Contact Name]'s Profile", template: true });
 
   return (
@@ -64,4 +64,4 @@ function ChatInfoPage() {
   );
 }
 
-export default ChatInfoPage;
+export default ChatDetailPage;

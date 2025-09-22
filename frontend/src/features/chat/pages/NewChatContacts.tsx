@@ -37,7 +37,7 @@ const mockContactList = [
   },
 ];
 
-function NewChatPage() {
+function NewChatContacts() {
   useTitle({ title: "Find Contacts", template: true });
 
   return (
@@ -81,4 +81,4 @@ function NewChatPage() {
   );
 }
 
-export default NewChatPage;
+export default NewChatContacts;

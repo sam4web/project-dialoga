@@ -1,6 +1,5 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import { HTTP_STATUS } from "../../../../shared/constants";
-import ApiError from "../../lib/errors/ApiError";
 import userService from "./user.service";
 import { IUpdateUserDTO } from "../../database/types/UserTypes";
 
