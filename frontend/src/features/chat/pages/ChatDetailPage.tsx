@@ -1,7 +1,7 @@
 import { CardTitle, Header } from "@/components";
 import useTitle from "@/hooks/useTitle";
 import { Image, User } from "lucide-react";
-import { ChatInfoCard } from "../components";
+import { ChatStatsCard } from "../components";
 
 function ChatDetailPage() {
   useTitle({ title: "[Contact Name]'s Profile", template: true });
@@ -32,9 +32,9 @@ function ChatDetailPage() {
           </div>
 
           <div className="flex bg-zinc-200/70 dark:bg-zinc-700/60 p-2.5 rounded-lg gap-3">
-            <ChatInfoCard value={127} label={"Messages"} />
-            <ChatInfoCard value={3} label={"Media"} />
-            <ChatInfoCard value={5} label={"Days"} />
+            <ChatStatsCard value={127} label={"Messages"} />
+            <ChatStatsCard value={3} label={"Media"} />
+            <ChatStatsCard value={5} label={"Days"} />
           </div>
         </div>
 

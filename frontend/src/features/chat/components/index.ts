@@ -1,19 +1,19 @@
-import ChatInfoCard from "./ChatInfoCard";
 import ChatMessageBubble from "./ChatMessageBubble";
 import ChatMessageHeader from "./ChatMessageHeader";
 import ChatMessageInput from "./ChatMessageInput";
-import ChatMessageSection from "./ChatMessageSection";
-import ChatPlaceholderSection from "./ChatPlaceholderSection";
-import ContactListSidebar from "./ContactListSidebar";
+import ConversationView from "./ConversationView";
+import PlaceholderView from "./PlaceholderView";
+import ConversationsList from "./ConversationsList";
 import NewChatSearchInput from "./NewChatSearchInput";
+import ChatStatsCard from "./ChatStatsCard";
 
 export {
-  ChatInfoCard,
+  ChatStatsCard,
   ChatMessageBubble,
   ChatMessageHeader,
   ChatMessageInput,
-  ChatMessageSection,
-  ChatPlaceholderSection,
-  ContactListSidebar,
+  ConversationView,
+  PlaceholderView,
+  ConversationsList,
   NewChatSearchInput,
 };

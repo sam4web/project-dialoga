@@ -158,7 +158,7 @@ const messageDummyData = {
   ],
 };
 
-function ChatMessageSection() {
+function ConversationView() {
   useTitle({ title: "[Contact Name] Chat", template: true });
 
   return (
@@ -178,4 +178,4 @@ function ChatMessageSection() {
   );
 }
 
-export default ChatMessageSection;
+export default ConversationView;

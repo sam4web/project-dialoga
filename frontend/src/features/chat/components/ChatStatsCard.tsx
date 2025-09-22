@@ -1,4 +1,4 @@
-function ChatInfoCard({ value, label }: { value: number; label: string }) {
+function ChatStatsCard({ value, label }: { value: number; label: string }) {
   return (
     <div className="flex-1 rounded-md py-3 px-2 bg-white dark:bg-zinc-800 text-center">
       <p className="header-text text-xl sm:text-2xl font-semibold">{value}</p>
@@ -7,4 +7,4 @@ function ChatInfoCard({ value, label }: { value: number; label: string }) {
   );
 }
 
-export default ChatInfoCard;
+export default ChatStatsCard;

@@ -42,7 +42,7 @@ const mockContactList = [
     lastOnline: 1678879,
   },
 ];
-function ContactListSidebar() {
+function ConversationsList() {
   return (
     <aside className="w-full h-dvh border-r border-zinc-400/50 dark:border-zinc-700 shadow-xs">
       <div className="space-y-5">
@@ -112,4 +112,4 @@ function ContactListSidebar() {
   );
 }
 
-export default ContactListSidebar;
+export default ConversationsList;

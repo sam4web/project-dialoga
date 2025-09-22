@@ -3,7 +3,7 @@ import Button from "@/components/ui/Button";
 import useTitle from "@/hooks/useTitle";
 import { Link } from "react-router-dom";
 
-function ChatPlaceholderSection() {
+function PlaceholderView() {
   useTitle({ title: "Welcome", template: true });
 
   return (
@@ -28,4 +28,4 @@ function ChatPlaceholderSection() {
   );
 }
 
-export default ChatPlaceholderSection;
+export default PlaceholderView;
