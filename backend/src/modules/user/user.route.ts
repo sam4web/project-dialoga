@@ -4,12 +4,13 @@ import authorize from "../../middlewares/auth.middleware";
 import { validate } from "../../middlewares/validation.middleware";
 import { updateUserSchema } from "./user.schema";
 
-const userRoutes = Router();
+const userRouter = Router();
 
-userRoutes.get("/", authorize, userController.getAllUsers);
-userRoutes
+userRouter.get("/", authorize, userController.getAllUsers);
+userRouter.get("/new-chat", authorize, userController.getNewChatCandidates);
+userRouter
   .route("/profile")
   .get(authorize, userController.getUserProfile)
   .patch(authorize, validate(updateUserSchema, "body"), userController.updateUserProfile);
 
-export default userRoutes;
+export default userRouter;

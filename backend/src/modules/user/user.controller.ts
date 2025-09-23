@@ -6,8 +6,15 @@ import { IUpdateUserDTO } from "../../database/types/UserTypes";
 class UserController {
   public async getAllUsers(request: Request, response: Response) {
     const userId: string = (request as any).userId;
-    const users = userService.getAllUsers(userId);
-    response.status(HTTP_STATUS.OK).json({ users });
+    const users = await userService.getAllUsers(userId);
+    response.status(HTTP_STATUS.OK).json(users);
+    return;
+  }
+
+  public async getNewChatCandidates(request: Request, response: Response) {
+    const userId: string = (request as any).userId;
+    const newContacts = await userService.getNewChatCandidates(userId);
+    response.status(HTTP_STATUS.OK).json(newContacts);
     return;
   }
 
