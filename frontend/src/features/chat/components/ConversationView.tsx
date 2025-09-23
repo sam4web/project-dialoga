@@ -1,8 +1,6 @@
-import useTitle from "@/hooks/useTitle";
-import ChatMessageHeader from "./ChatMessageHeader";
-import ChatMessageBubble from "./ChatMessageBubble";
-import ChatMessageInput from "./ChatMessageInput";
+import { useTitle } from "@/hooks";
 import { TMessage } from "../types";
+import { ChatMessageBubble, ChatMessageHeader, ChatMessageInput } from "./index";
 
 const messageDummyData = {
   profile: {

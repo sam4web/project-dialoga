@@ -1,5 +1,5 @@
 import { CardTitle, Header } from "@/components";
-import useTitle from "@/hooks/useTitle";
+import { useTitle } from "@/hooks";
 import { Image, User } from "lucide-react";
 import { ChatStatsCard } from "../components";
 

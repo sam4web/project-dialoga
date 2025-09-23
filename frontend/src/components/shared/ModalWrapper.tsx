@@ -1,6 +1,6 @@
 import { LucideIcon, X } from "lucide-react";
-import Button from "../ui/Button";
-import { cx } from "@/lib/utils";
+import { Button } from "@/components";
+import { cx } from "@/utils";
 
 type Props = {
   className?: string;

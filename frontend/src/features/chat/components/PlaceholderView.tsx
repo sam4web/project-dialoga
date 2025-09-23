@@ -1,6 +1,5 @@
-import WelcomeMessage from "@/components/shared/WelcomeMessage";
-import Button from "@/components/ui/Button";
-import useTitle from "@/hooks/useTitle";
+import { Button, WelcomeMessage } from "@/components";
+import { useTitle } from "@/hooks";
 import { Link } from "react-router-dom";
 
 function PlaceholderView() {

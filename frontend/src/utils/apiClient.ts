@@ -4,7 +4,7 @@ import { API_TIMEOUT_MS, HTTP_STATUS } from "@shared/constants";
 import { store } from "@/app/store";
 import { setTooManyRequests } from "@/app/slices/errorSlice";
 
-const apiClient = axios.create({
+export const apiClient = axios.create({
   baseURL: config.VITE_API_BASE_URL,
   timeout: API_TIMEOUT_MS,
   headers: {
@@ -24,5 +24,3 @@ apiClient.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
-export default apiClient;

@@ -24,7 +24,7 @@ function LoginPage() {
   }
 
   return (
-    <div className="container flex-center flex-col space-y-5 sm:space-y-7">
+    <section className="container flex-center flex-col space-y-5 sm:space-y-7">
       <WelcomeMessage title="Dialoga" subtitle="Connect with friends instantly" />
 
       <div className="max-w-md sm:max-w-lg w-full mx-auto container-card">
@@ -55,7 +55,7 @@ function LoginPage() {
         </div>
         {formType === "sign-in" ? <SignInForm /> : <SignUpForm />}
       </div>
-    </div>
+    </section>
   );
 }
 

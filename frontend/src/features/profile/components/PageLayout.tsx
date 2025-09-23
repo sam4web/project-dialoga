@@ -31,7 +31,7 @@ function PageLayout({ children }: { children: React.ReactNode }) {
       )}
 
       <Header title="Settings & Profile" />
-      <div className="container min-h-full max-w-2xl mx-auto mt-5 space-y-5 sm:space-y-7">{children}</div>
+      <section className="container min-h-full max-w-2xl mx-auto mt-5 space-y-5 sm:space-y-7">{children}</section>
     </>
   );
 }
