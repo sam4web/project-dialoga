@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { changePasswordApi, loginApi, refreshApi, registerApi, signoutApi } from "../api";
 import { IRegisterRequestDTO, ILoginRequestDTO, Token, TChangePasswordSchema } from "../types";
-import { AxiosError } from "axios";
 import { ThunkApiConfig } from "@/store/types";
+import { handleApiError } from "@/lib/errorHandler";
 
 export const sendLoginRequest = createAsyncThunk<Token, ILoginRequestDTO, ThunkApiConfig>(
   "auth/login",
@@ -11,10 +11,7 @@ export const sendLoginRequest = createAsyncThunk<Token, ILoginRequestDTO, ThunkA
       const token = await loginApi(credentials);
       return token;
     } catch (error) {
-      if (error instanceof AxiosError) {
-        return rejectWithValue(error.response?.data?.message);
-      }
-      return rejectWithValue("Authentication failed. Please try logging in again.");
+      return rejectWithValue(handleApiError(error, "Authentication failed. Please try logging in again."));
     }
   }
 );
@@ -26,10 +23,7 @@ export const sendRegisterRequest = createAsyncThunk<Token, IRegisterRequestDTO, 
       const token = await registerApi(credentials);
       return token;
     } catch (error) {
-      if (error instanceof AxiosError) {
-        return rejectWithValue(error.response?.data?.message);
-      }
-      return rejectWithValue("Registration unsuccessful. Please try again in a few moments.");
+      return rejectWithValue(handleApiError(error, "Registration unsuccessful. Please try again in a few moments."));
     }
   }
 );
@@ -39,10 +33,7 @@ export const sendRefreshTokenRequest = createAsyncThunk<Token, void>("auth/refre
     const token = await refreshApi();
     return token;
   } catch (error) {
-    if (error instanceof AxiosError) {
-      return rejectWithValue(error.response?.data?.message);
-    }
-    return rejectWithValue("Could not refresh your session. Please log in to continue.");
+    return rejectWithValue(handleApiError(error, "Could not refresh your session. Please log in to continue."));
   }
 });
 
@@ -50,10 +41,9 @@ export const sendSignOutRequest = createAsyncThunk<void>("auth/signOut", async (
   try {
     await signoutApi();
   } catch (error) {
-    if (error instanceof AxiosError) {
-      return rejectWithValue(error.response?.data?.message);
-    }
-    return rejectWithValue("Failed to log out. For security, please clear your cookies or close your browser.");
+    return rejectWithValue(
+      handleApiError(error, "Failed to log out. For security, please clear your cookies or close your browser.")
+    );
   }
 });
 
@@ -63,10 +53,9 @@ export const sendChangePasswordRequest = createAsyncThunk<void, TChangePasswordS
     try {
       await changePasswordApi(getState, credentials);
     } catch (error) {
-      if (error instanceof AxiosError) {
-        return rejectWithValue(error.response?.data?.message);
-      }
-      return rejectWithValue("Failed to update password. Please check your information and try again.");
+      return rejectWithValue(
+        handleApiError(error, "Failed to update password. Please check your information and try again.")
+      );
     }
   }
 );

@@ -1,4 +1,4 @@
-import { RootState } from "@/store";
+import { RootState } from "@/app/store";
 import { createSlice } from "@reduxjs/toolkit";
 
 interface ProfileState {

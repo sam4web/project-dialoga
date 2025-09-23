@@ -1,5 +1,4 @@
-import { useAppDispatch } from "@/store/hooks";
-import { ThunkApiConfig } from "@/store/types";
+import { ThunkApiConfig, useAppDispatch } from "@/app/store";
 import { AsyncThunkAction } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 

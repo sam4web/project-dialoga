@@ -1,8 +1,8 @@
 import { Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { sendRefreshTokenRequest } from "@/features/auth/slice";
-import { useAppDispatch } from "@/store/hooks";
 import Spinner from "@/components/common/Spinner";
+import { useAppDispatch } from "@/app/store/hooks";
 
 const AuthPersist = () => {
   const dispatch = useAppDispatch();

@@ -1,7 +1,7 @@
 import api from "@/lib/axios";
 import { IUpdateUserDTO, IUser } from "../types";
-import { RootState } from "@/store";
 import apiEndpoints from "@/config/api";
+import { RootState } from "@/app/store";
 
 export const getUserProfileApi = async (getState: () => RootState): Promise<IUser> => {
   const token = getState().auth.token;

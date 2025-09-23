@@ -1,7 +1,7 @@
-import { RootState } from "@/store";
 import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 import { fetchUserProfile, sendUpdateUserProfileRequest } from "./profileThunks";
 import { IUser } from "../types";
+import { RootState } from "@/app/store";
 
 interface ProfileState {
   updateProfileImageModalState: boolean;

@@ -1,7 +1,7 @@
 import api from "@/lib/axios";
 import { ILoginRequestDTO, IRegisterRequestDTO, TChangePasswordSchema, Token } from "../types";
 import apiEndpoints from "@/config/api";
-import { RootState } from "@/store";
+import { RootState } from "@/app/store";
 
 export const loginApi = async (credentials: ILoginRequestDTO): Promise<Token> => {
   const response = await api.post(apiEndpoints.auth.login, credentials);

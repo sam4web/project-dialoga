@@ -1,4 +1,4 @@
-import { RootState, AppDispatch } from "./index";
+import { RootState, AppDispatch } from "./store";
 
 export interface ThunkApiConfig {
   state: RootState;

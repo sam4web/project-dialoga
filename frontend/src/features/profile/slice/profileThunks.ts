@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { IUpdateUserDTO, IUser } from "../types";
 import { getUserProfileApi, updateUserProfileApi } from "../api";
-import { AxiosError } from "axios";
 import { ThunkApiConfig } from "@/store/types";
+import { handleApiError } from "../../../lib/errorHandler";
 
 export const fetchUserProfile = createAsyncThunk<IUser, void, ThunkApiConfig>(
   "auth/getUserProfile",
@@ -11,10 +11,9 @@ export const fetchUserProfile = createAsyncThunk<IUser, void, ThunkApiConfig>(
       const userData = await getUserProfileApi(getState);
       return userData;
     } catch (error) {
-      if (error instanceof AxiosError) {
-        return rejectWithValue(error.response?.data?.message);
-      }
-      return rejectWithValue("Failed to retrieve profile due to an invalid or expired access token.");
+      return rejectWithValue(
+        handleApiError(error, "Failed to retrieve profile due to an invalid or expired access token.")
+      );
     }
   }
 );
@@ -26,10 +25,9 @@ export const sendUpdateUserProfileRequest = createAsyncThunk<IUser, IUpdateUserD
       const userData = await updateUserProfileApi(getState, updateData);
       return userData;
     } catch (error) {
-      if (error instanceof AxiosError) {
-        return rejectWithValue(error.response?.data?.message);
-      }
-      return rejectWithValue("Profile update failed. Please check your login status and ensure the data is valid.");
+      return rejectWithValue(
+        handleApiError(error, "Profile update failed. Please check your login status and ensure the data is valid.")
+      );
     }
   }
 );

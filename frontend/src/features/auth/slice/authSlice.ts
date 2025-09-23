@@ -6,7 +6,7 @@ import {
   sendRegisterRequest,
   sendSignOutRequest,
 } from "./authThunks";
-import { RootState } from "@/store";
+import { RootState } from "@/app/store";
 
 export interface AuthState {
   token: null | string;

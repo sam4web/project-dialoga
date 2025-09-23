@@ -10,6 +10,7 @@ import Button from "./ui/Button";
 import Input from "./ui/Input";
 import Switch from "./ui/Switch";
 import ThemeToggler from "./ui/ThemeToggler";
+import ErrorView from "./container/ErrorView";
 
 export {
   BaseLayout,
@@ -24,4 +25,5 @@ export {
   Input,
   Switch,
   ThemeToggler,
+  ErrorView,
 };

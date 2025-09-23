@@ -1,12 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { themeReducer } from "@/features/theme/slice";
 import { profileReducer } from "@/features/profile/slice";
 import { authReducer } from "@/features/auth/slice";
 import { chatReducer } from "@/features/chat/slice";
+import { errorReducer, themeReducer } from "@/app/slices";
 
 export const store = configureStore({
   reducer: {
     theme: themeReducer,
+    error: errorReducer,
     profile: profileReducer,
     auth: authReducer,
     chat: chatReducer,

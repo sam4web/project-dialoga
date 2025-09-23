@@ -32,9 +32,9 @@ function ChatDetailPage() {
           </div>
 
           <div className="flex bg-zinc-200/70 dark:bg-zinc-700/60 p-2.5 rounded-lg gap-3">
-            <ChatStatsCard value={127} label={"Messages"} />
-            <ChatStatsCard value={3} label={"Media"} />
-            <ChatStatsCard value={5} label={"Days"} />
+            <ChatStatsCard value={127} label={"Messages Sent"} />
+            <ChatStatsCard value={3} label={"Media Shared"} />
+            <ChatStatsCard value={5} label={"Days Active"} />
           </div>
         </div>
 

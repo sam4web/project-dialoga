@@ -1,6 +1,6 @@
-import { selectCurrentTheme } from "@/features/theme/slice";
 import { useSelector } from "react-redux";
 import { Bounce, ToastContainer } from "react-toastify";
+import { selectCurrentTheme } from "@/app/slices/themeSlice";
 
 function Toast() {
   const theme = useSelector(selectCurrentTheme);

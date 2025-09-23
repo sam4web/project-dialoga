@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Settings } from "lucide-react";
-import { selectCurrentTheme } from "@/features/theme/slice";
 import { useSelector } from "react-redux";
 import { IUpdateUserDTO, IUser, IUserSettings } from "../types";
 import { selectUserData, sendUpdateUserProfileRequest } from "../slice";
 import { useActionWithToast, useDebounceEffect } from "@/hooks";
 import { CardTitle, Switch, ThemeToggler } from "@/components";
+import { selectCurrentTheme } from "@/app/slices/themeSlice";
 
 interface ISettingItem {
   name: keyof IUserSettings;
