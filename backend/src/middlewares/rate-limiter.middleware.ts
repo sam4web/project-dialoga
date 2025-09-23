@@ -1,4 +1,5 @@
 import rateLimit from "express-rate-limit";
+import config from "../config";
 
 export const publicApiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -6,6 +7,7 @@ export const publicApiLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   message: "Too many requests from this IP, please try again later.",
+  skip: () => config.ENV === "development",
 });
 
 export const authLimiter = rateLimit({
@@ -14,4 +16,5 @@ export const authLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   message: "Too many authentication attempts from this IP. Please try again later.",
+  skip: () => config.ENV === "development",
 });
