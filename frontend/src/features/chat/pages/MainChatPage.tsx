@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { cx } from "@/lib/utils";
+import { cx } from "@/utils";
 import { ConversationView, PlaceholderView, ConversationsList } from "../components";
 
 function MainChatPage() {

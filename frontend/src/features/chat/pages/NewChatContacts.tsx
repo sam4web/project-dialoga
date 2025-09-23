@@ -1,6 +1,6 @@
 import { Button, Header } from "@/components";
 import { useTitle } from "@/hooks";
-import { capitalize } from "@/lib/utils";
+import { capitalize } from "@/utils";
 import { MessageCircle } from "lucide-react";
 import { NewChatSearchInput } from "../components";
 

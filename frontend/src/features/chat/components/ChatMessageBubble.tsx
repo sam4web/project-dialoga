@@ -1,6 +1,6 @@
-import { cx } from "@/lib/utils";
+import { cx } from "@/utils";
 import { formatDistanceToNow } from "date-fns/formatDistanceToNow";
-import { capitalize } from "@/lib/utils";
+import { capitalize } from "@/utils";
 import type { TMessage } from "../types";
 
 function ChatMessageBubble({ message, sentTime, sentBy, type }: TMessage) {

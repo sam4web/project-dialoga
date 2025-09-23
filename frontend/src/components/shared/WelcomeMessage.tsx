@@ -1,4 +1,4 @@
-import { cx } from "@/lib/utils";
+import { cx } from "@/utils";
 
 type Props = {
   title: string;

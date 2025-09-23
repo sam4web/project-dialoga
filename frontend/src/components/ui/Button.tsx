@@ -1,4 +1,4 @@
-import { cx } from "@/lib/utils";
+import { cx } from "@/utils";
 import { ButtonHTMLAttributes, ReactNode } from "react";
 
 const baseStyles = "border-2 hover:opacity-85 hover:-translate-y-0.5 py-2 px-4 shadow-xs";

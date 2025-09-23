@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { IUpdateUserDTO, IUser } from "../types";
 import { getUserProfileApi, updateUserProfileApi } from "../api";
-import { ThunkApiConfig } from "@/store/types";
-import { handleApiError } from "../../../lib/errorHandler";
+import { ThunkApiConfig } from "@/app/store";
+import { handleApiError } from "@/utils";
 
 export const fetchUserProfile = createAsyncThunk<IUser, void, ThunkApiConfig>(
   "auth/getUserProfile",

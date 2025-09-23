@@ -1,4 +1,4 @@
-import { cx } from "@/lib/utils";
+import { cx } from "@/utils";
 import { useState } from "react";
 
 type Props = {

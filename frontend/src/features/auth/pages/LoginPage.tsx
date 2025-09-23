@@ -1,5 +1,5 @@
 import useTitle from "@/hooks/useTitle";
-import { cx } from "@/lib/utils";
+import { cx } from "@/utils";
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";

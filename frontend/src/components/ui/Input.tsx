@@ -1,4 +1,4 @@
-import { cx } from "@/lib/utils";
+import { cx } from "@/utils";
 import { HTMLInputTypeAttribute, InputHTMLAttributes, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { FieldValues, Path, useFormContext } from "react-hook-form";

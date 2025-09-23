@@ -4,7 +4,7 @@ import { API_TIMEOUT_MS, HTTP_STATUS } from "@shared/constants";
 import { store } from "@/app/store";
 import { setTooManyRequests } from "@/app/slices/errorSlice";
 
-const api = axios.create({
+const apiClient = axios.create({
   baseURL: config.VITE_API_BASE_URL,
   timeout: API_TIMEOUT_MS,
   headers: {
@@ -14,7 +14,7 @@ const api = axios.create({
   withCredentials: true,
 });
 
-api.interceptors.response.use(
+apiClient.interceptors.response.use(
   (respones) => respones,
   (error) => {
     if (error.status === HTTP_STATUS.TOO_MANY_REQUESTS) {
@@ -25,4 +25,4 @@ api.interceptors.response.use(
   }
 );
 
-export default api;
+export default apiClient;

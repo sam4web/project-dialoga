@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { changePasswordApi, loginApi, refreshApi, registerApi, signoutApi } from "../api";
 import { IRegisterRequestDTO, ILoginRequestDTO, Token, TChangePasswordSchema } from "../types";
-import { ThunkApiConfig } from "@/store/types";
-import { handleApiError } from "@/lib/errorHandler";
+import { handleApiError } from "@/utils";
+import { ThunkApiConfig } from "@/app/store";
 
 export const sendLoginRequest = createAsyncThunk<Token, ILoginRequestDTO, ThunkApiConfig>(
   "auth/login",
