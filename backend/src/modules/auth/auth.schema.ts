@@ -1,4 +1,5 @@
 import z from "zod";
+import { requiredString } from "../../lib/schema";
 
 const passwordSchema = z
   .string()
@@ -8,14 +9,6 @@ const passwordSchema = z
   .regex(/[a-z]/, "Password must contain at least one lowercase letter.")
   .regex(/[0-9]/, "Password must contain at least one number.")
   .regex(/[!@#$%^&*(),.?":{}|<>]/, "Password must contain at least one special character.");
-
-const requiredString = (requiredMsg: string, notValidMsg: string): z.ZodString => {
-  return z
-    .string({
-      error: (issue) => (issue.input === undefined ? requiredMsg : notValidMsg),
-    })
-    .min(1, requiredMsg);
-};
 
 export const loginSchema = z.object({
   email: z.email({

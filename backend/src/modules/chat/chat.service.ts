@@ -1,9 +1,32 @@
 import UserRepository, { IUserRepository } from "../../database/repositories/UserRepository";
+import ConversationRepository, { IConversationRepository } from "../../database/repositories/ConversationRepository";
+import { IConversation } from "../../database/types/ConversationTypes";
 
 class ChatService {
   private userRepository: IUserRepository;
-  constructor(userRepository: IUserRepository = new UserRepository()) {
+  private conversationRepository: IConversationRepository;
+
+  constructor(
+    userRepository: IUserRepository = new UserRepository(),
+    conversationRepository: IConversationRepository = new ConversationRepository()
+  ) {
     this.userRepository = userRepository;
+    this.conversationRepository = conversationRepository;
+  }
+
+  public async getAllConversations(userId: string) {
+    const activeConversations = await this.conversationRepository.getAllConversation(userId);
+    console.log(activeConversations);
+    return [];
+  }
+
+  public async startNewConversation(userId: string, receiverId: string): Promise<IConversation> {
+    const conversation = await this.conversationRepository.findConversation(userId, receiverId);
+    if (conversation) {
+      return conversation;
+    }
+    const newConversation = await this.conversationRepository.createConversation(userId, receiverId);
+    return newConversation;
   }
 }
 

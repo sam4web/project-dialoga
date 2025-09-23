@@ -6,3 +6,7 @@ export interface IContact {
   statusMessage: string;
   settings: IUserSettings;
 }
+
+export interface IStartConversationDTO {
+  receiverId: string;
+}

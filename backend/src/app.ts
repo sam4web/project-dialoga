@@ -11,6 +11,7 @@ import errorHandler from "./middlewares/error.middleware";
 
 import authRoutes from "./modules/auth/auth.route";
 import userRoutes from "./modules/user/user.route";
+import chatRoutes from "./modules/chat/chat.route";
 
 const app: Application = express();
 
@@ -42,6 +43,7 @@ app.get("/health", (request: Request, response: Response) => {
 // register module routes
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/chat", chatRoutes);
 
 //  --- ERROR HANDLING ---
 // catch-all for undefined routes (404 Not Found)
