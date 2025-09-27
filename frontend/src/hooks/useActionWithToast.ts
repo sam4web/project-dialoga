@@ -2,12 +2,6 @@ import { ThunkApiConfig, useAppDispatch } from "@/app/store";
 import { AsyncThunkAction } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 
-interface IExecuteActionProps<TResponse, TArgs> {
-  action: AsyncThunkAction<TResponse, TArgs, ThunkApiConfig>;
-  loadingMessage: string;
-  successMessage: string;
-}
-
 const useActionWithToast = <TResponse, TArgs>() => {
   const dispatch = useAppDispatch();
 
@@ -15,12 +9,17 @@ const useActionWithToast = <TResponse, TArgs>() => {
     action,
     loadingMessage,
     successMessage,
-  }: IExecuteActionProps<TResponse, TArgs>): Promise<TResponse | undefined> => {
+  }: {
+    action: AsyncThunkAction<TResponse, TArgs, ThunkApiConfig>;
+    loadingMessage?: string;
+    successMessage?: string;
+  }): Promise<TResponse | undefined> => {
     try {
-      const toastId = toast.info(loadingMessage);
+      let toastId = null;
+      if (loadingMessage) toastId = toast.info(loadingMessage);
       const result = await dispatch(action).unwrap();
-      toast.dismiss(toastId);
-      toast.success(successMessage);
+      if (toastId) toast.dismiss(toastId);
+      if (successMessage) toast.success(successMessage);
       if (result) return result;
     } catch (error) {
       toast.dismiss();

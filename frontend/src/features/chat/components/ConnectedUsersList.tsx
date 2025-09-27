@@ -17,8 +17,6 @@ function ConnectedUsersList() {
     const fetchChatList = async () => {
       await executeAction({
         action: fetchConnectedUsers(),
-        loadingMessage: "Retrieving your contacts...",
-        successMessage: "Chat list is successfully loaded.",
       });
     };
 

@@ -18,7 +18,6 @@ function NewChatPage() {
       await executeAction({
         action: fetchUnconnectedUsers(),
         loadingMessage: "Retrieving contacts...",
-        successMessage: "Contact list is successfully loaded.",
       });
     };
 

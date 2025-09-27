@@ -15,7 +15,7 @@ function ChatMessageBubble({ message, sentTime, sentBy, type }: TMessage) {
       {type === "text" ? (
         <p className={cx("text-base", self ? "text-primary-light" : "text-color-light")}>{message}</p>
       ) : (
-        <img src={message} alt="" className="image-message" />
+        <img src={message} alt="" className="image-message mt-1" />
       )}
       <p
         className={cx(

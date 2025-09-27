@@ -33,8 +33,7 @@ function ProfileSettingCard() {
   const handleSettingUpdate = async () => {
     await executeAction({
       action: sendUpdateUserProfileRequest({ settings } as IUpdateUserDTO),
-      loadingMessage: "Updating your settings...",
-      successMessage: "Success! Settings updated.",
+      successMessage: "Settings updated",
     });
   };
 
