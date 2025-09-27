@@ -5,10 +5,7 @@ import { startConversationSchema } from "./chat.schema";
 import { validate } from "../../middlewares/validation.middleware";
 
 const chatRouter = Router();
-chatRouter
-  .route("/conversations")
-  .get(authorize, chatController.getAllConversations)
-  .post(authorize, validate(startConversationSchema), chatController.startNewConversation);
+chatRouter.post("/conversations", authorize, validate(startConversationSchema), chatController.startNewConversation);
 
 // Get Messages for a Specific Conversation
 // chatRouter.get("/conversations/:conversationId/messages");

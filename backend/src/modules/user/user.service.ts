@@ -1,7 +1,8 @@
 import ConversationRepository, { IConversationRepository } from "../../database/repositories/ConversationRepository";
 import UserRepository, { IUserRepository } from "../../database/repositories/UserRepository";
-import { IUpdateUserDTO, TUserWithoutPassword } from "../../database/types/UserTypes";
+import { IUpdateUserDTO, IUser, TUserWithoutPassword } from "../../database/types/UserTypes";
 import ApiError from "../../lib/errors/ApiError";
+import { IContact } from "./user.types";
 
 class UserService {
   private userRepository: IUserRepository;
@@ -19,23 +20,33 @@ class UserService {
     return (await this.userRepository.getAll()).filter((u) => u.id != userId);
   }
 
-  public async getNewChatCandidates(userId: string) {
+  public async getUnconnectedUsers(userId: string): Promise<IContact[]> {
     const users = (await this.userRepository.getAll()).filter((u) => u._id != userId);
-    const activeConversations = await this.conversationRepository.getAllConversation(userId);
-    const activeConversationIds: string[] = activeConversations.map((conv) => {
+    const conversations = await this.conversationRepository.getAllConversation(userId);
+    const connectedParticipantIds: string[] = conversations.map((conv) => {
       return conv.user1._id.toString() === userId ? conv.user2._id.toString() : conv.user1._id.toString();
     });
-
-    const newContacts = users
-      .filter((user) => !activeConversationIds.includes(user._id.toString()))
+    const unconnectedUsers = users
+      .filter((user) => !connectedParticipantIds.includes(user._id.toString()))
       .map((user) => {
-        return {
-          _id: user._id,
-          fullname: user.fullname,
-          profileImage: user.profileImage,
-        };
+        const { _id, profileImage, fullname, email, statusMessage } = user;
+        return { _id, profileImage, fullname, email, statusMessage } as IContact;
       });
-    return newContacts;
+    return unconnectedUsers;
+  }
+
+  public async getConnectedUsers(userId: string): Promise<IContact[]> {
+    const conversations = await this.conversationRepository.getAllConversation(userId);
+    const participantIds: string[] = conversations.map((conv) => {
+      return conv.user1._id.toString() === userId ? conv.user2._id.toString() : conv.user1._id.toString();
+    });
+    const participantPromises = participantIds.map(async (participantId) => {
+      const user = (await this.userRepository.findById(participantId)) as IUser;
+      const { _id, profileImage, fullname, email, statusMessage } = user;
+      return { _id, profileImage, fullname, email, statusMessage } as IContact;
+    });
+    const activeParticipants = await Promise.all(participantPromises);
+    return activeParticipants;
   }
 
   public async getUserProfile(userId: string) {

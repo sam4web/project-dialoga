@@ -4,13 +4,6 @@ import { HTTP_STATUS } from "../../../../shared/constants";
 import { IStartConversationDTO } from "./chat.types";
 
 class ChatController {
-  public async getAllConversations(request: Request, response: Response) {
-    const userId: string = (request as any).userId;
-    const activeChats = await chatService.getAllConversations(userId);
-    response.status(HTTP_STATUS.OK).json(activeChats);
-    return;
-  }
-
   public async startNewConversation(request: Request, response: Response) {
     const userId: string = (request as any).userId;
     const { receiverId }: IStartConversationDTO = (request as any).validatedBody;

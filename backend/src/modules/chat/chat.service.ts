@@ -14,12 +14,6 @@ class ChatService {
     this.conversationRepository = conversationRepository;
   }
 
-  public async getAllConversations(userId: string) {
-    const activeConversations = await this.conversationRepository.getAllConversation(userId);
-    console.log(activeConversations);
-    return [];
-  }
-
   public async startNewConversation(userId: string, receiverId: string): Promise<IConversation> {
     const conversation = await this.conversationRepository.findConversation(userId, receiverId);
     if (conversation) {

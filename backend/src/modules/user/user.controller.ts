@@ -11,10 +11,17 @@ class UserController {
     return;
   }
 
-  public async getNewChatCandidates(request: Request, response: Response) {
+  public async getUnconnectedUsers(request: Request, response: Response) {
     const userId: string = (request as any).userId;
-    const newContacts = await userService.getNewChatCandidates(userId);
-    response.status(HTTP_STATUS.OK).json(newContacts);
+    const unconnectedUsers = await userService.getUnconnectedUsers(userId);
+    response.status(HTTP_STATUS.OK).json(unconnectedUsers);
+    return;
+  }
+
+  public async getConnectedUsers(request: Request, response: Response) {
+    const userId: string = (request as any).userId;
+    const connectedUsers = await userService.getConnectedUsers(userId);
+    response.status(HTTP_STATUS.OK).json(connectedUsers);
     return;
   }
 

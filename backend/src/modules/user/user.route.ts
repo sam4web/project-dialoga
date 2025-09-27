@@ -7,7 +7,8 @@ import { updateUserSchema } from "./user.schema";
 const userRouter = Router();
 
 userRouter.get("/", authorize, userController.getAllUsers);
-userRouter.get("/new-chat", authorize, userController.getNewChatCandidates);
+userRouter.get("/unconnected", authorize, userController.getUnconnectedUsers);
+userRouter.get("/connected", authorize, userController.getConnectedUsers);
 userRouter
   .route("/profile")
   .get(authorize, userController.getUserProfile)
