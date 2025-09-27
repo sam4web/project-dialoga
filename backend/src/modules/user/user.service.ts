@@ -2,7 +2,7 @@ import ConversationRepository, { IConversationRepository } from "../../database/
 import UserRepository, { IUserRepository } from "../../database/repositories/UserRepository";
 import { IUpdateUserDTO, IUser, TUserWithoutPassword } from "../../database/types/UserTypes";
 import ApiError from "../../lib/errors/ApiError";
-import { IContact } from "./user.types";
+import { IConnectedUser, IContact } from "./user.types";
 
 class UserService {
   private userRepository: IUserRepository;
@@ -30,12 +30,12 @@ class UserService {
       .filter((user) => !connectedParticipantIds.includes(user._id.toString()))
       .map((user) => {
         const { _id, profileImage, fullname, email, statusMessage } = user;
-        return { _id, profileImage, fullname, email, statusMessage } as IContact;
+        return { _id, profileImage, fullname, email, statusMessage } as IConnectedUser;
       });
     return unconnectedUsers;
   }
 
-  public async getConnectedUsers(userId: string): Promise<IContact[]> {
+  public async getConnectedUsers(userId: string): Promise<IConnectedUser[]> {
     const conversations = await this.conversationRepository.getAllConversation(userId);
     const participantIds: string[] = conversations.map((conv) => {
       return conv.user1._id.toString() === userId ? conv.user2._id.toString() : conv.user1._id.toString();
@@ -43,7 +43,7 @@ class UserService {
     const participantPromises = participantIds.map(async (participantId) => {
       const user = (await this.userRepository.findById(participantId)) as IUser;
       const { _id, profileImage, fullname, email, statusMessage } = user;
-      return { _id, profileImage, fullname, email, statusMessage } as IContact;
+      return { _id, profileImage, fullname, email, statusMessage } as IConnectedUser;
     });
     const activeParticipants = await Promise.all(participantPromises);
     return activeParticipants;
