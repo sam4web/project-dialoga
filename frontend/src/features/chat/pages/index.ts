@@ -1,5 +1,5 @@
 import ChatDetailPage from "./ChatDetailPage";
 import MainChatPage from "./MainChatPage";
-import NewChatContacts from "./NewChatContacts";
+import NewChatPage from "./NewChatPage";
 
-export { ChatDetailPage, MainChatPage, NewChatContacts };
+export { ChatDetailPage, MainChatPage, NewChatPage };

@@ -5,7 +5,7 @@ import { ThunkApiConfig } from "@/app/store";
 import { handleApiError } from "@/utils";
 
 export const fetchUserProfile = createAsyncThunk<IUser, void, ThunkApiConfig>(
-  "auth/getUserProfile",
+  "user/getUserProfile",
   async (_, { getState, rejectWithValue }) => {
     try {
       const userData = await getUserProfileApi(getState);
@@ -19,7 +19,7 @@ export const fetchUserProfile = createAsyncThunk<IUser, void, ThunkApiConfig>(
 );
 
 export const sendUpdateUserProfileRequest = createAsyncThunk<IUser, IUpdateUserDTO, ThunkApiConfig>(
-  "auth/updateUserProfile",
+  "user/updateUserProfile",
   async (updateData, { getState, rejectWithValue }) => {
     try {
       const userData = await updateUserProfileApi(getState, updateData);

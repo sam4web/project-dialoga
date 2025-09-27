@@ -3,9 +3,11 @@ import ChatMessageHeader from "./ChatMessageHeader";
 import ChatMessageInput from "./ChatMessageInput";
 import ConversationView from "./ConversationView";
 import PlaceholderView from "./PlaceholderView";
-import ConversationsList from "./ConversationsList";
+import ChatSideBar from "./ChatSideBar";
 import NewChatSearchInput from "./NewChatSearchInput";
 import ChatStatsCard from "./ChatStatsCard";
+import ConnectedUsersList from "./ConnectedUsersList";
+import NewChatContactItem from "./NewChatContactItem";
 
 export {
   ChatStatsCard,
@@ -14,6 +16,8 @@ export {
   ChatMessageInput,
   ConversationView,
   PlaceholderView,
-  ConversationsList,
+  ChatSideBar,
   NewChatSearchInput,
+  ConnectedUsersList,
+  NewChatContactItem,
 };

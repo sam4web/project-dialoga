@@ -1,7 +1,7 @@
 import { chatReducer } from "./chatSlice";
-// import {} from "./chatThunks";
+import {} from "./chatThunks";
 
 export { chatReducer };
 
-// export * from "./chatThunks";
+export * from "./chatThunks";
 export * from "./chatSlice";

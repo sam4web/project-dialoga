@@ -5,7 +5,7 @@ import Root from "@/app/container/Root";
 import AuthRequired from "./AuthRequired";
 import AuthPersist from "./AuthPersist";
 import { LandingPage, NotFoundPage, TooManyRequestsPage } from "@/app/pages";
-import { ChatDetailPage, MainChatPage, NewChatContacts } from "@/features/chat/pages";
+import { ChatDetailPage, MainChatPage, NewChatPage } from "@/features/chat/pages";
 
 const AppRouter = createBrowserRouter(
   createRoutesFromElements(
@@ -14,7 +14,7 @@ const AppRouter = createBrowserRouter(
         <Route index element={<LandingPage />} />
         <Route element={<AuthRequired />}>
           <Route path="/chat" element={<MainChatPage />} />
-          <Route path="/chat/new" element={<NewChatContacts />} />
+          <Route path="/chat/new" element={<NewChatPage />} />
           <Route path="/chat/:chatId" element={<MainChatPage />} />
           <Route path="/chat/:chatId/info" element={<ChatDetailPage />} />
           <Route path="/settings" element={<SettingsPage />} />

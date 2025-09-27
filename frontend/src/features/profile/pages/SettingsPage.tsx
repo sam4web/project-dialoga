@@ -1,9 +1,9 @@
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { IUser } from "../types";
-import { fetchUserProfile, isProfileLoaded } from "../slice";
-import { PageLayout, ProfileActionCard, ProfileSettingCard, ProfileUpdateCard } from "../components";
 import { useActionWithToast, useTitle } from "@/hooks";
+import { useSelector } from "react-redux";
+import { fetchUserProfile, isProfileLoaded } from "../slice";
+import { IUser } from "../types";
+import { useEffect } from "react";
+import { PageLayout, ProfileActionCard, ProfileSettingCard, ProfileUpdateCard } from "../components";
 import { Spinner } from "@/components";
 
 function SettingsPage() {
