@@ -37,7 +37,7 @@ export const sendRefreshTokenRequest = createAsyncThunk<Token, void>("auth/refre
   }
 });
 
-export const sendSignOutRequest = createAsyncThunk<void>("auth/signOut", async (_, { rejectWithValue }) => {
+export const sendSignOutRequest = createAsyncThunk<void>("auth/signout", async (_, { rejectWithValue }) => {
   try {
     await signoutApi();
   } catch (error) {
