@@ -1,9 +1,9 @@
 import Button from "@/components/ui/Button";
 import { Paperclip, Send } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import { closeFileUploadModal, selectFileUploadModalState, showFileUploadModal } from "../slice/index";
 import ModalWrapper from "@/components/shared/ModalWrapper";
 import FileUploadModal from "@/components/shared/FileUploadModal";
+import { closeFileUploadModal, selectFileUploadModalState, showFileUploadModal } from "@/app/slices";
 
 function ChatMessageInput() {
   const dispatch = useDispatch();

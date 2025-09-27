@@ -4,8 +4,8 @@ import FileUploadModal from "@/components/shared/FileUploadModal";
 import { closeUpdateProfileImageModal, selectUpdateProfileImageModalState } from "../slice";
 import Header from "@/components/shared/Header";
 import { UserPen } from "lucide-react";
-import { selectChangePasswordModalState } from "@/features/auth/slice";
 import { ChangePasswordModal } from "@/features/auth/components";
+import { selectChangePasswordModalState } from "@/app/slices";
 
 function PageLayout({ children }: { children: React.ReactNode }) {
   const dispatch = useDispatch();

@@ -10,25 +10,16 @@ import { RootState } from "@/app/store";
 
 export interface AuthState {
   token: null | string;
-  changePasswordModalState: boolean;
 }
 
 const initialState: AuthState = {
   token: null,
-  changePasswordModalState: false,
 };
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {
-    showChangePasswordModal: (state) => {
-      state.changePasswordModalState = true;
-    },
-    closeChangePasswordModal: (state) => {
-      state.changePasswordModalState = false;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addMatcher(isAnyOf(sendSignOutRequest.fulfilled, sendChangePasswordRequest.fulfilled), (state) => {
@@ -43,9 +34,6 @@ const authSlice = createSlice({
   },
 });
 
-export const selectChangePasswordModalState = (state: RootState) => state.auth.changePasswordModalState;
 export const isUserAuthenticated = (state: RootState) => Boolean(state.auth.token);
-
-export const { closeChangePasswordModal, showChangePasswordModal } = authSlice.actions;
 
 export const authReducer = authSlice.reducer;

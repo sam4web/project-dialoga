@@ -1,5 +1,5 @@
 import { Action, combineReducers } from "@reduxjs/toolkit";
-import { errorReducer, themeReducer } from "../slices";
+import { errorReducer, themeReducer, viewReducer } from "../slices";
 import { profileReducer } from "@/features/profile/slice";
 import { authReducer } from "@/features/auth/slice";
 import { chatReducer } from "@/features/chat/slice";
@@ -11,10 +11,10 @@ export const appReducer = combineReducers({
   profile: profileReducer,
   auth: authReducer,
   chat: chatReducer,
+  view: viewReducer,
 });
 
 export const rootReducer = (state: RootState | undefined, action: Action) => {
-  console.log(action.type);
   if (action.type === "auth/signout/fulfilled") {
     const globalStateToPreserve = state ? { theme: state.theme } : {};
     return appReducer(globalStateToPreserve as RootState, action);

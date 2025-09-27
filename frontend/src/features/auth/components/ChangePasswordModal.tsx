@@ -1,4 +1,4 @@
-import { closeChangePasswordModal, sendChangePasswordRequest } from "../slice";
+import { sendChangePasswordRequest } from "../slice";
 import { useDispatch } from "react-redux";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { changePasswordSchema, TChangePasswordSchema } from "../types";
@@ -7,6 +7,7 @@ import { Lock } from "lucide-react";
 import { useActionWithToast } from "@/hooks";
 import { useNavigate } from "react-router-dom";
 import { Button, Input, ModalWrapper } from "@/components";
+import { closeChangePasswordModal } from "@/app/slices";
 
 function ChangePasswordModal() {
   const dispatch = useDispatch();
