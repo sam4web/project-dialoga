@@ -2,11 +2,16 @@ import { NextFunction, Request, Response } from "express";
 import ApiError from "../lib/errors/ApiError";
 import { formatListWithAnd } from "../../../shared/helpers";
 
-const checkFileExists = async (request: Request, response: Response, next: NextFunction) => {
-  if (!request.files) {
-    return next(ApiError.badRequest("The upload file was not provided."));
-  }
-  next();
+const checkFileExists = (fieldname: string) => {
+  return (request: Request, response: Response, next: NextFunction) => {
+    if (!request.files || !(request as any).files[fieldname]) {
+      return next(ApiError.badRequest("Expected file in request payload, but none was received."));
+    }
+    if (Array.isArray((request as any).files[fieldname])) {
+      return next(ApiError.badRequest("Expected a single file, but multiple were received."));
+    }
+    next();
+  };
 };
 
 const validateFileType = (allowedExtensions: string[]) => {

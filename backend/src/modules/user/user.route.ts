@@ -20,7 +20,7 @@ userRouter
 userRouter.patch(
   "/profile/image",
   fileUpload({ createParentPath: true }),
-  checkFileExists,
+  checkFileExists("image"),
   validateFileType(FILE_UPLOAD_CONSTANTS.ACCEPTED_FILE_TYPES),
   validateFileSize(FILE_UPLOAD_CONSTANTS.MAX_SIZE_BYTES),
   userController.updateUserProfileImage
