@@ -3,9 +3,9 @@ export const COPYRIGHT_YEAR = new Date().getFullYear();
 export const API_TIMEOUT_MS = 30000;
 
 export const FILE_UPLOAD_CONSTANTS = {
-  MAX_SIZE_BYTES: 1 * 1024 * 1024, // 1MB
-  MAX_SIZE_MB: 1,
-  ACCEPTED_IMAGE_TYPES: ["image/jpeg", "image/png", "image/gif"],
+  MAX_SIZE_BYTES: 2 * 1024 * 1024, // 2MB
+  MAX_SIZE_MB: 2,
+  ACCEPTED_FILE_TYPES: ["image/jpg", "image/jpeg", "image/png", "image/webp"],
 };
 
 export enum HTTP_METHODS {

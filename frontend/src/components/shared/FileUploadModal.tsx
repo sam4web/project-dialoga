@@ -3,8 +3,9 @@ import { useRef } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
-import { FILE_UPLOAD_CONSTANTS } from "@shared/constants";
 import Button from "../ui/Button";
+import { FILE_UPLOAD_CONSTANTS } from "@shared/constants";
+import { formatListWithAnd } from "@shared/helpers";
 
 type Props = {
   handleFileSubmit: (image: File) => void;
@@ -13,10 +14,16 @@ type Props = {
 const fileSchema = z.object({
   image: z
     .instanceof(File)
-    .refine((file) => file.size <= FILE_UPLOAD_CONSTANTS.MAX_SIZE_MB, "Max image size is 1MB.")
     .refine(
-      (file) => FILE_UPLOAD_CONSTANTS.ACCEPTED_IMAGE_TYPES.includes(file.type),
-      "Only .jpg, .jpeg, .png and .webp formats are supported."
+      (file) => file.size <= FILE_UPLOAD_CONSTANTS.MAX_SIZE_BYTES,
+      `Max image size is ${FILE_UPLOAD_CONSTANTS.MAX_SIZE_MB}MB.`
+    )
+    .refine(
+      (file) => FILE_UPLOAD_CONSTANTS.ACCEPTED_FILE_TYPES.includes(file.type),
+      (() => {
+        const extensions = FILE_UPLOAD_CONSTANTS.ACCEPTED_FILE_TYPES.map((type) => type.slice(type.search("/") + 1));
+        return `Only ${formatListWithAnd(extensions)} formats are supported.`;
+      })()
     ),
 });
 
@@ -41,8 +48,8 @@ function FileUploadModal({ handleFileSubmit }: Props) {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+    console.log(file);
     if (file) setValue("image", file, { shouldValidate: true });
-    console.log(errors.image?.message);
   };
 
   const imageFile = watch("image");
@@ -56,7 +63,8 @@ function FileUploadModal({ handleFileSubmit }: Props) {
           <span className="text-color-light mb-5">
             <p className="text-base sm:text-lg">Upload an Image</p>
             <p className="text-sm font-light opacity-85 max-w-80">
-              Please upload an image file that is less than 1MB in size. Other file types are not permitted.
+              Please upload an image file that is less than {FILE_UPLOAD_CONSTANTS.MAX_SIZE_MB}MB in size. Other file
+              types are not permitted.
             </p>
           </span>
           <Button variant="outline" type="button" onClick={() => fileInputRef?.current?.click()}>

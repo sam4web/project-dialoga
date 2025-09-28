@@ -11,10 +11,4 @@ export const updateUserSchema = z.object({
       typingIndicator: z.boolean(),
     })
     .optional(),
-  profileImage: z
-    .object({
-      name: z.string(),
-      data: z.string(),
-    })
-    .optional(),
 });

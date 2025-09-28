@@ -1,11 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
 import ModalWrapper from "@/components/shared/ModalWrapper";
 import FileUploadModal from "@/components/shared/FileUploadModal";
-import { closeUpdateProfileImageModal, selectUpdateProfileImageModalState } from "../slice";
 import Header from "@/components/shared/Header";
 import { UserPen } from "lucide-react";
 import { ChangePasswordModal } from "@/features/auth/components";
-import { selectChangePasswordModalState } from "@/app/slices";
+import {
+  closeUpdateProfileImageModal,
+  selectChangePasswordModalState,
+  selectUpdateProfileImageModalState,
+} from "@/app/slices";
 
 function PageLayout({ children }: { children: React.ReactNode }) {
   const dispatch = useDispatch();

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { HTTP_STATUS } from "../../../../shared/constants";
 import userService from "./user.service";
-import { IUpdateUserDTO } from "../../database/types/UserTypes";
+import { IUpdateUserDTO, IUserProfileImage } from "../../database/types/UserTypes";
 
 class UserController {
   public async getAllUsers(request: Request, response: Response) {
@@ -37,6 +37,15 @@ class UserController {
     const updateData: IUpdateUserDTO = (request as any).validatedBody;
     const updatedUser = await userService.updateUserProfile(userId, updateData);
     response.status(HTTP_STATUS.OK).json(updatedUser);
+    return;
+  }
+
+  public async updateUserProfileImage(request: Request, response: Response) {
+    const userId: string = (request as any).userId;
+    console.log(userId);
+    console.log((request as any).files.image);
+    response.status(HTTP_STATUS.NO_CONTENT);
+    response.end();
     return;
   }
 }

@@ -4,11 +4,13 @@ import { RootState } from "../store";
 interface ViewState {
   fileUploadModalState: boolean;
   changePasswordModalState: boolean;
+  updateProfileImageModalState: boolean;
 }
 
 const initialState: ViewState = {
   fileUploadModalState: false,
   changePasswordModalState: false,
+  updateProfileImageModalState: false,
 };
 
 const viewSlice = createSlice({
@@ -27,12 +29,25 @@ const viewSlice = createSlice({
     closeFileUploadModal: (state) => {
       state.fileUploadModalState = false;
     },
+    showUpdateProfileImageModal: (state) => {
+      state.updateProfileImageModalState = true;
+    },
+    closeUpdateProfileImageModal: (state) => {
+      state.updateProfileImageModalState = false;
+    },
   },
 });
 
 export const selectChangePasswordModalState = (state: RootState) => state.view.changePasswordModalState;
 export const selectFileUploadModalState = (state: RootState) => state.view.fileUploadModalState;
+export const selectUpdateProfileImageModalState = (state: RootState) => state.view.updateProfileImageModalState;
 
-export const { closeChangePasswordModal, showChangePasswordModal, showFileUploadModal, closeFileUploadModal } =
-  viewSlice.actions;
+export const {
+  closeChangePasswordModal,
+  showChangePasswordModal,
+  showFileUploadModal,
+  closeFileUploadModal,
+  closeUpdateProfileImageModal,
+  showUpdateProfileImageModal,
+} = viewSlice.actions;
 export const viewReducer = viewSlice.reducer;

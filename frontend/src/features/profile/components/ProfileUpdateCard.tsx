@@ -3,9 +3,10 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IUpdateUserDTO, IUser, TUpdateProfileSchema, updateProfileSchema } from "../types";
-import { selectUserData, sendUpdateUserProfileRequest, showUpdateProfileImageModal } from "../slice";
+import { selectUserData, sendUpdateUserProfileRequest } from "../slice";
 import { useActionWithToast } from "@/hooks";
 import { Button, CardTitle, Input, ProfileImage } from "@/components";
+import { showUpdateProfileImageModal } from "@/app/slices";
 
 function ProfileUpdateCard() {
   const user = useSelector(selectUserData);
