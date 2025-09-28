@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { IUpdateUserDTO, IUser, TUpdateProfileSchema, updateProfileSchema } from "../types";
 import { selectUserData, sendUpdateUserProfileRequest, showUpdateProfileImageModal } from "../slice";
 import { useActionWithToast } from "@/hooks";
-import { Button, CardTitle, Input } from "@/components";
+import { Button, CardTitle, Input, ProfileImage } from "@/components";
 
 function ProfileUpdateCard() {
   const user = useSelector(selectUserData);
@@ -36,11 +36,7 @@ function ProfileUpdateCard() {
 
       <div className="flex items-center space-x-4">
         <div className="relative">
-          <img
-            src="https://picsum.photos/500/500"
-            alt="profile image"
-            className="size-16 sm:size-20 shadow-sm rounded-full"
-          />
+          <ProfileImage className="size-16! sm:size-20!" alt="profile image" />
           <button
             className="absolute -bottom-1 -right-1 bg-zinc-50/90 dark:bg-zinc-700 p-1.5 rounded-full cursor-pointer"
             title="Update profile image"

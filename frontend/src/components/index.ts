@@ -11,6 +11,7 @@ import Input from "./ui/Input";
 import Switch from "./ui/Switch";
 import ThemeToggler from "./ui/ThemeToggler";
 import ErrorView from "./container/ErrorView";
+import ProfileImage from "./shared/ProfileImage";
 
 export {
   BaseLayout,
@@ -26,4 +27,5 @@ export {
   Switch,
   ThemeToggler,
   ErrorView,
+  ProfileImage,
 };
