@@ -16,3 +16,14 @@ export const updateUserProfileApi = async (getState: () => RootState, updateData
   });
   return response.data;
 };
+
+export const updateUserProfileImageApi = async (getState: () => RootState, updateImage: FormData): Promise<IUser> => {
+  const token = getState().auth.token;
+  const response = await apiClient.patch(apiEndpoints.users.profileImage, updateImage, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return response.data;
+};

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { IUpdateUserDTO, IUser } from "../types";
-import { getUserProfileApi, updateUserProfileApi } from "../api";
+import { getUserProfileApi, updateUserProfileApi, updateUserProfileImageApi } from "../api";
 import { ThunkApiConfig } from "@/app/store";
 import { handleApiError } from "@/utils";
 
@@ -27,6 +27,23 @@ export const sendUpdateUserProfileRequest = createAsyncThunk<IUser, IUpdateUserD
     } catch (error) {
       return rejectWithValue(
         handleApiError(error, "Profile update failed. Please check your login status and ensure the data is valid.")
+      );
+    }
+  }
+);
+
+export const sendUpdateUserProfileImageRequest = createAsyncThunk<IUser, FormData, ThunkApiConfig>(
+  "user/updateUserProfileImage",
+  async (updateImage, { getState, rejectWithValue }) => {
+    try {
+      const userData = await updateUserProfileImageApi(getState, updateImage);
+      return userData;
+    } catch (error) {
+      return rejectWithValue(
+        handleApiError(
+          error,
+          "Profile image update failed. Please check your login status and ensure the data is valid."
+        )
       );
     }
   }

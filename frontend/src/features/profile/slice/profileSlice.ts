@@ -1,5 +1,5 @@
 import { createSlice, isAnyOf } from "@reduxjs/toolkit";
-import { fetchUserProfile, sendUpdateUserProfileRequest } from "./profileThunks";
+import { fetchUserProfile, sendUpdateUserProfileImageRequest, sendUpdateUserProfileRequest } from "./profileThunks";
 import { IUser } from "../types";
 import { RootState } from "@/app/store";
 
@@ -16,9 +16,16 @@ const profileSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addMatcher(isAnyOf(fetchUserProfile.fulfilled, sendUpdateUserProfileRequest.fulfilled), (state, action) => {
-      state.userProfile = action.payload;
-    });
+    builder.addMatcher(
+      isAnyOf(
+        fetchUserProfile.fulfilled,
+        sendUpdateUserProfileRequest.fulfilled,
+        sendUpdateUserProfileImageRequest.fulfilled
+      ),
+      (state, action) => {
+        state.userProfile = action.payload;
+      }
+    );
   },
 });
 

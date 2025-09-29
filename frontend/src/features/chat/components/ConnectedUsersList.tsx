@@ -3,7 +3,7 @@ import { IChatListItem } from "../types";
 import { fetchConnectedUsers, isConnectedUsersLoaded, selectConnectedUsers } from "../slice";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import { ProfileImage, Spinner } from "@/components";
+import { UserAvatar, Spinner } from "@/components";
 import ms from "ms";
 import { truncate } from "@/utils";
 import { Link } from "react-router-dom";
@@ -40,7 +40,11 @@ function ConnectedUsersList() {
             <div className="hover:bg-zinc-200/70 dark:hover:bg-zinc-400/15 cursor-pointer rounded-xl px-3 md:px-2.5 lg:px-3 py-3">
               <div className="flex items-center space-x-2 sm:space-x-2.5">
                 <div className="relative">
-                  <ProfileImage alt={`${contact.fullname} profile image`} />
+                  <UserAvatar
+                    alt={`${contact.fullname} profile image`}
+                    fullname={contact.fullname}
+                    src={contact.profileImage}
+                  />
                   {/* {contact.lastOnline === 0 && (
                   <div className="absolute bottom-0 right-0 bg-green-500 size-3 rounded-full" />
                 )} */}

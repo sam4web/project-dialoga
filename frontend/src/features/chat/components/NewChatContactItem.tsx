@@ -1,4 +1,4 @@
-import { Button, ProfileImage } from "@/components";
+import { Button, UserAvatar } from "@/components";
 import { capitalize } from "@/utils";
 import { MessageCircle } from "lucide-react";
 import { IContact } from "../types";
@@ -11,7 +11,11 @@ function NewChatContactItem({ contact }: { contact: IContact }) {
     >
       <div className="flex items-center space-x-2 sm:space-x-4">
         <div className="relative">
-          <ProfileImage alt={`${contact.fullname} profile image`} />
+          <UserAvatar
+            alt={`${contact.fullname} profile image`}
+            fullname={contact.fullname}
+            src={contact.profileImage}
+          />
           {/* {contact.status === "online" && (
             <div className="absolute bottom-0 right-0 bg-green-500 size-3 rounded-full" />
           )} */}

@@ -8,11 +8,6 @@ export const updateProfileSchema = z.object({
 
 export type TUpdateProfileSchema = z.infer<typeof updateProfileSchema>;
 
-export interface IUserProfileImage {
-  name: string;
-  data: string;
-}
-
 export interface IUserSettings {
   readReceipts: boolean;
   onlineStatus: boolean;
@@ -27,10 +22,10 @@ export interface IUser {
   createdAt: Date;
   updatedAt: Date;
   settings: IUserSettings;
-  profileImage: IUserProfileImage;
+  profileImage: string | null;
 }
 
-export interface IUpdateUserDTO extends Partial<IUserProfileImage>, Partial<IUserSettings> {
+export interface IUpdateUserDTO extends Partial<IUserSettings> {
   fullname?: string;
   email?: string;
   statusMessage?: string;

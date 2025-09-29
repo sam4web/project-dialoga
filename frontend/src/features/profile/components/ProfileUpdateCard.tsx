@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { IUpdateUserDTO, IUser, TUpdateProfileSchema, updateProfileSchema } from "../types";
 import { selectUserData, sendUpdateUserProfileRequest } from "../slice";
 import { useActionWithToast } from "@/hooks";
-import { Button, CardTitle, Input, ProfileImage } from "@/components";
+import { Button, CardTitle, Input, UserAvatar } from "@/components";
 import { showUpdateProfileImageModal } from "@/app/slices";
 
 function ProfileUpdateCard() {
@@ -37,7 +37,14 @@ function ProfileUpdateCard() {
 
       <div className="flex items-center space-x-4">
         <div className="relative">
-          <ProfileImage className="size-16! sm:size-20!" alt="profile image" />
+          {user && (
+            <UserAvatar
+              className="size-16! sm:size-20! text-2xl! sm:text-3xl!"
+              src={user.profileImage ? user.profileImage : ""}
+              alt="profile image"
+              fullname={user.fullname}
+            />
+          )}
           <button
             className="absolute -bottom-1 -right-1 bg-zinc-50/90 dark:bg-zinc-700 p-1.5 rounded-full cursor-pointer"
             title="Update profile image"

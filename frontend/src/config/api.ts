@@ -8,6 +8,7 @@ const apiEndpoints = {
   },
   users: {
     profile: "/api/users/profile",
+    profileImage: "/api/users/profile/image",
     connected: "/api/users/connected",
     unconnected: "/api/users/unconnected",
   },
