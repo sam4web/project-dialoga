@@ -47,8 +47,8 @@ function ProfileUpdateCard() {
           </button>
         </div>
         <div className="sm:space-y-0.5">
-          <p className="header-text text-lg sm:text-xl">John Doe</p>
-          <p className="text-color-light">john@example.com</p>
+          <p className="header-text text-lg sm:text-xl">{user?.fullname}</p>
+          <p className="text-color-light">{user?.email}</p>
         </div>
       </div>
 

@@ -43,7 +43,7 @@ const bootstrap = async () => {
 server.on("error", (error: NodeJS.ErrnoException) => {
   if (error.syscall !== "listen") throw error;
 
-  const bind = typeof config.PORT === "string" ? "Pipe " : "Port" + config.PORT;
+  const bind = typeof config.PORT === "string" ? "Pipe " : "Port " + config.PORT;
   switch (error.code) {
     case "EACCES":
       logger.error(`${bind} requires elevated privileges.`);
