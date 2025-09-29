@@ -42,8 +42,9 @@ class UserController {
 
   public async updateUserProfileImage(request: Request, response: Response) {
     const userId: string = (request as any).userId;
-    const updatedImage = (request as any).files.image;
-    console.log(updatedImage);
+    const { name, data, mimetype: contentType } = (request as any).files.image;
+    const updateImageData = { name, data, contentType } as IUserProfileImage;
+    await userService.updateUserProfileImage(userId, updateImageData);
     response.status(HTTP_STATUS.NO_CONTENT);
     response.end();
     return;

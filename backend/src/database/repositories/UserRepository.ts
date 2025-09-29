@@ -14,7 +14,7 @@ export interface IUserRepository {
 export default class UserRepository implements IUserRepository {
   public async getAll(): Promise<IUser[]> {
     try {
-      const users = await User.find({}).select("-password -__v").lean();
+      const users = await User.find({}).populate("profileImage").select("-password -__v").lean();
       return users;
     } catch (error) {
       throw ApiError.internal("Failed to get users.");
@@ -32,7 +32,7 @@ export default class UserRepository implements IUserRepository {
 
   public async findById(id: string): Promise<IUser | null> {
     try {
-      const user = await User.findById(id).select("-__v").lean();
+      const user = await User.findById(id).populate("profileImage").select("-__v").lean();
       return user;
     } catch (error) {
       throw ApiError.internal("Failed to find user.");
@@ -41,20 +41,20 @@ export default class UserRepository implements IUserRepository {
 
   public async findByEmail(email: string): Promise<IUser | null> {
     try {
-      const user = await User.findOne({ email }).select("-__v").lean();
+      const user = await User.findOne({ email }).populate("profileImage").select("-__v").lean();
       return user;
     } catch (error) {
       throw ApiError.internal("Failed to find user.");
     }
   }
 
-  public async update(id: string, updatedData: IUpdateUserDTO): Promise<IUser | null> {
+  public async update(id: string, updateData: IUpdateUserDTO): Promise<IUser | null> {
     try {
-      const updatedUser = await User.findByIdAndUpdate(id, updatedData, {
+      const updatedUser = await User.findByIdAndUpdate(id, updateData, {
         new: true,
         runValidators: true,
       })
-        .sort({ createdAt: 1 })
+        .populate("profileImage")
         .select("-password -__v")
         .lean();
       return updatedUser as IUser | null;

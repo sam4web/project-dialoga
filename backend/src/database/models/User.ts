@@ -1,14 +1,6 @@
 import bcrypt from "bcrypt";
 import { Schema, UpdateQuery, model } from "mongoose";
-import { IUser, IUserProfileImage, IUserSettings } from "../types/UserTypes";
-
-const profileImageSchema = new Schema<IUserProfileImage>(
-  {
-    name: { type: String, default: "" },
-    data: { type: String, default: "" },
-  },
-  { _id: false }
-);
+import { IUser, IUserSettings } from "../types/UserTypes";
 
 const settingsSchema = new Schema<IUserSettings>(
   {
@@ -26,7 +18,11 @@ const userSchema = new Schema<IUser>(
     email: { type: String, unique: true, required: true },
     password: { type: String, required: true },
     settings: { type: settingsSchema, default: () => ({}) },
-    profileImage: { type: profileImageSchema, default: () => ({}) },
+    profileImage: {
+      type: Schema.Types.ObjectId,
+      ref: "ProfileImage",
+      default: null,
+    },
   },
   { timestamps: true }
 );

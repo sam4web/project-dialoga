@@ -1,4 +1,5 @@
 import { Document } from "mongoose";
+import { IProfileImage } from "./ProfileImageTypes";
 
 export interface IUser extends Document {
   _id: string;
@@ -9,15 +10,10 @@ export interface IUser extends Document {
   createdAt: Date;
   updatedAt: Date;
   settings: IUserSettings;
-  profileImage: IUserProfileImage;
+  profileImage: IProfileImage;
 }
 
 export type TUserWithoutPassword = Omit<IUser, "password">;
-
-export interface IUserProfileImage {
-  name: string;
-  data: string;
-}
 
 export interface IUserSettings {
   readReceipts: boolean;
@@ -31,7 +27,7 @@ export interface ICreateUserDTO {
   password: string;
 }
 
-export interface IUpdateUserDTO extends Partial<IUserProfileImage>, Partial<IUserSettings> {
+export interface IUpdateUserDTO extends Partial<IUserSettings> {
   fullname?: string;
   email?: string;
   statusMessage?: string;

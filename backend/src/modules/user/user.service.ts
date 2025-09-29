@@ -1,5 +1,6 @@
 import ConversationRepository, { IConversationRepository } from "../../database/repositories/ConversationRepository";
 import UserRepository, { IUserRepository } from "../../database/repositories/UserRepository";
+import { IProfileImage } from "../../database/types/ProfileImageTypes";
 import { IUpdateUserDTO, IUser, TUserWithoutPassword } from "../../database/types/UserTypes";
 import ApiError from "../../lib/errors/ApiError";
 import { IConnectedUser, IContact } from "./user.types";
@@ -67,6 +68,10 @@ class UserService {
     }
     const { password, ...userWithoutPassword } = updatedUser;
     return userWithoutPassword as TUserWithoutPassword;
+  }
+
+  public async updateUserProfileImage(userId: string, imageData: IProfileImage) {
+    // const updatedUser = await this.userRepository.update(userId, )
   }
 }
 
