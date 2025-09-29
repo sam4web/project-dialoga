@@ -5,4 +5,4 @@ export interface IProfileImage extends Document {
   contentType: string;
 }
 
-export interface IUpdateProfileImageDTO extends Omit<IProfileImage, "_id"> {}
+export interface IUpdateProfileImageDTO extends IProfileImage {}

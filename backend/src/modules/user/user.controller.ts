@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import { HTTP_STATUS } from "../../../../shared/constants";
 import userService from "./user.service";
-import { IUpdateUserDTO, IUserProfileImage } from "../../database/types/UserTypes";
+import { IUpdateUserDTO } from "../../database/types/UserTypes";
+import { IProfileImage } from "../../database/types/ProfileImageTypes";
 
 class UserController {
   public async getAllUsers(request: Request, response: Response) {
@@ -43,9 +44,9 @@ class UserController {
   public async updateUserProfileImage(request: Request, response: Response) {
     const userId: string = (request as any).userId;
     const { name, data, mimetype: contentType } = (request as any).files.image;
-    const updateImageData = { name, data, contentType } as IUserProfileImage;
-    await userService.updateUserProfileImage(userId, updateImageData);
-    response.status(HTTP_STATUS.NO_CONTENT);
+    const updateImageData = { name, data, contentType } as IProfileImage;
+    const updatedUser = await userService.updateUserProfileImage(userId, updateImageData);
+    response.status(HTTP_STATUS.OK).json(updatedUser);
     response.end();
     return;
   }

@@ -1,8 +1,8 @@
 import { IMessage } from "./MessageTypes";
-import { TUserWithoutPassword } from "./UserTypes";
+import { IUserWithoutPassword } from "./UserTypes";
 
 export interface IConversation extends Document {
-  user1: TUserWithoutPassword;
-  user2: TUserWithoutPassword;
+  user1: IUserWithoutPassword;
+  user2: IUserWithoutPassword;
   messages: IMessage[];
 }

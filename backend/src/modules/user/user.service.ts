@@ -1,24 +1,39 @@
 import ConversationRepository, { IConversationRepository } from "../../database/repositories/ConversationRepository";
+import ProfileImageRepository, { IProfileImageRepository } from "../../database/repositories/ProfileImageRepository";
 import UserRepository, { IUserRepository } from "../../database/repositories/UserRepository";
 import { IProfileImage } from "../../database/types/ProfileImageTypes";
-import { IUpdateUserDTO, IUser, TUserWithoutPassword } from "../../database/types/UserTypes";
+import { IUpdateUserDTO, IUser, IUserWithoutPassword } from "../../database/types/UserTypes";
 import ApiError from "../../lib/errors/ApiError";
+import { getProfileImageDataUri } from "./user.helpers";
 import { IConnectedUser, IContact } from "./user.types";
 
 class UserService {
   private userRepository: IUserRepository;
   private conversationRepository: IConversationRepository;
+  private profileImageRepository: IProfileImageRepository;
 
   constructor(
     userRepository: IUserRepository = new UserRepository(),
-    conversationRepository: IConversationRepository = new ConversationRepository()
+    conversationRepository: IConversationRepository = new ConversationRepository(),
+    profileImageRepository: IProfileImageRepository = new ProfileImageRepository()
   ) {
     this.userRepository = userRepository;
     this.conversationRepository = conversationRepository;
+    this.profileImageRepository = profileImageRepository;
   }
 
   public async getAllUsers(userId: string) {
-    return (await this.userRepository.getAll()).filter((u) => u.id != userId);
+    const usersPromises = (await this.userRepository.getAll())
+      .filter((u) => u._id != userId)
+      .map(async (user) => {
+        let { _id, fullname, email, statusMessage, profileImage } = user;
+        if (user.profileImage) {
+          profileImage = await getProfileImageDataUri(String(user.profileImage));
+        }
+        return { _id, fullname, email, statusMessage, profileImage } as IUserWithoutPassword;
+      });
+    const users = await Promise.all(usersPromises);
+    return users;
   }
 
   public async getUnconnectedUsers(userId: string): Promise<IContact[]> {
@@ -27,12 +42,17 @@ class UserService {
     const connectedParticipantIds: string[] = conversations.map((conv) => {
       return conv.user1._id.toString() === userId ? conv.user2._id.toString() : conv.user1._id.toString();
     });
-    const unconnectedUsers = users
+    const participantPromises = users
       .filter((user) => !connectedParticipantIds.includes(user._id.toString()))
-      .map((user) => {
-        const { _id, profileImage, fullname, email, statusMessage } = user;
-        return { _id, profileImage, fullname, email, statusMessage } as IConnectedUser;
+      .map(async (user) => {
+        let { _id, fullname, email, statusMessage, profileImage } = user;
+        if (user.profileImage) {
+          profileImage = await getProfileImageDataUri(String(user.profileImage));
+        }
+        return { _id, fullname, email, statusMessage, profileImage } as IConnectedUser;
       });
+
+    const unconnectedUsers = await Promise.all(participantPromises);
     return unconnectedUsers;
   }
 
@@ -43,8 +63,11 @@ class UserService {
     });
     const participantPromises = participantIds.map(async (participantId) => {
       const user = (await this.userRepository.findById(participantId)) as IUser;
-      const { _id, profileImage, fullname, email, statusMessage } = user;
-      return { _id, profileImage, fullname, email, statusMessage } as IConnectedUser;
+      let { _id, fullname, email, statusMessage, profileImage } = user;
+      if (user.profileImage) {
+        profileImage = await getProfileImageDataUri(String(user.profileImage));
+      }
+      return { _id, fullname, email, statusMessage, profileImage } as IConnectedUser;
     });
     const activeParticipants = await Promise.all(participantPromises);
     return activeParticipants;
@@ -57,8 +80,11 @@ class UserService {
         "Failed to get profile. Either an invalid token was provided, or the user does not exist."
       );
     }
+    if (user.profileImage) {
+      user.profileImage = await getProfileImageDataUri(String(user.profileImage));
+    }
     const { password, ...userWithoutPassword } = user;
-    return userWithoutPassword as TUserWithoutPassword;
+    return userWithoutPassword as IUserWithoutPassword;
   }
 
   public async updateUserProfile(userId: string, updateData: IUpdateUserDTO) {
@@ -67,11 +93,21 @@ class UserService {
       throw ApiError.unauthorized("Profile update failed. Could not verify your identity. Please log in again.");
     }
     const { password, ...userWithoutPassword } = updatedUser;
-    return userWithoutPassword as TUserWithoutPassword;
+    return userWithoutPassword as IUserWithoutPassword;
   }
 
   public async updateUserProfileImage(userId: string, imageData: IProfileImage) {
-    // const updatedUser = await this.userRepository.update(userId, )
+    const user = (await this.userRepository.findById(userId)) as IUser;
+    let profileImage: IProfileImage | null = null;
+    if (!user.profileImage) {
+      profileImage = (await this.profileImageRepository.create(imageData)) as IProfileImage;
+      await this.userRepository.update(userId, { profileImage: profileImage._id });
+    } else {
+      profileImage = (await this.profileImageRepository.update(String(user.profileImage), imageData)) as IProfileImage;
+    }
+    user.profileImage = await getProfileImageDataUri(String(profileImage._id));
+    const { password, ...userWithoutPassword } = user;
+    return userWithoutPassword as IUserWithoutPassword;
   }
 }
 
