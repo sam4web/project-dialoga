@@ -92,6 +92,9 @@ class UserService {
     if (!updatedUser) {
       throw ApiError.unauthorized("Profile update failed. Could not verify your identity. Please log in again.");
     }
+    if (updatedUser.profileImage) {
+      updatedUser.profileImage = await getProfileImageDataUri(String(updatedUser.profileImage));
+    }
     const { password, ...userWithoutPassword } = updatedUser;
     return userWithoutPassword as IUserWithoutPassword;
   }
