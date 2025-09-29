@@ -9,21 +9,22 @@ import { checkFileExists, validateFileSize, validateFileType } from "../../middl
 
 const userRouter = Router();
 
-userRouter.use(authorize);
-userRouter.get("/", userController.getAllUsers);
-userRouter.get("/unconnected", userController.getUnconnectedUsers);
-userRouter.get("/connected", userController.getConnectedUsers);
-userRouter
-  .route("/profile")
-  .get(userController.getUserProfile)
-  .patch(validate(updateUserSchema, "body"), userController.updateUserProfile);
-userRouter.patch(
-  "/profile/image",
+const updateProfileImageMiddleware = [
   fileUpload({ createParentPath: true }),
   checkFileExists("image"),
   validateFileType(FILE_UPLOAD_CONSTANTS.ACCEPTED_FILE_TYPES),
   validateFileSize(FILE_UPLOAD_CONSTANTS.MAX_SIZE_BYTES),
-  userController.updateUserProfileImage
-);
+];
+
+userRouter.use(authorize);
+userRouter.get("/", userController.getAllUsers);
+userRouter.get("/unconnected", userController.getUnconnectedUsers);
+userRouter.get("/connected", userController.getConnectedUsers);
+userRouter.get("/profile/:id", userController.getPublicProfile);
+userRouter
+  .route("/me")
+  .get(userController.getCurrentUserProfile)
+  .patch(validate(updateUserSchema, "body"), userController.updateUserProfile);
+userRouter.patch("/me/image", updateProfileImageMiddleware, userController.updateUserProfileImage);
 
 export default userRouter;

@@ -7,8 +7,8 @@ const apiEndpoints = {
     changePassword: "/api/auth/change-password",
   },
   users: {
-    profile: "/api/users/profile",
-    profileImage: "/api/users/profile/image",
+    myProfile: "/api/users/me",
+    myProfileImage: "/api/users/me/image",
     connected: "/api/users/connected",
     unconnected: "/api/users/unconnected",
   },
