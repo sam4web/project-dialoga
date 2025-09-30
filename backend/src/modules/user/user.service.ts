@@ -2,10 +2,10 @@ import ConversationRepository, { IConversationRepository } from "../../database/
 import ProfileImageRepository, { IProfileImageRepository } from "../../database/repositories/ProfileImageRepository";
 import UserRepository, { IUserRepository } from "../../database/repositories/UserRepository";
 import { IProfileImage } from "../../database/types/ProfileImageTypes";
-import { IUpdateUserDTO, IUser, IUserWithoutPassword } from "../../database/types/UserTypes";
+import { IUpdateUserDTO, IUser, IUserProfile } from "../../database/types/UserTypes";
 import ApiError from "../../lib/errors/ApiError";
 import { getProfileImageDataUri } from "./user.helpers";
-import { IConnectedUser, IContact } from "./user.types";
+import { IConnectedUser } from "./user.types";
 
 class UserService {
   private userRepository: IUserRepository;
@@ -30,13 +30,13 @@ class UserService {
         if (user.profileImage) {
           profileImage = await getProfileImageDataUri(String(user.profileImage));
         }
-        return { _id, fullname, email, statusMessage, profileImage } as IUserWithoutPassword;
+        return { _id, fullname, email, statusMessage, profileImage } as IUserProfile;
       });
     const users = await Promise.all(usersPromises);
     return users;
   }
 
-  public async getUnconnectedUsers(userId: string): Promise<IContact[]> {
+  public async getUnconnectedUsers(userId: string): Promise<IUserProfile[]> {
     const users = (await this.userRepository.getAll()).filter((u) => u._id != userId);
     const conversations = await this.conversationRepository.getAllConversation(userId);
     const connectedParticipantIds: string[] = conversations.map((conv) => {
@@ -49,7 +49,7 @@ class UserService {
         if (user.profileImage) {
           profileImage = await getProfileImageDataUri(String(user.profileImage));
         }
-        return { _id, fullname, email, statusMessage, profileImage } as IConnectedUser;
+        return { _id, fullname, email, statusMessage, profileImage } as IUserProfile;
       });
 
     const unconnectedUsers = await Promise.all(participantPromises);
@@ -67,6 +67,7 @@ class UserService {
       if (user.profileImage) {
         profileImage = await getProfileImageDataUri(String(user.profileImage));
       }
+      // TODO: include isOnline, lastSeen, lastMessage properties
       return { _id, fullname, email, statusMessage, profileImage } as IConnectedUser;
     });
     const activeParticipants = await Promise.all(participantPromises);
@@ -83,8 +84,8 @@ class UserService {
     if (user.profileImage) {
       user.profileImage = await getProfileImageDataUri(String(user.profileImage));
     }
-    const { password, ...userWithoutPassword } = user;
-    return userWithoutPassword as IUserWithoutPassword;
+    const { password, createdAt, updatedAt, ...userWithoutPassword } = user;
+    return userWithoutPassword as IUserProfile;
   }
 
   public async updateUserProfile(userId: string, updateData: IUpdateUserDTO) {
@@ -95,8 +96,8 @@ class UserService {
     if (updatedUser.profileImage) {
       updatedUser.profileImage = await getProfileImageDataUri(String(updatedUser.profileImage));
     }
-    const { password, ...userWithoutPassword } = updatedUser;
-    return userWithoutPassword as IUserWithoutPassword;
+    const { password, createdAt, updatedAt, ...userWithoutPassword } = updatedUser;
+    return userWithoutPassword as IUserProfile;
   }
 
   public async updateUserProfileImage(userId: string, imageData: IProfileImage) {
@@ -109,8 +110,8 @@ class UserService {
       profileImage = (await this.profileImageRepository.update(String(user.profileImage), imageData)) as IProfileImage;
     }
     user.profileImage = await getProfileImageDataUri(String(profileImage._id));
-    const { password, ...userWithoutPassword } = user;
-    return userWithoutPassword as IUserWithoutPassword;
+    const { password, createdAt, updatedAt, ...userWithoutPassword } = user;
+    return userWithoutPassword as IUserProfile;
   }
 }
 

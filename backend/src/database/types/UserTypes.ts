@@ -12,7 +12,7 @@ export interface IUser extends Document {
   profileImage: string | null;
 }
 
-export interface IUserWithoutPassword extends Omit<IUser, "password"> {}
+export interface IUserProfile extends Omit<IUser, "password" | "createdAt" | "updatedAt"> {}
 
 export interface IUserSettings {
   readReceipts: boolean;

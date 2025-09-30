@@ -1,13 +1,6 @@
-import { IUserProfileImage } from "../../database/types/UserTypes";
+import { IUserProfile } from "../../database/types/UserTypes";
 
-export interface IContact {
-  _id: string;
-  fullname: string;
-  email: string;
-  profileImage: IUserProfileImage;
-  statusMessage: string;
-}
-export interface IConnectedUser extends IContact {
+export interface IConnectedUser extends IUserProfile {
   // isOnline: boolean;
   // lastSeen: Date;
   // lastMessage: string
