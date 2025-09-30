@@ -73,7 +73,7 @@ class UserService {
     return activeParticipants;
   }
 
-  public async getCurrentUserProfile(userId: string) {
+  public async getUserProfile(userId: string) {
     const user = await this.userRepository.findById(userId);
     if (!user) {
       throw ApiError.unauthorized(

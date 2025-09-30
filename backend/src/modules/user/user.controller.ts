@@ -28,7 +28,14 @@ class UserController {
 
   public async getCurrentUserProfile(request: Request, response: Response) {
     const userId: string = (request as any).userId;
-    const user = await userService.getCurrentUserProfile(userId);
+    const user = await userService.getUserProfile(userId);
+    response.status(HTTP_STATUS.OK).json(user);
+    return;
+  }
+
+  public async getPublicProfile(request: Request, response: Response) {
+    const userId: string = (request as any).validatedParams;
+    const user = await userService.getUserProfile(userId);
     response.status(HTTP_STATUS.OK).json(user);
     return;
   }
@@ -47,12 +54,6 @@ class UserController {
     const updateImageData = { name, data, contentType } as IProfileImage;
     const updatedUser = await userService.updateUserProfileImage(userId, updateImageData);
     response.status(HTTP_STATUS.OK).json(updatedUser);
-    return;
-  }
-
-  public async getPublicProfile(request: Request, response: Response) {
-    response.status(HTTP_STATUS.NOT_FOUND);
-    response.end();
     return;
   }
 }

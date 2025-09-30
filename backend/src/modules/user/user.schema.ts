@@ -1,4 +1,6 @@
 import z from "zod";
+import { requiredString } from "../../lib/schema";
+import mongoose from "mongoose";
 
 export const updateUserSchema = z.object({
   fullname: z.string().optional(),
@@ -11,4 +13,13 @@ export const updateUserSchema = z.object({
       typingIndicator: z.boolean(),
     })
     .optional(),
+});
+
+export const getPublicProfileSchema = z.object({
+  id: requiredString("Id must be provided.", "Invalid resource Id format. Please check the Id provided.").refine(
+    (val) => mongoose.Types.ObjectId.isValid(val),
+    {
+      error: "Invalid resource Id format. Please check the Id provided.",
+    }
+  ),
 });
