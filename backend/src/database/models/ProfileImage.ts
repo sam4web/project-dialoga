@@ -3,9 +3,20 @@ import { IProfileImage } from "../types";
 
 const profileImageSchema = new Schema<IProfileImage>(
   {
-    name: { type: String, required: true },
-    data: { type: Buffer, required: true },
-    contentType: { type: String, required: true },
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    data: {
+      type: Buffer,
+      required: true,
+    },
+    contentType: {
+      type: String,
+      required: true,
+      trim: true,
+    },
   },
   { timestamps: false }
 );

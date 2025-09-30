@@ -13,16 +13,12 @@ const settingsSchema = new Schema<IUserSettings>(
 
 const userSchema = new Schema<IUser>(
   {
-    fullname: { type: String, required: true },
-    statusMessage: { type: String, default: "" },
-    email: { type: String, unique: true, required: true },
+    fullname: { type: String, required: true, trim: true },
+    statusMessage: { type: String, default: "", trim: true },
+    email: { type: String, unique: true, required: true, trim: true },
     password: { type: String, required: true },
     settings: { type: settingsSchema, default: () => ({}) },
-    profileImage: {
-      type: Schema.Types.ObjectId,
-      ref: "ProfileImage",
-      default: null,
-    },
+    profileImage: { type: Schema.Types.ObjectId, ref: "ProfileImage", default: null },
   },
   { timestamps: true }
 );

@@ -7,8 +7,8 @@ function Toast() {
   return (
     <ToastContainer
       position="top-right"
-      autoClose={2700}
-      limit={3}
+      autoClose={2000}
+      limit={4}
       hideProgressBar={false}
       newestOnTop={false}
       closeOnClick
