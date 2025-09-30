@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { IUpdateUserDTO, IUserProfile } from "../types";
 import { getCurrentUserProfileApi, getPublicProfileApi, updateUserProfileApi, updateUserProfileImageApi } from "../api";
 import { ThunkApiConfig } from "@/app/store";
+import { IUpdateUserDTO, IUserProfile } from "@shared/types/user";
 import { handleApiError } from "@/utils";
 
 export const fetchCurrentUserProfile = createAsyncThunk<IUserProfile, void, ThunkApiConfig>(

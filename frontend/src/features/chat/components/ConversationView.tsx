@@ -3,9 +3,9 @@ import { ChatMessageDraft, ChatMessageHeader, ChatMessageInput } from "./index";
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchPublicProfile } from "@/features/profile/slice";
-import { IUserProfile } from "@/features/profile/types";
 import { Spinner } from "@/components";
 import ChatMessageList from "./ChatMessageList";
+import { IUserProfile } from "@shared/types/user";
 
 function ConversationView({ userId }: { userId: string }) {
   const [searchParams] = useSearchParams();

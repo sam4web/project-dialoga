@@ -1,10 +1,10 @@
+import { useEffect } from "react";
 import { useActionWithToast, useTitle } from "@/hooks";
 import { useSelector } from "react-redux";
 import { fetchCurrentUserProfile, isProfileLoaded } from "../slice";
-import { IUserProfile } from "../types";
-import { useEffect } from "react";
 import { PageLayout, ProfileActionCard, ProfileSettingCard, ProfileUpdateCard } from "../components";
 import { Spinner } from "@/components";
+import { IUserProfile } from "@shared/types/user";
 
 function SettingsPage() {
   useTitle({ title: "My Profile", template: true });

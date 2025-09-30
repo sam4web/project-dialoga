@@ -1,5 +1,5 @@
 import { useActionWithToast } from "@/hooks";
-import { IChatListItem } from "../types";
+import { IConnectedUser } from "../types";
 import { fetchConnectedUsers, isConnectedUsersLoaded, selectConnectedUsers } from "../slice";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -9,7 +9,7 @@ import { truncate } from "@/utils";
 import { Link } from "react-router-dom";
 
 function ConnectedUsersList() {
-  const { executeAction } = useActionWithToast<IChatListItem[], void>();
+  const { executeAction } = useActionWithToast<IConnectedUser[], void>();
   const connectedUsers = useSelector(selectConnectedUsers);
   const isLoaded = useSelector(isConnectedUsersLoaded);
 

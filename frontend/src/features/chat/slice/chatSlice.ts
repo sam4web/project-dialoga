@@ -1,11 +1,11 @@
 import { RootState } from "@/app/store";
 import { createSlice } from "@reduxjs/toolkit";
-import { IChatListItem, IContact } from "../types";
 import { fetchConnectedUsers, fetchUnconnectedUsers } from "./chatThunks";
+import { IConnectedUser, IUserProfile } from "@shared/types/user";
 
 interface ChatState {
-  connectedUsers: IChatListItem[] | null;
-  unconnectedUsers: IContact[] | null;
+  connectedUsers: IConnectedUser[] | null;
+  unconnectedUsers: IUserProfile[] | null;
 }
 
 const initialState: ChatState = {

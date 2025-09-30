@@ -1,10 +1,10 @@
 import { ThunkApiConfig } from "@/app/store";
 import { handleApiError } from "@/utils";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { IChatListItem, IContact } from "../types";
 import { getConnectedUsersApi, getUnConnectedUsersApi } from "../api";
+import { IConnectedUser, IUserProfile } from "@shared/types/user";
 
-export const fetchConnectedUsers = createAsyncThunk<IChatListItem[], void, ThunkApiConfig>(
+export const fetchConnectedUsers = createAsyncThunk<IConnectedUser[], void, ThunkApiConfig>(
   "chat/getConnectedUsers",
   async (_, { getState, rejectWithValue }) => {
     try {
@@ -16,7 +16,7 @@ export const fetchConnectedUsers = createAsyncThunk<IChatListItem[], void, Thunk
   }
 );
 
-export const fetchUnconnectedUsers = createAsyncThunk<IContact[], void, ThunkApiConfig>(
+export const fetchUnconnectedUsers = createAsyncThunk<IUserProfile[], void, ThunkApiConfig>(
   "chat/getUnconnectedUsers",
   async (_, { getState, rejectWithValue }) => {
     try {

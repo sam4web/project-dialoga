@@ -48,7 +48,6 @@ function FileUploadModal({ handleFileSubmit }: Props) {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    console.log(file);
     if (file) setValue("image", file, { shouldValidate: true });
   };
 

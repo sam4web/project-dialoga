@@ -4,8 +4,8 @@ import {
   sendUpdateUserProfileImageRequest,
   sendUpdateUserProfileRequest,
 } from "./profileThunks";
-import { IUserProfile } from "../types";
 import { RootState } from "@/app/store";
+import { IUserProfile } from "@shared/types/user";
 
 interface ProfileState {
   userProfile: IUserProfile | null;

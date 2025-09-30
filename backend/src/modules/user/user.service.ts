@@ -2,7 +2,7 @@ import ConversationRepository, { IConversationRepository } from "../../database/
 import ProfileImageRepository, { IProfileImageRepository } from "../../database/repositories/ProfileImageRepository";
 import UserRepository, { IUserRepository } from "../../database/repositories/UserRepository";
 import { IProfileImage } from "../../database/types/ProfileImageTypes";
-import { IUpdateUserDTO, IUser, IUserProfile } from "../../database/types/UserTypes";
+import { IUpdateUserDTO, IUserProfile } from "../../database/types/UserTypes";
 import ApiError from "../../lib/errors/ApiError";
 import { getProfileImageDataUri } from "./user.helpers";
 import { IConnectedUser } from "./user.types";
@@ -62,7 +62,7 @@ class UserService {
       return conv.user1._id.toString() === userId ? conv.user2._id.toString() : conv.user1._id.toString();
     });
     const participantPromises = participantIds.map(async (participantId) => {
-      const user = (await this.userRepository.findById(participantId)) as IUser;
+      const user = (await this.userRepository.findById(participantId))!;
       let { _id, fullname, email, statusMessage, profileImage } = user;
       if (user.profileImage) {
         profileImage = await getProfileImageDataUri(String(user.profileImage));
@@ -101,7 +101,7 @@ class UserService {
   }
 
   public async updateUserProfileImage(userId: string, imageData: IProfileImage) {
-    const user = (await this.userRepository.findById(userId)) as IUser;
+    const user = (await this.userRepository.findById(userId))!;
     let profileImage: IProfileImage | null = null;
     if (!user.profileImage) {
       profileImage = (await this.profileImageRepository.create(imageData)) as IProfileImage;

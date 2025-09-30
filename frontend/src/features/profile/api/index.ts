@@ -1,7 +1,7 @@
-import { IUpdateUserDTO, IUserProfile } from "../types";
 import apiEndpoints from "@/config/api";
 import { RootState } from "@/app/store";
 import { apiClient } from "@/utils";
+import { IUpdateUserDTO, IUserProfile } from "@shared/types/user";
 
 export const getCurrentUserProfileApi = async (getState: () => RootState): Promise<IUserProfile> => {
   const token = getState().auth.token;

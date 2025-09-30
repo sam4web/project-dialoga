@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import z from "zod";
 
 export const updateProfileSchema = z.object({
@@ -8,28 +7,3 @@ export const updateProfileSchema = z.object({
 });
 
 export type TUpdateProfileSchema = z.infer<typeof updateProfileSchema>;
-
-export interface IUserSettings {
-  readReceipts: boolean;
-  onlineStatus: boolean;
-  typingIndicator: boolean;
-}
-
-export interface IUser {
-  _id: string;
-  fullname: string;
-  email: string;
-  statusMessage: string;
-  createdAt: Date;
-  updatedAt: Date;
-  settings: IUserSettings;
-  profileImage: string | null;
-}
-
-export interface IUserProfile extends Omit<IUser, "password" | "createdAt" | "updatedAt"> {}
-
-export interface IUpdateUserDTO extends Partial<IUserSettings> {
-  fullname?: string;
-  email?: string;
-  statusMessage?: string;
-}

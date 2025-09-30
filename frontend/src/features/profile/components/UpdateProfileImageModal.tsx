@@ -4,7 +4,7 @@ import { useActionWithToast } from "@/hooks";
 import { UserPen } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { sendUpdateUserProfileImageRequest } from "../slice";
-import { IUserProfile } from "../types";
+import { IUserProfile } from "@shared/types/user";
 
 function UpdateProfileImageModal() {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ function UpdateProfileImageModal() {
     await executeAction({
       action: sendUpdateUserProfileImageRequest(formData),
       loadingMessage: "Updating your profile picture...",
-      successMessage: "Success! Your avatar has been changed.",
+      successMessage: "Your avatar has been updated.",
     });
     dispatch(closeUpdateProfileImageModal());
   };
