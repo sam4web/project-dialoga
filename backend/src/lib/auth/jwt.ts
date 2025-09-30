@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
-import ApiError from "../errors/ApiError";
 import ms from "ms";
+import { ApiError } from "..";
 
 interface IJwtPayload {
   id: string;

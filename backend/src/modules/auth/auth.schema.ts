@@ -1,5 +1,5 @@
 import z from "zod";
-import { requiredString } from "../../lib/schema";
+import { requiredString } from "../../lib";
 
 const passwordSchema = z
   .string()

@@ -1,10 +1,10 @@
 import { NextFunction, Request, Response } from "express";
-import ApiError from "../../lib/errors/ApiError";
-import { IChangePassReqDTO, ILoginDTO, IRegisterDTO } from "./auth.types";
-import authService from "./auth.service";
-import { HTTP_STATUS } from "../../../../shared/constants";
 import ms from "ms";
-import config from "../../config";
+import { HTTP_STATUS } from "../../../../shared/constants";
+import { config } from "../../config";
+import { ApiError } from "../../lib";
+import { IChangePassReqDTO, ILoginDTO, IRegisterDTO } from ".";
+import authService from "./auth.service";
 
 class AuthController {
   public async login(request: Request, response: Response, next: NextFunction) {

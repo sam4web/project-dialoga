@@ -1,6 +1,6 @@
 import z from "zod";
-import { requiredString } from "../../lib/schema";
 import mongoose from "mongoose";
+import { requiredString } from "../../lib";
 
 export const startConversationSchema = z.object({
   receiverId: requiredString("Receiver Id is required.", "Please enter a valid Id.").refine(

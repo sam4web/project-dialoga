@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import ApiError from "../lib/errors/ApiError";
 import { formatListWithAnd } from "../../../shared/helpers";
+import { ApiError } from "../lib";
 
-const checkFileExists = (fieldname: string) => {
+export const checkFileExists = (fieldname: string) => {
   return (request: Request, response: Response, next: NextFunction) => {
     if (!request.files || !(request as any).files[fieldname]) {
       return next(ApiError.badRequest("Expected file in request payload, but none was received."));
@@ -14,7 +14,7 @@ const checkFileExists = (fieldname: string) => {
   };
 };
 
-const validateFileType = (allowedExtensions: string[]) => {
+export const validateFileType = (allowedExtensions: string[]) => {
   return (request: Request, response: Response, next: NextFunction) => {
     const extension = (request as any).files["image"].mimetype;
     if (!allowedExtensions.includes(extension)) {
@@ -25,7 +25,7 @@ const validateFileType = (allowedExtensions: string[]) => {
   };
 };
 
-const validateFileSize = (maxFileSizeBytes: number) => {
+export const validateFileSize = (maxFileSizeBytes: number) => {
   return (request: Request, response: Response, next: NextFunction) => {
     const fileSize = (request as any).files["image"].size;
     if (fileSize > maxFileSizeBytes) {
@@ -36,5 +36,3 @@ const validateFileSize = (maxFileSizeBytes: number) => {
     next();
   };
 };
-
-export { checkFileExists, validateFileType, validateFileSize };

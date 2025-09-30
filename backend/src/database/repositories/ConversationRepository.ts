@@ -1,6 +1,6 @@
-import ApiError from "../../lib/errors/ApiError";
-import Conversation from "../models/Conversation";
-import { IConversation } from "../types/ConversationTypes";
+import { ApiError } from "../../lib";
+import { Conversation } from "../models";
+import { IConversation } from "../types";
 
 export interface IConversationRepository {
   findConversation(userId1: string, userId2: string): Promise<IConversation | null>;

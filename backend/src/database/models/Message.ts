@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import { IMessage } from "../types/MessageTypes";
+import { IMessage } from "../types";
 
 const messageSchema = new Schema<IMessage>(
   {

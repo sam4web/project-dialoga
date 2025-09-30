@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
-import logger from "../config/logger";
-import ApiError from "../lib/errors/ApiError";
+import { ApiError } from "../lib";
+import { logger } from "../config";
 
-const errorHandler = (error: Error, request: Request, response: Response, next: NextFunction) => {
+export const errorHandler = (error: Error, request: Request, response: Response, next: NextFunction) => {
   if (error instanceof ApiError) {
     logger.warn(`API Error: ${error.message}`, { path: request.path, status: error.statusCode });
     response.status(error.statusCode).json({
@@ -23,5 +23,3 @@ const errorHandler = (error: Error, request: Request, response: Response, next: 
     message: "An unexpected error occurred. Please try again later.",
   });
 };
-
-export default errorHandler;

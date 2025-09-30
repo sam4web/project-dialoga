@@ -1,6 +1,6 @@
 import cors from "cors";
 import logger from "./logger";
-import config from ".";
+import config from "./config";
 
 const dynamicOriginCheck = (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => {
   if (config.ENV === "development") {

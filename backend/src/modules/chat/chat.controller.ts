@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import chatService from "./chat.service";
 import { HTTP_STATUS } from "../../../../shared/constants";
 import { IStartConversationDTO } from "./chat.types";
+import chatService from "./chat.service";
 
 class ChatController {
   public async startNewConversation(request: Request, response: Response) {

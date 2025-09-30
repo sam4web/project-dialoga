@@ -1,6 +1,6 @@
 import z from "zod";
-import { requiredString } from "../../lib/schema";
 import mongoose from "mongoose";
+import { requiredString } from "../../lib";
 
 export const updateUserSchema = z.object({
   fullname: z.string().optional(),

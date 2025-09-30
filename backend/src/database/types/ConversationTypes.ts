@@ -1,8 +1,8 @@
-import { IMessage } from "./MessageTypes";
-import { IUserWithoutPassword } from "./UserTypes";
+import mongoose from "mongoose";
+import { IMessage } from ".";
 
 export interface IConversation extends Document {
-  user1: IUserWithoutPassword;
-  user2: IUserWithoutPassword;
+  user1: mongoose.Types.ObjectId;
+  user2: mongoose.Types.ObjectId;
   messages: IMessage[];
 }

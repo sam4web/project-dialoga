@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import logger from "./logger";
-import config from ".";
+import config from "./config";
 
 const connectDatabase = async (): Promise<void> => {
   const mongoUri = config.MONGO_URI;

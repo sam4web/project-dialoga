@@ -1,5 +1,5 @@
-import ProfileImageRepository from "../../database/repositories/ProfileImageRepository";
-import ApiError from "../../lib/errors/ApiError";
+import { ProfileImageRepository } from "../../database";
+import { ApiError } from "../../lib";
 
 export const getProfileImageDataUri = async (profileImageId: string) => {
   const profileImageRepository = new ProfileImageRepository();

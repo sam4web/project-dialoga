@@ -1,9 +1,8 @@
-import ApiError from "../../lib/errors/ApiError";
-import { generateToken, verifyToken } from "../../lib/auth/jwt";
-import config from "../../config";
 import bcrypt from "bcrypt";
-import UserRepository, { IUserRepository } from "../../database/repositories/UserRepository";
-import { IAuthResponse, ILoginDTO, IRegisterDTO, IChangePassServiceDTO } from "./auth.types";
+import { IUserRepository, UserRepository } from "../../database";
+import { ApiError, generateToken, verifyToken } from "../../lib";
+import { config } from "../../config";
+import { IAuthResponse, IChangePassServiceDTO, ILoginDTO, IRegisterDTO } from "./auth.types";
 
 class AuthService {
   private userRepository: IUserRepository;

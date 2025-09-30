@@ -1,6 +1,6 @@
-import ApiError from "../../lib/errors/ApiError";
-import ProfileImage from "../models/ProfileImage";
-import { IProfileImage, IUpdateProfileImageDTO } from "../types/ProfileImageTypes";
+import { ApiError } from "../../lib";
+import { ProfileImage } from "../models";
+import { IProfileImage, IUpdateProfileImageDTO } from "../types";
 
 export interface IProfileImageRepository {
   findById(id: string): Promise<IProfileImage | null>;

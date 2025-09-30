@@ -1,6 +1,6 @@
-import ApiError from "../../lib/errors/ApiError";
-import User from "../models/User";
-import { ICreateUserDTO, IUpdateUserDTO, IUser } from "../types/UserTypes";
+import { ApiError } from "../../lib";
+import { User } from "../models";
+import { ICreateUserDTO, IUpdateUserDTO, IUser } from "../types";
 
 export interface IUserRepository {
   getAll(): Promise<IUser[]>;

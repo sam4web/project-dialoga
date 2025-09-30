@@ -1,9 +1,7 @@
 import { Router } from "express";
-import { validate } from "../../middlewares/validation.middleware";
-import authorize from "../../middlewares/auth.middleware";
+import { authLimiter, authorize, validate } from "../../middlewares";
 import { changePasswordSchema, loginSchema, registerSchema } from "./auth.schema";
 import authController from "./auth.controller";
-import { authLimiter } from "../../middlewares/rate-limiter.middleware";
 
 const authRouter = Router();
 

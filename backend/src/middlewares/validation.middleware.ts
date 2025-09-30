@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { ZodError, ZodType } from "zod";
-import ApiError from "../lib/errors/ApiError";
+import { ApiError } from "../lib";
 
 export const validate = (schema: ZodType, source: "body" | "query" | "params" = "body") => {
   return (request: Request, response: Response, next: NextFunction) => {
@@ -13,6 +13,8 @@ export const validate = (schema: ZodType, source: "body" | "query" | "params" = 
       (request as any)[`validated${source.charAt(0).toUpperCase() + source.slice(1)}`] = parsedData;
       next();
     } catch (error) {
+      console.log(error);
+
       if (error instanceof ZodError) {
         const errorMessage = error.issues.map((err) => err.message).join("\n");
         next(ApiError.badRequest(errorMessage));

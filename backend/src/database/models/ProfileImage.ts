@@ -1,5 +1,5 @@
 import { model, Schema } from "mongoose";
-import { IProfileImage } from "../types/ProfileImageTypes";
+import { IProfileImage } from "../types";
 
 const profileImageSchema = new Schema<IProfileImage>(
   {

@@ -1,8 +1,6 @@
 import { Router } from "express";
-import authorize from "../../middlewares/auth.middleware";
-import chatController from "./chat.controller";
-import { startConversationSchema } from "./chat.schema";
-import { validate } from "../../middlewares/validation.middleware";
+import { chatController, startConversationSchema } from ".";
+import { authorize, validate } from "../../middlewares";
 
 const chatRouter = Router();
 chatRouter.use(authorize);

@@ -1,6 +1,10 @@
-import UserRepository, { IUserRepository } from "../../database/repositories/UserRepository";
-import ConversationRepository, { IConversationRepository } from "../../database/repositories/ConversationRepository";
-import { IConversation } from "../../database/types/ConversationTypes";
+import {
+  ConversationRepository,
+  IConversation,
+  IConversationRepository,
+  IUserRepository,
+  UserRepository,
+} from "../../database";
 
 class ChatService {
   private userRepository: IUserRepository;

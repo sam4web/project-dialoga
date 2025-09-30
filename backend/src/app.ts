@@ -3,15 +3,12 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import helmet from "helmet";
-
-import corsOptions from "./config/corsOptions";
-import logger from "./config/logger";
-import ApiError from "./lib/errors/ApiError";
-import errorHandler from "./middlewares/error.middleware";
-
-import authRoutes from "./modules/auth/auth.route";
-import userRoutes from "./modules/user/user.route";
-import chatRoutes from "./modules/chat/chat.route";
+import { corsOptions, logger } from "./config";
+import { ApiError } from "./lib";
+import { errorHandler } from "./middlewares";
+import { authRouter } from "./modules/auth";
+import { userRouter } from "./modules/user";
+import { chatRouter } from "./modules/chat";
 
 const app: Application = express();
 
@@ -41,9 +38,9 @@ app.get("/health", (request: Request, response: Response) => {
 });
 
 // register module routes
-app.use("/api/auth", authRoutes);
-app.use("/api/users", userRoutes);
-app.use("/api/chat", chatRoutes);
+app.use("/api/auth", authRouter);
+app.use("/api/users", userRouter);
+app.use("/api/chat", chatRouter);
 
 //  --- ERROR HANDLING ---
 // catch-all for undefined routes (404 Not Found)

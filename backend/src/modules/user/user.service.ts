@@ -1,11 +1,17 @@
-import ConversationRepository, { IConversationRepository } from "../../database/repositories/ConversationRepository";
-import ProfileImageRepository, { IProfileImageRepository } from "../../database/repositories/ProfileImageRepository";
-import UserRepository, { IUserRepository } from "../../database/repositories/UserRepository";
-import { IProfileImage } from "../../database/types/ProfileImageTypes";
-import { IUpdateUserDTO, IUserProfile } from "../../database/types/UserTypes";
-import ApiError from "../../lib/errors/ApiError";
+import {
+  ConversationRepository,
+  IConnectedUser,
+  IConversationRepository,
+  IProfileImage,
+  IProfileImageRepository,
+  IUpdateUserDTO,
+  IUserProfile,
+  IUserRepository,
+  ProfileImageRepository,
+  UserRepository,
+} from "../../database";
+import { ApiError } from "../../lib";
 import { getProfileImageDataUri } from "./user.helpers";
-import { IConnectedUser } from "./user.types";
 
 class UserService {
   private userRepository: IUserRepository;
@@ -104,7 +110,7 @@ class UserService {
     const user = (await this.userRepository.findById(userId))!;
     let profileImage: IProfileImage | null = null;
     if (!user.profileImage) {
-      profileImage = (await this.profileImageRepository.create(imageData)) as IProfileImage;
+      profileImage = (await this.profileImageRepository.create(imageData))!;
       await this.userRepository.update(userId, { profileImage: profileImage._id });
     } else {
       profileImage = (await this.profileImageRepository.update(String(user.profileImage), imageData)) as IProfileImage;

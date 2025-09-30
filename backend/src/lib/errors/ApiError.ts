@@ -1,4 +1,5 @@
 import { HTTP_STATUS } from "../../../../shared/constants";
+
 class ApiError extends Error {
   public statusCode: number;
   public errors: string[] | object[];

@@ -1,11 +1,10 @@
 import { NextFunction, Request, Response } from "express";
-import ApiError from "../lib/errors/ApiError";
-import { verifyToken } from "../lib/auth/jwt";
-import config from "../config";
 import mongoose from "mongoose";
-import User from "../database/models/User";
+import { ApiError, verifyToken } from "../lib";
+import { config } from "../config";
+import { User } from "../database";
 
-const authorize = async (request: Request, response: Response, next: NextFunction) => {
+export const authorize = async (request: Request, response: Response, next: NextFunction) => {
   const token = request.headers.authorization;
   if (!token || !token.includes("Bearer ")) {
     return next(ApiError.unauthorized("Unauthorized: Access is denied due to invalid credentials."));
@@ -22,5 +21,3 @@ const authorize = async (request: Request, response: Response, next: NextFunctio
   (request as any).userId = decodedId;
   next();
 };
-
-export default authorize;

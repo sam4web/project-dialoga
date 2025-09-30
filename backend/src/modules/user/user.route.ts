@@ -1,11 +1,9 @@
 import { Router } from "express";
-import userController from "./user.controller";
-import authorize from "../../middlewares/auth.middleware";
-import { validate } from "../../middlewares/validation.middleware";
-import { getPublicProfileSchema, updateUserSchema } from "./user.schema";
 import fileUpload from "express-fileupload";
 import { FILE_UPLOAD_CONSTANTS } from "../../../../shared/constants";
-import { checkFileExists, validateFileSize, validateFileType } from "../../middlewares/file.middleware";
+import { authorize, checkFileExists, validate, validateFileSize, validateFileType } from "../../middlewares";
+import userController from "./user.controller";
+import { getPublicProfileSchema, updateUserSchema } from "./user.schema";
 
 const userRouter = Router();
 

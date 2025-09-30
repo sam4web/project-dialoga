@@ -1,4 +1,4 @@
-import { ICreateUserDTO } from "../../database/types/UserTypes";
+import { ICreateUserDTO } from "../../database";
 
 export interface IRegisterDTO extends ICreateUserDTO {}
 

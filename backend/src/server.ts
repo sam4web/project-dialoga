@@ -1,9 +1,7 @@
 import http from "http";
-
 import app from "./app";
-import config from "./config";
-import logger from "./config/logger";
-import connectDatabase from "./config/database";
+import { connectDatabase, logger } from "./config";
+import { config } from "./config";
 
 const server = http.createServer(app);
 

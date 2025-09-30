@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import { Schema, UpdateQuery, model } from "mongoose";
-import { IUser, IUserSettings } from "../types/UserTypes";
+import { IUser, IUserSettings } from "../types";
 
 const settingsSchema = new Schema<IUserSettings>(
   {

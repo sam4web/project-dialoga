@@ -1,6 +1,6 @@
 import winston from "winston";
 import fs from "fs";
-import config from ".";
+import config from "./config";
 import path from "path";
 
 const logDir = path.join(__dirname, "..", "..", "logs");

@@ -1,8 +1,7 @@
 import { Request, Response } from "express";
 import { HTTP_STATUS } from "../../../../shared/constants";
+import { IProfileImage, IUpdateUserDTO } from "../../database";
 import userService from "./user.service";
-import { IUpdateUserDTO } from "../../database/types/UserTypes";
-import { IProfileImage } from "../../database/types/ProfileImageTypes";
 import { TGetPublicProfileSchema } from "./user.schema";
 
 class UserController {
