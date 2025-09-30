@@ -23,3 +23,5 @@ export const getPublicProfileSchema = z.object({
     }
   ),
 });
+
+export type TGetPublicProfileSchema = z.infer<typeof getPublicProfileSchema>;

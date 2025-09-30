@@ -3,6 +3,7 @@ import { HTTP_STATUS } from "../../../../shared/constants";
 import userService from "./user.service";
 import { IUpdateUserDTO } from "../../database/types/UserTypes";
 import { IProfileImage } from "../../database/types/ProfileImageTypes";
+import { TGetPublicProfileSchema } from "./user.schema";
 
 class UserController {
   public async getAllUsers(request: Request, response: Response) {
@@ -34,7 +35,7 @@ class UserController {
   }
 
   public async getPublicProfile(request: Request, response: Response) {
-    const userId: string = (request as any).validatedParams;
+    const { id: userId }: TGetPublicProfileSchema = (request as any).validatedParams;
     const user = await userService.getUserProfile(userId);
     response.status(HTTP_STATUS.OK).json(user);
     return;
