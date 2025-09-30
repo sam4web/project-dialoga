@@ -37,7 +37,7 @@ function ProfileSettingCard() {
     });
   };
 
-  useDebounceEffect(handleSettingUpdate, [JSON.stringify(settings)], 700);
+  useDebounceEffect(handleSettingUpdate, [JSON.stringify(settings)], 500);
 
   const settingItems: ISettingItem[] = [
     { name: "readReceipts", label: "Read Receipts", description: "Let others know when you've read their messages" },

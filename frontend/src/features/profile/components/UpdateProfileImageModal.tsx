@@ -4,10 +4,11 @@ import { useActionWithToast } from "@/hooks";
 import { UserPen } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { sendUpdateUserProfileImageRequest } from "../slice";
+import { IUser } from "../types";
 
 function UpdateProfileImageModal() {
   const dispatch = useDispatch();
-  const { executeAction } = useActionWithToast();
+  const { executeAction } = useActionWithToast<IUser, FormData>();
 
   const handleSubmit = async (imageFile: File) => {
     const formData = new FormData();

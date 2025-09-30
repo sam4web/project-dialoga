@@ -8,6 +8,7 @@ import NewChatSearchInput from "./NewChatSearchInput";
 import ChatStatsCard from "./ChatStatsCard";
 import ConnectedUsersList from "./ConnectedUsersList";
 import NewChatContactItem from "./NewChatContactItem";
+import ChatMessageDraft from "./ChatMessageDraft";
 
 export {
   ChatStatsCard,
@@ -20,4 +21,5 @@ export {
   NewChatSearchInput,
   ConnectedUsersList,
   NewChatContactItem,
+  ChatMessageDraft,
 };

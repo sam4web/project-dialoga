@@ -5,10 +5,7 @@ import { IContact } from "../types";
 
 function NewChatContactItem({ contact }: { contact: IContact }) {
   return (
-    <div
-      key={contact._id}
-      className="flex items-center justify-between w-full hover:bg-zinc-200/70 dark:hover:bg-zinc-400/15 cursor-pointer rounded-xl px-1.5 sm:px-2.5 py-2.5 sm:py-3.5"
-    >
+    <div className="flex items-center justify-between w-full hover:bg-zinc-200/60 dark:hover:bg-zinc-400/10 cursor-pointer rounded-xl px-1.5 sm:px-2.5 py-2.5 sm:py-3.5">
       <div className="flex items-center space-x-2 sm:space-x-4">
         <div className="relative">
           <UserAvatar

@@ -1,6 +1,6 @@
 import { useActionWithToast, useTitle } from "@/hooks";
 import { useSelector } from "react-redux";
-import { fetchUserProfile, isProfileLoaded } from "../slice";
+import { fetchCurrentUserProfile, isProfileLoaded } from "../slice";
 import { IUser } from "../types";
 import { useEffect } from "react";
 import { PageLayout, ProfileActionCard, ProfileSettingCard, ProfileUpdateCard } from "../components";
@@ -14,9 +14,8 @@ function SettingsPage() {
   useEffect(() => {
     const fetchUserData = async () => {
       await executeAction({
-        action: fetchUserProfile(),
+        action: fetchCurrentUserProfile(),
         loadingMessage: "Retrieving your profile details...",
-        successMessage: "Profile loaded successfully.",
       });
     };
     if (!isLoaded) fetchUserData();

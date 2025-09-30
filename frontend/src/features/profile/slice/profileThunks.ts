@@ -1,14 +1,27 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { IUpdateUserDTO, IUser } from "../types";
-import { getUserProfileApi, updateUserProfileApi, updateUserProfileImageApi } from "../api";
+import { getCurrentUserProfileApi, getPublicProfileApi, updateUserProfileApi, updateUserProfileImageApi } from "../api";
 import { ThunkApiConfig } from "@/app/store";
 import { handleApiError } from "@/utils";
 
-export const fetchUserProfile = createAsyncThunk<IUser, void, ThunkApiConfig>(
-  "user/getUserProfile",
+export const fetchCurrentUserProfile = createAsyncThunk<IUser, void, ThunkApiConfig>(
+  "user/getCurrentUserProfile",
   async (_, { getState, rejectWithValue }) => {
     try {
-      const userData = await getUserProfileApi(getState);
+      const userData = await getCurrentUserProfileApi(getState);
+      return userData;
+    } catch (error) {
+      return rejectWithValue(
+        handleApiError(error, "Failed to retrieve profile due to an invalid or expired access token.")
+      );
+    }
+  }
+);
+export const fetchPublicProfile = createAsyncThunk<IUser, string, ThunkApiConfig>(
+  "user/getPublicProfile",
+  async (userId, { getState, rejectWithValue }) => {
+    try {
+      const userData = await getPublicProfileApi(userId, getState);
       return userData;
     } catch (error) {
       return rejectWithValue(

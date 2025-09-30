@@ -5,6 +5,7 @@ import { fetchUnconnectedUsers, isUnconnectedUsersLoaded, selectUnconnectedUsers
 import { IContact } from "../types";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 function NewChatPage() {
   useTitle({ title: "Find Contacts", template: true });
@@ -37,7 +38,11 @@ function NewChatPage() {
               <Spinner />
             </div>
           ) : (
-            contactList?.map((contact) => <NewChatContactItem contact={contact} key={contact._id} />)
+            contactList?.map((contact) => (
+              <Link key={contact._id} to={`/chat/${contact._id}?new`}>
+                <NewChatContactItem contact={contact} />
+              </Link>
+            ))
           )}
         </div>
       </div>

@@ -15,8 +15,8 @@ const AppRouter = createBrowserRouter(
         <Route element={<AuthRequired />}>
           <Route path="/chat" element={<MainChatPage />} />
           <Route path="/chat/new" element={<NewChatPage />} />
-          <Route path="/chat/:chatId" element={<MainChatPage />} />
-          <Route path="/chat/:chatId/info" element={<ChatDetailPage />} />
+          <Route path="/chat/:userId" element={<MainChatPage />} />
+          <Route path="/chat/:userId/info" element={<ChatDetailPage />} />
           <Route path="/settings" element={<SettingsPage />} />
         </Route>
         <Route path="/login" element={<LoginPage />} />
