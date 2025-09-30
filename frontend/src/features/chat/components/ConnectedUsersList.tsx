@@ -43,7 +43,7 @@ function ConnectedUsersList() {
                   <UserAvatar
                     alt={`${contact.fullname} profile image`}
                     fullname={contact.fullname}
-                    src={contact.profileImage}
+                    src={contact?.profileImage || ""}
                   />
                   {/* {contact.lastOnline === 0 && (
                   <div className="absolute bottom-0 right-0 bg-green-500 size-3 rounded-full" />

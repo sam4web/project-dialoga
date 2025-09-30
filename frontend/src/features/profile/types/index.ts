@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import z from "zod";
 
 export const updateProfileSchema = z.object({
@@ -24,6 +25,8 @@ export interface IUser {
   settings: IUserSettings;
   profileImage: string | null;
 }
+
+export interface IUserProfile extends Omit<IUser, "password" | "createdAt" | "updatedAt"> {}
 
 export interface IUpdateUserDTO extends Partial<IUserSettings> {
   fullname?: string;

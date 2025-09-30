@@ -1,10 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { IUpdateUserDTO, IUser } from "../types";
+import { IUpdateUserDTO, IUserProfile } from "../types";
 import { getCurrentUserProfileApi, getPublicProfileApi, updateUserProfileApi, updateUserProfileImageApi } from "../api";
 import { ThunkApiConfig } from "@/app/store";
 import { handleApiError } from "@/utils";
 
-export const fetchCurrentUserProfile = createAsyncThunk<IUser, void, ThunkApiConfig>(
+export const fetchCurrentUserProfile = createAsyncThunk<IUserProfile, void, ThunkApiConfig>(
   "user/getCurrentUserProfile",
   async (_, { getState, rejectWithValue }) => {
     try {
@@ -17,7 +17,7 @@ export const fetchCurrentUserProfile = createAsyncThunk<IUser, void, ThunkApiCon
     }
   }
 );
-export const fetchPublicProfile = createAsyncThunk<IUser, string, ThunkApiConfig>(
+export const fetchPublicProfile = createAsyncThunk<IUserProfile, string, ThunkApiConfig>(
   "user/getPublicProfile",
   async (userId, { getState, rejectWithValue }) => {
     try {
@@ -31,7 +31,7 @@ export const fetchPublicProfile = createAsyncThunk<IUser, string, ThunkApiConfig
   }
 );
 
-export const sendUpdateUserProfileRequest = createAsyncThunk<IUser, IUpdateUserDTO, ThunkApiConfig>(
+export const sendUpdateUserProfileRequest = createAsyncThunk<IUserProfile, IUpdateUserDTO, ThunkApiConfig>(
   "user/updateUserProfile",
   async (updateData, { getState, rejectWithValue }) => {
     try {
@@ -45,7 +45,7 @@ export const sendUpdateUserProfileRequest = createAsyncThunk<IUser, IUpdateUserD
   }
 );
 
-export const sendUpdateUserProfileImageRequest = createAsyncThunk<IUser, FormData, ThunkApiConfig>(
+export const sendUpdateUserProfileImageRequest = createAsyncThunk<IUserProfile, FormData, ThunkApiConfig>(
   "user/updateUserProfileImage",
   async (updateImage, { getState, rejectWithValue }) => {
     try {

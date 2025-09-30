@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Settings } from "lucide-react";
 import { useSelector } from "react-redux";
-import { IUpdateUserDTO, IUser, IUserSettings } from "../types";
+import { IUpdateUserDTO, IUserProfile, IUserSettings } from "../types";
 import { selectUserData, sendUpdateUserProfileRequest } from "../slice";
 import { useActionWithToast, useDebounceEffect } from "@/hooks";
 import { CardTitle, Switch, ThemeToggler } from "@/components";
@@ -16,7 +16,7 @@ interface ISettingItem {
 function ProfileSettingCard() {
   const user = useSelector(selectUserData);
   const theme = useSelector(selectCurrentTheme);
-  const { executeAction } = useActionWithToast<IUser, IUpdateUserDTO>();
+  const { executeAction } = useActionWithToast<IUserProfile, IUpdateUserDTO>();
   const [settings, setSettings] = useState<IUserSettings>({
     readReceipts: user?.settings.readReceipts || false,
     onlineStatus: user?.settings.onlineStatus || false,

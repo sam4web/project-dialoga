@@ -1,14 +1,14 @@
 import { useActionWithToast, useTitle } from "@/hooks";
 import { useSelector } from "react-redux";
 import { fetchCurrentUserProfile, isProfileLoaded } from "../slice";
-import { IUser } from "../types";
+import { IUserProfile } from "../types";
 import { useEffect } from "react";
 import { PageLayout, ProfileActionCard, ProfileSettingCard, ProfileUpdateCard } from "../components";
 import { Spinner } from "@/components";
 
 function SettingsPage() {
   useTitle({ title: "My Profile", template: true });
-  const { executeAction } = useActionWithToast<IUser, void>();
+  const { executeAction } = useActionWithToast<IUserProfile, void>();
   const isLoaded = useSelector(isProfileLoaded);
 
   useEffect(() => {

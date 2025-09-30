@@ -2,7 +2,7 @@ import { Camera, User } from "lucide-react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { IUpdateUserDTO, IUser, TUpdateProfileSchema, updateProfileSchema } from "../types";
+import { IUpdateUserDTO, IUserProfile, TUpdateProfileSchema, updateProfileSchema } from "../types";
 import { selectUserData, sendUpdateUserProfileRequest } from "../slice";
 import { useActionWithToast } from "@/hooks";
 import { Button, CardTitle, Input, UserAvatar } from "@/components";
@@ -10,7 +10,7 @@ import { showUpdateProfileImageModal } from "@/app/slices";
 
 function ProfileUpdateCard() {
   const user = useSelector(selectUserData);
-  const { executeAction } = useActionWithToast<IUser, IUpdateUserDTO>();
+  const { executeAction } = useActionWithToast<IUserProfile, IUpdateUserDTO>();
   const dispatch = useDispatch();
   const methods = useForm<TUpdateProfileSchema>({
     resolver: zodResolver(updateProfileSchema),

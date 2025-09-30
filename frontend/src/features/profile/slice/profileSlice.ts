@@ -4,11 +4,11 @@ import {
   sendUpdateUserProfileImageRequest,
   sendUpdateUserProfileRequest,
 } from "./profileThunks";
-import { IUser } from "../types";
+import { IUserProfile } from "../types";
 import { RootState } from "@/app/store";
 
 interface ProfileState {
-  userProfile: IUser | null;
+  userProfile: IUserProfile | null;
 }
 
 const initialState: ProfileState = {

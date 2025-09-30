@@ -1,4 +1,4 @@
-import { IUserProfileImage } from "@/features/profile/types";
+import { IUserProfile } from "@/features/profile/types";
 
 export type TMessage = {
   id: string;
@@ -8,14 +8,7 @@ export type TMessage = {
   sentBy: string;
 };
 
-export interface IContact {
-  _id: string;
-  fullname: string;
-  email: string;
-  profileImage: IUserProfileImage;
-  statusMessage: string;
-}
-export interface IChatListItem extends IContact {
+export interface IChatListItem extends IUserProfile {
   isOnline: boolean;
   lastSeen: Date;
   lastMessage: string;
