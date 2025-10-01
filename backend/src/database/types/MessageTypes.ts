@@ -1,18 +1,25 @@
-import { Document, Schema } from "mongoose";
+import mongoose from "mongoose";
 
-export interface IMessage extends Document {
+export interface IImageMessage {
   _id: string;
-  author: Schema.Types.ObjectId;
-  receiver: Schema.Types.ObjectId;
-  message: string;
+  name: string;
+  data: Buffer;
+  contentType: string;
+}
+
+export interface IMessage {
+  _id: string;
+  receiverId: mongoose.Types.ObjectId;
+  text: string | null;
+  image: IImageMessage | null;
   type: "image" | "text";
   createdAt: Date;
   updatedAt: Date;
 }
 
 export interface ICreateMessageDTO {
-  author: string;
-  receiver: string;
-  message: string;
+  receiverId: string;
+  text: string | null;
+  image: IImageMessage | null;
   type: "image" | "text";
 }

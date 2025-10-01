@@ -6,8 +6,8 @@ import chatService from "./chat.service";
 class ChatController {
   public async startNewConversation(request: Request, response: Response) {
     const userId: string = (request as any).userId;
-    const { receiverId }: IStartConversationDTO = (request as any).validatedBody;
-    const newConversation = await chatService.startNewConversation(userId, receiverId);
+    const { receiverId, initialMessage }: IStartConversationDTO = (request as any).validatedBody;
+    const newConversation = await chatService.startNewConversation(userId, receiverId, initialMessage);
     response.status(HTTP_STATUS.OK).json(newConversation);
     return;
   }

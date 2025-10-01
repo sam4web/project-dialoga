@@ -1,20 +1,50 @@
 import { model, Schema } from "mongoose";
-import { IMessage } from "../types";
+import { IImageMessage, IMessage } from "../types";
+
+const imageMessageSchema = new Schema<IImageMessage>(
+  {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    data: {
+      type: Buffer,
+      required: true,
+    },
+    contentType: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+  },
+  { _id: false }
+);
 
 const messageSchema = new Schema<IMessage>(
   {
-    author: {
+    receiverId: {
       type: Schema.Types.ObjectId,
       ref: "User",
+    },
+    type: {
+      type: String,
+      enum: ["image", "text"],
       required: true,
     },
-    receiver: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
+    text: {
+      type: String,
+      required: function () {
+        return this.type === "text";
+      },
+      trim: true,
     },
-    message: { type: String, required: true },
-    type: { type: String, enum: ["image", "text"], required: true },
+    image: {
+      type: imageMessageSchema,
+      required: function () {
+        return this.type === "image";
+      },
+    },
   },
   { timestamps: true }
 );

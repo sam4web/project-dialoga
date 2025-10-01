@@ -1,8 +1,10 @@
 import { Router } from "express";
-import { chatController, startConversationSchema } from ".";
 import { authorize, validate } from "../../middlewares";
+import { startConversationSchema } from "./chat.schema";
+import chatController from "./chat.controller";
 
 const chatRouter = Router();
+
 chatRouter.use(authorize);
 chatRouter.post("/conversations", validate(startConversationSchema), chatController.startNewConversation);
 

@@ -2,28 +2,76 @@ import {
   ConversationRepository,
   IConversation,
   IConversationRepository,
+  ICreateMessageDTO,
+  IMessageRepository,
   IUserRepository,
+  MessageRepository,
   UserRepository,
 } from "../../database";
+import { ApiError } from "../../lib";
+import { IAddMessageInConversationDTO } from "./chat.types";
 
 class ChatService {
   private userRepository: IUserRepository;
   private conversationRepository: IConversationRepository;
+  private messageRepository: IMessageRepository;
 
   constructor(
     userRepository: IUserRepository = new UserRepository(),
-    conversationRepository: IConversationRepository = new ConversationRepository()
+    conversationRepository: IConversationRepository = new ConversationRepository(),
+    messageRepository: IMessageRepository = new MessageRepository()
   ) {
     this.userRepository = userRepository;
     this.conversationRepository = conversationRepository;
+    this.messageRepository = messageRepository;
   }
 
-  public async startNewConversation(userId: string, receiverId: string): Promise<IConversation> {
-    const conversation = await this.conversationRepository.findConversation(userId, receiverId);
-    if (conversation) {
-      return conversation;
+  public async addMessageInConversation({
+    conversationId,
+    messageId,
+  }: IAddMessageInConversationDTO): Promise<IConversation | null> {
+    const conversation = await this.conversationRepository.findById(conversationId);
+    if (!conversation) {
+      throw ApiError.notFound("Conversation not found. The requested chat session does not exist.");
     }
-    const newConversation = await this.conversationRepository.createConversation(userId, receiverId);
+    const message = await this.messageRepository.findById(messageId);
+    if (!message) {
+      throw ApiError.notFound("Message not found. The specific message ID could not be located.");
+    }
+    const updatedConversation = await this.conversationRepository.updatePropertyById({
+      conversationId,
+      propertyName: "messages",
+      value: [...conversation.messages, message],
+    });
+    return updatedConversation;
+  }
+
+  public async startNewConversation(
+    userId: string,
+    receiverId: string,
+    initialMessage: string
+  ): Promise<IConversation> {
+    const conversation = await this.conversationRepository.find({ user1: userId, user2: receiverId });
+    if (conversation) {
+      throw ApiError.conflict(
+        "A conversation already exists between the specified users. Use the existing conversation to send a message."
+      );
+    }
+    const receiver = await this.userRepository.findById(receiverId);
+    if (!receiver) {
+      throw ApiError.notFound("receiver user not found. Cannot start a conversation with a nonexistent user.");
+    }
+    const message = await this.messageRepository.create({
+      type: "text",
+      receiverId,
+      text: initialMessage,
+      image: null,
+    });
+    const newConversation = await this.conversationRepository.create({
+      user1: userId,
+      user2: receiverId,
+      messages: [message],
+    });
     return newConversation;
   }
 }

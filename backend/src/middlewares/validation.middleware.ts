@@ -13,8 +13,6 @@ export const validate = (schema: ZodType, source: "body" | "query" | "params" = 
       (request as any)[`validated${source.charAt(0).toUpperCase() + source.slice(1)}`] = parsedData;
       next();
     } catch (error) {
-      console.log(error);
-
       if (error instanceof ZodError) {
         const errorMessage = error.issues.map((err) => err.message).join("\n");
         next(ApiError.badRequest(errorMessage));

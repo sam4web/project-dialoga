@@ -1,4 +1,4 @@
-export interface IProfileImage extends Document {
+export interface IProfileImage {
   _id: string;
   name: string;
   data: Buffer | BinaryType;

@@ -44,7 +44,7 @@ class UserService {
 
   public async getUnconnectedUsers(userId: string): Promise<IUserProfile[]> {
     const users = (await this.userRepository.getAll()).filter((u) => u._id != userId);
-    const conversations = await this.conversationRepository.getAllConversation(userId);
+    const conversations = await this.conversationRepository.getAll(userId);
     const connectedParticipantIds: string[] = conversations.map((conv) => {
       return conv.user1._id.toString() === userId ? conv.user2._id.toString() : conv.user1._id.toString();
     });
@@ -63,7 +63,7 @@ class UserService {
   }
 
   public async getConnectedUsers(userId: string): Promise<IConnectedUser[]> {
-    const conversations = await this.conversationRepository.getAllConversation(userId);
+    const conversations = await this.conversationRepository.getAll(userId);
     const participantIds: string[] = conversations.map((conv) => {
       return conv.user1._id.toString() === userId ? conv.user2._id.toString() : conv.user1._id.toString();
     });

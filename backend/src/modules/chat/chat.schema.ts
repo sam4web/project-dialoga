@@ -7,4 +7,5 @@ export const startConversationSchema = z.object({
     (val) => mongoose.Types.ObjectId.isValid(val),
     { error: "Please enter a valid Id." }
   ),
+  initialMessage: requiredString("Initial message is required.", "Initial message must be a valid string."),
 });
