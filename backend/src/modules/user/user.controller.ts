@@ -1,8 +1,9 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { HTTP_STATUS } from "../../../../shared/constants";
 import { IProfileImage, IUpdateUserDTO } from "../../database";
 import userService from "./user.service";
 import { TGetPublicProfileSchema } from "./user.schema";
+import { ApiError } from "../../lib";
 
 class UserController {
   public async getAllUsers(request: Request, response: Response) {
@@ -29,13 +30,19 @@ class UserController {
   public async getCurrentUserProfile(request: Request, response: Response) {
     const userId: string = (request as any).userId;
     const user = await userService.getUserProfile(userId);
+    if (!user) {
+      throw ApiError.unauthorized("Invalid token. Authentication failed; your profile cannot be loaded.");
+    }
     response.status(HTTP_STATUS.OK).json(user);
     return;
   }
 
-  public async getPublicProfile(request: Request, response: Response) {
+  public async getPublicProfile(request: Request, response: Response, next: NextFunction) {
     const { id: userId }: TGetPublicProfileSchema = (request as any).validatedParams;
     const user = await userService.getUserProfile(userId);
+    if (!user) {
+      throw ApiError.notFound("User profile not found. The provided ID does not match any existing user.");
+    }
     response.status(HTTP_STATUS.OK).json(user);
     return;
   }

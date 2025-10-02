@@ -2,14 +2,13 @@ import {
   ConversationRepository,
   IConversation,
   IConversationRepository,
-  ICreateMessageDTO,
   IMessageRepository,
   IUserRepository,
   MessageRepository,
   UserRepository,
 } from "../../database";
 import { ApiError } from "../../lib";
-import { IAddMessageInConversationDTO } from "./chat.types";
+import { IAddMessageInConversationDTO, IStartConversationDTO } from "./chat.types";
 
 class ChatService {
   private userRepository: IUserRepository;
@@ -46,11 +45,11 @@ class ChatService {
     return updatedConversation;
   }
 
-  public async startNewConversation(
-    userId: string,
-    receiverId: string,
-    initialMessage: string
-  ): Promise<IConversation> {
+  public async startNewConversation({
+    userId,
+    receiverId,
+    initialMessage,
+  }: IStartConversationDTO): Promise<IConversation> {
     const conversation = await this.conversationRepository.find({ user1: userId, user2: receiverId });
     if (conversation) {
       throw ApiError.conflict(

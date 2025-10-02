@@ -1,6 +1,10 @@
-export interface IStartConversationDTO {
+export interface IStartConversationRequestDTO {
   receiverId: string;
   initialMessage: string;
+}
+
+export interface IStartConversationDTO extends IStartConversationRequestDTO {
+  userId: string;
 }
 
 export interface IAddMessageInConversationDTO {

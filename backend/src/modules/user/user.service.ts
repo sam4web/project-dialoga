@@ -82,11 +82,7 @@ class UserService {
 
   public async getUserProfile(userId: string) {
     const user = await this.userRepository.findById(userId);
-    if (!user) {
-      throw ApiError.unauthorized(
-        "Failed to get profile. Either an invalid token was provided, or the user does not exist."
-      );
-    }
+    if (!user) return null;
     if (user.profileImage) {
       user.profileImage = await getProfileImageDataUri(String(user.profileImage));
     }
