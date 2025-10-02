@@ -115,6 +115,24 @@ class UserService {
     const { password, createdAt, updatedAt, ...userWithoutPassword } = user;
     return userWithoutPassword as IUserProfile;
   }
+
+  public async getCurrentUserProfile(userId: string) {
+    const user = await this.getUserProfile(userId);
+    if (!user) {
+      throw ApiError.unauthorized("Invalid token. Authentication failed; your profile cannot be loaded.");
+    }
+    return user;
+  }
+
+  public async getPublicProfile(userId: string, targetId: string) {
+    if (userId === targetId) {
+      throw ApiError.forbidden("You cannot use the public profile endpoint to view your own user ID.");
+    }
+    const user = await this.getUserProfile(userId);
+    if (!user) {
+      throw ApiError.notFound("User profile not found. The provided ID does not match any existing user.");
+    }
+  }
 }
 
 const userService = new UserService();

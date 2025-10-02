@@ -50,6 +50,10 @@ class ChatService {
     receiverId,
     initialMessage,
   }: IStartConversationDTO): Promise<IConversation> {
+    if (userId === receiverId) {
+      throw ApiError.forbidden("Cannot start a conversation with yourself. Please specify a different user.");
+    }
+
     const conversation = await this.conversationRepository.find({ user1: userId, user2: receiverId });
     if (conversation) {
       throw ApiError.conflict(

@@ -29,20 +29,16 @@ class UserController {
 
   public async getCurrentUserProfile(request: Request, response: Response) {
     const userId: string = (request as any).userId;
-    const user = await userService.getUserProfile(userId);
-    if (!user) {
-      throw ApiError.unauthorized("Invalid token. Authentication failed; your profile cannot be loaded.");
-    }
+    const user = await userService.getCurrentUserProfile(userId);
     response.status(HTTP_STATUS.OK).json(user);
     return;
   }
 
   public async getPublicProfile(request: Request, response: Response, next: NextFunction) {
-    const { id: userId }: TGetPublicProfileSchema = (request as any).validatedParams;
-    const user = await userService.getUserProfile(userId);
-    if (!user) {
-      throw ApiError.notFound("User profile not found. The provided ID does not match any existing user.");
-    }
+    const userId: string = (request as any).userId;
+    const { id: targetId }: TGetPublicProfileSchema = (request as any).validatedParams;
+    const user = await userService.getPublicProfile(userId, targetId);
+
     response.status(HTTP_STATUS.OK).json(user);
     return;
   }
