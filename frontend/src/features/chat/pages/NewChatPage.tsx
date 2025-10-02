@@ -2,15 +2,15 @@ import { Header, Spinner } from "@/components";
 import { useActionWithToast, useTitle } from "@/hooks";
 import { NewChatContactItem, NewChatSearchInput } from "../components";
 import { fetchUnconnectedUsers, isUnconnectedUsersLoaded, selectUnconnectedUsers } from "../slice";
-import { IContact } from "../types";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { IUserProfile } from "@shared/types/user";
 
 function NewChatPage() {
   useTitle({ title: "Find Contacts", template: true });
 
-  const { executeAction } = useActionWithToast<IContact[], void>();
+  const { executeAction } = useActionWithToast<IUserProfile[], void>();
   const contactList = useSelector(selectUnconnectedUsers);
   const isLoaded = useSelector(isUnconnectedUsersLoaded);
 

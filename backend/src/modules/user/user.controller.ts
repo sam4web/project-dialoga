@@ -35,10 +35,8 @@ class UserController {
   }
 
   public async getPublicProfile(request: Request, response: Response, next: NextFunction) {
-    const userId: string = (request as any).userId;
     const { id: targetId }: TGetPublicProfileSchema = (request as any).validatedParams;
-    const user = await userService.getPublicProfile(userId, targetId);
-
+    const user = await userService.getPublicProfile(targetId);
     response.status(HTTP_STATUS.OK).json(user);
     return;
   }

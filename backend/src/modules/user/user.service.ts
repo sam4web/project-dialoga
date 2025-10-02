@@ -124,14 +124,12 @@ class UserService {
     return user;
   }
 
-  public async getPublicProfile(userId: string, targetId: string) {
-    if (userId === targetId) {
-      throw ApiError.forbidden("You cannot use the public profile endpoint to view your own user ID.");
-    }
+  public async getPublicProfile(userId: string) {
     const user = await this.getUserProfile(userId);
     if (!user) {
       throw ApiError.notFound("User profile not found. The provided ID does not match any existing user.");
     }
+    return user;
   }
 }
 

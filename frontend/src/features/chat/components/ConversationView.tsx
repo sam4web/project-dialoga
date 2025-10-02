@@ -1,34 +1,33 @@
-import { useActionWithToast, useTitle } from "@/hooks";
-import { ChatMessageDraft, ChatMessageHeader, ChatMessageInput } from "./index";
-import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useActionWithToast, useTitle } from "@/hooks";
 import { fetchPublicProfile } from "@/features/profile/slice";
 import { Spinner } from "@/components";
-import ChatMessageList from "./ChatMessageList";
 import { IUserProfile } from "@shared/types/user";
+import ChatMessageThread from "./ChatMessageThread";
+import ChatHeader from "./ChatHeader";
+import ChatMessageStart from "./ChatMessageStart";
 
 function ConversationView({ userId }: { userId: string }) {
   const [searchParams] = useSearchParams();
   const { executeAction } = useActionWithToast<IUserProfile, string>();
   const [selectedProfile, setSelectedProfile] = useState<IUserProfile | null>(null);
+  const navigate = useNavigate();
   const isNew = searchParams.has("new");
 
   useEffect(() => {
-    const fetchPublicUserProfile = async () => {
+    const fetchUserProfile = async () => {
       const userProfile = await executeAction({
         action: fetchPublicProfile(userId),
         loadingMessage: "Getting profile details...",
       });
+      if (!userProfile) {
+        navigate(isNew ? "/chat/new" : "/chat", { replace: true });
+        return;
+      }
       setSelectedProfile(userProfile as IUserProfile);
     };
-
-    fetchPublicUserProfile();
-
-    //  if new chat
-    //    -> show user chat message draft view
-    //    -> if user sends a message hit start-conversation route
-    //  else fetch conversation messages
-
+    fetchUserProfile();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -44,9 +43,12 @@ function ConversationView({ userId }: { userId: string }) {
 
   return (
     <section className="relative h-full">
-      <ChatMessageHeader {...selectedProfile} isNew={isNew} />
-      <div className="h-[86dvh] overflow-y-hidden">{isNew ? <ChatMessageDraft /> : <ChatMessageList />}</div>
-      <ChatMessageInput />
+      <ChatHeader {...selectedProfile} isNew={isNew} />
+      {isNew ? (
+        <ChatMessageStart targetUserId={selectedProfile._id} />
+      ) : (
+        <ChatMessageThread recipientId={selectedProfile._id} />
+      )}
     </section>
   );
 }

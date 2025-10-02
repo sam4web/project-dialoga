@@ -5,7 +5,12 @@ import ModalWrapper from "@/components/shared/ModalWrapper";
 import FileUploadModal from "@/components/shared/FileUploadModal";
 import { closeFileUploadModal, selectFileUploadModalState, showFileUploadModal } from "@/app/slices";
 
-function ChatMessageInput() {
+type Props = {
+  isNew?: boolean;
+  handleSubmit: (formData: FormData, type: "text" | "image") => void;
+};
+
+function MessageInput({ isNew, handleSubmit }: Props) {
   const dispatch = useDispatch();
   const fileUploadModalState = useSelector(selectFileUploadModalState);
 
@@ -15,8 +20,10 @@ function ChatMessageInput() {
         <ModalWrapper handleCloseAction={() => dispatch(closeFileUploadModal())}>
           <div className="mt-9 sm:mt-7">
             <FileUploadModal
-              handleFileSubmit={(image) => {
-                console.log(image);
+              handleFileSubmit={(imageFile) => {
+                const formData = new FormData();
+                formData.append("image", imageFile);
+                handleSubmit(formData, "image");
                 dispatch(closeFileUploadModal());
               }}
             />
@@ -26,15 +33,15 @@ function ChatMessageInput() {
 
       <div className="border-t border-zinc-400/50 absolute bottom-0 left-0 w-full bg-primary-light/70 dark:bg-zinc-900 z-[3]">
         <div className="flex items-center justify-between space-x-2 md:space-x-3 px-2.5 lg:px-4.5 pt-3 md:pt-4 pb-2 md:pb-3">
-          <Button variant="icon" title="Upload File" onClick={() => dispatch(showFileUploadModal())}>
-            <Paperclip />
-          </Button>
+          {!isNew && (
+            <Button variant="icon" title="Upload File" onClick={() => dispatch(showFileUploadModal())}>
+              <Paperclip />
+            </Button>
+          )}
 
           <form
             className="flex-1 flex items-center justify-between space-x-2"
-            onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
-              e.preventDefault();
-            }}
+            action={(data) => handleSubmit(data, "text")}
           >
             <input
               className="input-field rounded-lg text-base py-2 px-2.5 focus:outline outline-none w-full focus:placeholder:text-transparent dark:placeholder:text-gray-200/60 placeholder:text-gray-800/50"
@@ -58,4 +65,4 @@ function ChatMessageInput() {
   );
 }
 
-export default ChatMessageInput;
+export default MessageInput;

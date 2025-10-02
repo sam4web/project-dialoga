@@ -24,9 +24,7 @@ export const fetchPublicProfile = createAsyncThunk<IUserProfile, string, ThunkAp
       const userData = await getPublicProfileApi(userId, getState);
       return userData;
     } catch (error) {
-      return rejectWithValue(
-        handleApiError(error, "Failed to retrieve profile due to an invalid or expired access token.")
-      );
+      return rejectWithValue(handleApiError(error, "Cannot locate a user profile matching the provided identifier."));
     }
   }
 );

@@ -1,5 +1,6 @@
 import { TMessage } from "../types";
-import ChatMessageBubble from "./ChatMessageBubble";
+import MessageBubble from "./MessageBubble";
+import MessageInput from "./MessageInput";
 
 const messageDummyData = {
   profile: {
@@ -155,14 +156,18 @@ const messageDummyData = {
   ],
 };
 
-function ChatMessageList() {
+function ChatMessageThread({ recipientId }: { recipientId: string }) {
   return (
-    <div className="space-y-4 overflow-y-auto h-full chat-container-scrollbar px-2.5 lg:px-5 py-5">
-      {messageDummyData.messages.map((message: TMessage) => (
-        <ChatMessageBubble key={message.id} {...message} />
-      ))}
+    <div className="h-[86dvh] overflow-y-hidden">
+      <div className="space-y-4 overflow-y-auto h-full chat-container-scrollbar px-2.5 lg:px-5 py-5">
+        {messageDummyData.messages.map((message: TMessage) => (
+          <MessageBubble key={message.id} {...message} />
+        ))}
+      </div>
+
+      <MessageInput handleSubmit={(data, type) => console.log(data, type)} />
     </div>
   );
 }
 
-export default ChatMessageList;
+export default ChatMessageThread;

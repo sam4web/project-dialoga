@@ -3,7 +3,7 @@ import { formatDistanceToNow } from "date-fns/formatDistanceToNow";
 import { capitalize } from "@/utils";
 import type { TMessage } from "../types";
 
-function ChatMessageBubble({ message, sentTime, sentBy, type }: TMessage) {
+function MessageBubble({ message, sentTime, sentBy, type }: TMessage) {
   const self = sentBy === "self";
   return (
     <div
@@ -29,4 +29,4 @@ function ChatMessageBubble({ message, sentTime, sentBy, type }: TMessage) {
   );
 }
 
-export default ChatMessageBubble;
+export default MessageBubble;
