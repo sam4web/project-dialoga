@@ -1,7 +1,5 @@
-export interface IStartConversationRequestDTO {
-  receiverId: string;
-  initialMessage: string;
-}
+import { IStartConversationRequestDTO } from "../../../../shared/types/chat";
+export { IStartConversationRequestDTO };
 
 export interface IStartConversationDTO extends IStartConversationRequestDTO {
   userId: string;

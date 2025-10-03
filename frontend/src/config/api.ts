@@ -13,6 +13,9 @@ const apiEndpoints = {
     connected: "/api/users/connected",
     unconnected: "/api/users/unconnected",
   },
+  chat: {
+    startConversation: "/api/chat/conversations",
+  },
 };
 
 export default apiEndpoints;

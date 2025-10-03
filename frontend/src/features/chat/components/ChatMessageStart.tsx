@@ -1,22 +1,39 @@
 import { MessageCircleDashed } from "lucide-react";
 import MessageInput from "./MessageInput";
+import { useActionWithToast } from "@/hooks";
+import { IStartConversationRequestDTO, IUserProfile } from "@shared/types";
+import { useNavigate } from "react-router-dom";
+import { sendStartNewConversationRequest } from "../slice";
 
 type Props = {
   targetUserId: string;
 };
 
 function ChatMessageStart({ targetUserId }: Props) {
+  const navigate = useNavigate();
+  const { executeAction } = useActionWithToast<IUserProfile, IStartConversationRequestDTO>();
+
+  const sendStartConversationMessage = async (message: string) => {
+    const userProfile = await executeAction({
+      action: sendStartNewConversationRequest({ receiverId: targetUserId, initialMessage: message }),
+    });
+    if (userProfile) {
+      navigate(`/chat/${userProfile._id}`, { replace: true });
+      return;
+    }
+  };
+
   return (
     <div className="h-[86dvh] overflow-y-hidden">
       <div className="h-full flex-center px-2.5">
-        <div className="container-card gap-2 lg:gap-4 flex flex-col lg:flex-row flex-center">
-          <MessageCircleDashed className="text-color-light opacity-50 size-16 lg:size-20 m-0" />
-          <p className="text-color-light opacity-50 lg:text-lg max-w-xs">
+        <div className="container-card select-none gap-2 dark:opacity-45 opacity-60 lg:gap-4 flex flex-col lg:flex-row flex-center">
+          <MessageCircleDashed className="text-color-light opacity-80 size-16 lg:size-20 m-0" />
+          <p className="text-color-light opacity-80 lg:text-lg max-w-xs">
             <b>Ready to chat?</b> Send the first message below to begin your conversation.
           </p>
         </div>
       </div>
-      <MessageInput isNew handleSubmit={(data, type) => console.log(data, type)} />
+      <MessageInput isNew sendTextMessage={sendStartConversationMessage} />
     </div>
   );
 }

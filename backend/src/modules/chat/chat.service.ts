@@ -1,5 +1,6 @@
 import {
   ConversationRepository,
+  IConnectedUser,
   IConversation,
   IConversationRepository,
   IMessageRepository,
@@ -8,6 +9,7 @@ import {
   UserRepository,
 } from "../../database";
 import { ApiError } from "../../lib";
+import { userService } from "../user";
 import { IAddMessageInConversationDTO, IStartConversationDTO } from "./chat.types";
 
 class ChatService {
@@ -49,20 +51,19 @@ class ChatService {
     userId,
     receiverId,
     initialMessage,
-  }: IStartConversationDTO): Promise<IConversation> {
+  }: IStartConversationDTO): Promise<IConnectedUser> {
     if (userId === receiverId) {
       throw ApiError.forbidden("Cannot start a conversation with yourself. Please specify a different user.");
     }
-
+    const receiver = await this.userRepository.findById(receiverId);
+    if (!receiver) {
+      throw ApiError.notFound("Receiver user not found. Cannot start a conversation with a nonexistent user.");
+    }
     const conversation = await this.conversationRepository.find({ user1: userId, user2: receiverId });
     if (conversation) {
       throw ApiError.conflict(
         "A conversation already exists between the specified users. Use the existing conversation to send a message."
       );
-    }
-    const receiver = await this.userRepository.findById(receiverId);
-    if (!receiver) {
-      throw ApiError.notFound("receiver user not found. Cannot start a conversation with a nonexistent user.");
     }
     const message = await this.messageRepository.create({
       type: "text",
@@ -70,12 +71,14 @@ class ChatService {
       text: initialMessage,
       image: null,
     });
-    const newConversation = await this.conversationRepository.create({
+    await this.conversationRepository.create({
       user1: userId,
       user2: receiverId,
       messages: [message],
     });
-    return newConversation;
+    // TODO: add connected user properties
+    const userProfile = (await userService.getUserProfile(receiverId)) as IConnectedUser;
+    return userProfile;
   }
 }
 

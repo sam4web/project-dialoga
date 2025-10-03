@@ -1,6 +1,6 @@
 import { RootState } from "@/app/store";
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchConnectedUsers, fetchUnconnectedUsers } from "./chatThunks";
+import { fetchConnectedUsers, fetchUnconnectedUsers, sendStartNewConversationRequest } from "./chatThunks";
 import { IConnectedUser, IUserProfile } from "@shared/types/user";
 
 interface ChatState {
@@ -18,12 +18,16 @@ const chatSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchConnectedUsers.fulfilled, (state, action) => {
-      state.connectedUsers = action.payload;
-    });
-    builder.addCase(fetchUnconnectedUsers.fulfilled, (state, action) => {
-      state.unconnectedUsers = action.payload;
-    });
+    builder
+      .addCase(fetchConnectedUsers.fulfilled, (state, action) => {
+        state.connectedUsers = action.payload;
+      })
+      .addCase(fetchUnconnectedUsers.fulfilled, (state, action) => {
+        state.unconnectedUsers = action.payload;
+      })
+      .addCase(sendStartNewConversationRequest.fulfilled, (state, action) => {
+        state.connectedUsers?.push(action.payload);
+      });
   },
 });
 
