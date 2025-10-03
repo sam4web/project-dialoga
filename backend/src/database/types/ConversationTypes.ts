@@ -1,13 +1,12 @@
 import mongoose from "mongoose";
+import { IConversation as IConversationSchema } from "../../../../shared/types/chat";
 import { IMessage } from "./MessageTypes";
+export * from "../../../../shared/types/chat";
 
-export interface IConversation {
-  _id: string;
+export interface IConversation extends Omit<IConversationSchema, "user1" | "user2" | "messages">, Document {
   user1: mongoose.Types.ObjectId;
   user2: mongoose.Types.ObjectId;
   messages: IMessage[];
-  createdAt: Date;
-  updatedAt: Date;
 }
 
 export interface ICreateConversationDTO {
