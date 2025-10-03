@@ -9,3 +9,8 @@ export interface IAddMessageInConversationDTO {
   conversationId: string;
   messageId: string;
 }
+
+export interface IGetConversationMessagesDTO {
+  userId: string;
+  conversationId: string;
+}

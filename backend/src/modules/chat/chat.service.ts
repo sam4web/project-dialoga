@@ -1,17 +1,17 @@
 import {
   ConversationRepository,
   IConversationRecipient,
-  IConversation,
   IConversationRepository,
   IMessageRepository,
   IUserProfile,
   IUserRepository,
   MessageRepository,
   UserRepository,
+  IMessage,
 } from "../../database";
 import { ApiError } from "../../lib";
 import { userService } from "../user";
-import { IAddMessageInConversationDTO, IStartConversationDTO } from "./chat.types";
+import { IAddMessageInConversationDTO, IGetConversationMessagesDTO, IStartConversationDTO } from "./chat.types";
 
 class ChatService {
   private userRepository: IUserRepository;
@@ -28,6 +28,7 @@ class ChatService {
     this.messageRepository = messageRepository;
   }
 
+  /*
   public async addMessageInConversation({
     conversationId,
     messageId,
@@ -47,6 +48,7 @@ class ChatService {
     });
     return updatedConversation;
   }
+  */
 
   public async startNewConversation({
     userId,
@@ -80,7 +82,22 @@ class ChatService {
     return { ...userProfile, conversationId: newConversation._id } as IConversationRecipient;
   }
 
-  public async getConversationMessages(userId: string, targetId: string) {}
+  public async getConversationMessages({ userId, conversationId }: IGetConversationMessagesDTO): Promise<IMessage[]> {
+    const conversation = await this.conversationRepository.findById(conversationId);
+    if (!conversation) {
+      throw ApiError.notFound("Conversation not found. The requested chat session does not exist.");
+    }
+    if (!(conversation.user1._id.equals(userId) || conversation.user2._id.equals(userId))) {
+      throw ApiError.forbidden("Unauthorized access. The user is not a participant in this conversation.");
+    }
+    const messagesListPromises = conversation.messages.map(async (message) => {
+      return (await this.messageRepository.findById(String(message))) as IMessage;
+    });
+    const messages = await Promise.all(messagesListPromises);
+    return messages;
+
+    return [];
+  }
 }
 
 const chatService = new ChatService();

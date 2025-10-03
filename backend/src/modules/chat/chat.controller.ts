@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { HTTP_STATUS } from "../../../../shared/constants";
 import chatService from "./chat.service";
 import { IStartConversationRequestDTO } from "./chat.types";
+import { TGetConversationMessagesSchema } from "./chat.schema";
+import { IMessage } from "../../database";
 
 class ChatController {
   public async startNewConversation(request: Request, response: Response) {
@@ -12,7 +14,13 @@ class ChatController {
     return;
   }
 
-  // public async getConversationMessages
+  public async getConversationMessages(request: Request, response: Response) {
+    const userId: string = (request as any).userId;
+    const { conversationId }: TGetConversationMessagesSchema = (request as any).validatedParams;
+    const messages: IMessage[] = await chatService.getConversationMessages({ userId, conversationId });
+    response.status(HTTP_STATUS.OK).json(messages);
+    return;
+  }
   // public async getConversationDetails
 }
 
