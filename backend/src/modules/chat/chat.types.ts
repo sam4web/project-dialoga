@@ -10,7 +10,7 @@ export interface IAddMessageInConversationDTO {
   messageId: string;
 }
 
-export interface IGetConversationMessagesDTO {
+export interface IConversationIdParamsDTO {
   userId: string;
   conversationId: string;
 }

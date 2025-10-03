@@ -9,8 +9,8 @@ class ChatController {
   public async startNewConversation(request: Request, response: Response) {
     const userId: string = (request as any).userId;
     const { receiverId, initialMessage }: IStartConversationRequestDTO = (request as any).validatedBody;
-    const userProfile = await chatService.startNewConversation({ userId, receiverId, initialMessage });
-    response.status(HTTP_STATUS.OK).json(userProfile);
+    const recepient = await chatService.startNewConversation({ userId, receiverId, initialMessage });
+    response.status(HTTP_STATUS.OK).json(recepient);
     return;
   }
 
@@ -21,6 +21,15 @@ class ChatController {
     response.status(HTTP_STATUS.OK).json(messages);
     return;
   }
+
+  public async getRecipientProfile(request: Request, response: Response) {
+    const userId: string = (request as any).userId;
+    const { conversationId }: TGetConversationMessagesSchema = (request as any).validatedParams;
+    const recipientProfile = await chatService.getRecipientProfile(conversationId);
+    response.status(HTTP_STATUS.OK).json(recipientProfile);
+    return;
+  }
+
   // public async getConversationDetails
 }
 

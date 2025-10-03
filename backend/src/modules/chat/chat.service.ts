@@ -11,7 +11,7 @@ import {
 } from "../../database";
 import { ApiError } from "../../lib";
 import { userService } from "../user";
-import { IAddMessageInConversationDTO, IGetConversationMessagesDTO, IStartConversationDTO } from "./chat.types";
+import { IAddMessageInConversationDTO, IConversationIdParamsDTO, IStartConversationDTO } from "./chat.types";
 
 class ChatService {
   private userRepository: IUserRepository;
@@ -82,7 +82,7 @@ class ChatService {
     return { ...userProfile, conversationId: newConversation._id } as IConversationRecipient;
   }
 
-  public async getConversationMessages({ userId, conversationId }: IGetConversationMessagesDTO): Promise<IMessage[]> {
+  public async getConversationMessages({ userId, conversationId }: IConversationIdParamsDTO): Promise<IMessage[]> {
     const conversation = await this.conversationRepository.findById(conversationId);
     if (!conversation) {
       throw ApiError.notFound("Conversation not found. The requested chat session does not exist.");
@@ -95,8 +95,25 @@ class ChatService {
     });
     const messages = await Promise.all(messagesListPromises);
     return messages;
+  }
 
-    return [];
+  public async getRecipientProfile({ userId, conversationId }: IConversationIdParamsDTO): Promise<IUserProfile> {
+    const conversation = await this.conversationRepository.findById(conversationId);
+    if (!conversation) {
+      throw ApiError.notFound("Conversation not found. The requested chat session does not exist.");
+    }
+    if (!(conversation.user1._id.equals(userId) || conversation.user2._id.equals(userId))) {
+      throw ApiError.forbidden("Unauthorized access. The user is not a participant in this conversation.");
+    }
+    const recipientId =
+      conversation.user1._id.toString() === userId
+        ? conversation.user2._id.toString()
+        : conversation.user1._id.toString();
+    const userProfile = await userService.getUserProfile(recipientId);
+    if (!userProfile) {
+      throw ApiError.notFound("User profile not found. The provided ID does not match any existing user.");
+    }
+    return userProfile;
   }
 }
 
