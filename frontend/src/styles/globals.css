@@ -9,14 +9,14 @@
 
   --font-foreground: "Inter", sans-serif;
 
-  --animate-appear: appear 150ms ease-in-out;
+  --animate-appear: appear 170ms ease-in-out;
 
   @keyframes appear {
     0% {
-      opacity: 0%;
+      opacity: 0;
     }
     100% {
-      opacity: 100%;
+      opacity: 1;
     }
   }
 }

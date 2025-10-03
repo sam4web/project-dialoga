@@ -1,29 +1,50 @@
-import Button from "@/components/ui/Button";
-import { Paperclip, Send } from "lucide-react";
+import { LoaderCircle, Paperclip, Send } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import ModalWrapper from "@/components/shared/ModalWrapper";
-import FileUploadModal from "@/components/shared/FileUploadModal";
 import { closeFileUploadModal, selectFileUploadModalState, showFileUploadModal } from "@/app/slices";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button, FileUploadModal, ModalWrapper } from "@/components";
+import { textMessageInputSchema, TTextMessageInputSchema } from "../types/index";
+import { cx } from "@/utils";
 
-type Props = {
+interface Props {
+  sendTextMessage?: (message: string) => Promise<void>;
+  sendImageMessage?: (formData: FormData) => Promise<void>;
   isNew?: boolean;
-  handleSubmit: (formData: FormData, type: "text" | "image") => void;
-};
+}
 
-function MessageInput({ isNew, handleSubmit }: Props) {
+function MessageInput({ isNew, sendTextMessage, sendImageMessage }: Props) {
   const dispatch = useDispatch();
   const fileUploadModalState = useSelector(selectFileUploadModalState);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting, isValid },
+  } = useForm<TTextMessageInputSchema>({
+    resolver: zodResolver(textMessageInputSchema),
+    mode: "onSubmit",
+  });
+
+  const onSubmit: SubmitHandler<TTextMessageInputSchema> = async (data) => {
+    if (sendTextMessage) {
+      await sendTextMessage(data.message);
+      reset();
+    }
+  };
 
   return (
     <>
-      {fileUploadModalState && (
+      {fileUploadModalState && !isNew && (
         <ModalWrapper handleCloseAction={() => dispatch(closeFileUploadModal())}>
           <div className="mt-9 sm:mt-7">
             <FileUploadModal
-              handleFileSubmit={(imageFile) => {
+              handleFileSubmit={async (imageFile) => {
                 const formData = new FormData();
                 formData.append("image", imageFile);
-                handleSubmit(formData, "image");
+                if (sendImageMessage) {
+                  await sendImageMessage(formData);
+                }
                 dispatch(closeFileUploadModal());
               }}
             />
@@ -38,26 +59,28 @@ function MessageInput({ isNew, handleSubmit }: Props) {
               <Paperclip />
             </Button>
           )}
-
-          <form
-            className="flex-1 flex items-center justify-between space-x-2"
-            action={(data) => handleSubmit(data, "text")}
-          >
-            <input
-              className="input-field rounded-lg text-base py-2 px-2.5 focus:outline outline-none w-full focus:placeholder:text-transparent dark:placeholder:text-gray-200/60 placeholder:text-gray-800/50"
-              name="message"
-              id="search"
-              placeholder="Type a message..."
-            />
-
-            <Button
-              variant="icon"
-              type="submit"
-              title="Send Message"
-              className="!bg-primary !text-primary-light hover:opacity-85"
-            >
-              <Send />
-            </Button>
+          <form className="flex-1 " onSubmit={handleSubmit(onSubmit)}>
+            <div className="w-full flex items-center justify-between space-x-2">
+              <input
+                className={cx(
+                  "input-field rounded-lg text-base py-2 px-2.5 outline-none focus:outline focus:placeholder:text-transparent dark:placeholder:text-gray-200/60 placeholder:text-gray-800/50",
+                  errors.message ? "border-red-400 outline-red-300" : ""
+                )}
+                id="message"
+                placeholder="Type a message..."
+                {...register("message")}
+              />
+              <Button
+                variant="icon"
+                type="submit"
+                title="Send Message"
+                className="!bg-primary !text-primary-light hover:opacity-90"
+                disabled={isSubmitting || !isValid}
+              >
+                {isSubmitting ? <LoaderCircle className="!size-5 animate-spin" /> : <Send />}
+              </Button>
+            </div>
+            {errors.message && <p className="text-red-500 text-sm pt-1">{errors.message.message}</p>}
           </form>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { CloudUpload } from "lucide-react";
+import { CloudUpload, LoaderCircle } from "lucide-react";
 import { useRef } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,7 +8,7 @@ import { FILE_UPLOAD_CONSTANTS } from "@shared/constants";
 import { formatListWithAnd } from "@shared/helpers";
 
 type Props = {
-  handleFileSubmit: (image: File) => void;
+  handleFileSubmit: (image: File) => Promise<void>;
 };
 
 const fileSchema = z.object({
@@ -36,14 +36,14 @@ function FileUploadModal({ handleFileSubmit }: Props) {
     handleSubmit,
     setValue,
     watch,
-    formState: { errors, isValid },
+    formState: { errors, isValid, isSubmitting },
   } = useForm<TFileSchema>({
     resolver: zodResolver(fileSchema),
     mode: "onChange",
   });
 
-  const onSubmit: SubmitHandler<TFileSchema> = (data) => {
-    handleFileSubmit(data.image);
+  const onSubmit: SubmitHandler<TFileSchema> = async (data) => {
+    await handleFileSubmit(data.image);
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -72,11 +72,7 @@ function FileUploadModal({ handleFileSubmit }: Props) {
 
           {fileName && (
             <p className="opacity-80 mt-3.5 text-sm italic">
-              {isValid ? (
-                <span className="text-color-light ">File Selected: {fileName}</span>
-              ) : (
-                <span className="text-red-500">Invalid File</span>
-              )}
+              {isValid && <span className="text-color-light ">File Selected: {fileName}</span>}
             </p>
           )}
           <input
@@ -89,12 +85,16 @@ function FileUploadModal({ handleFileSubmit }: Props) {
           />
         </div>
       </div>
-      <p className="text-red-500 text-sm pt-1.5"> {errors.image && (errors.image.message as string)}</p>
-      <div className="text-right mt-3">
-        <Button variant="primary" type="submit" className="!py-1.5 !px-2" disabled={!imageFile || !isValid}>
-          Upload Image
-        </Button>
-      </div>
+      <p className="text-red-500 pt-1.5"> {errors.image && (errors.image.message as string)}</p>
+      <Button
+        variant="primary"
+        type="submit"
+        className="!py-1.5 !px-2 max-w-32 w-full flex-center mt-3 float-right"
+        title="Upload Image"
+        disabled={!imageFile || !isValid || isSubmitting}
+      >
+        {isSubmitting ? <LoaderCircle className="size-6 animate-spin" /> : "Upload Image"}
+      </Button>
     </form>
   );
 }
