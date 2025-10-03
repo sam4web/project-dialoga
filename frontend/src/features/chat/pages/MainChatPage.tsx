@@ -3,15 +3,15 @@ import { cx } from "@/utils";
 import { ChatSideBar, ConversationView, PlaceholderView } from "../components";
 
 function MainChatPage() {
-  const { userId } = useParams();
+  const { conversationId } = useParams();
 
   return (
     <div className="flex">
-      <div className={cx("md:max-w-sm w-full", userId ? "hidden md:block" : "flex-1")}>
+      <div className={cx("md:max-w-sm w-full", conversationId ? "hidden md:block" : "flex-1")}>
         <ChatSideBar />
       </div>
-      <div className={cx("flex-1 w-full", !userId ? "hidden md:block" : "")}>
-        {userId ? <ConversationView userId={userId} /> : <PlaceholderView />}
+      <div className={cx("flex-1 w-full", !conversationId ? "hidden md:block" : "")}>
+        {conversationId ? <ConversationView conversationId={conversationId} /> : <PlaceholderView />}
       </div>
     </div>
   );

@@ -1,54 +1,34 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { useActionWithToast, useTitle } from "@/hooks";
-import { fetchPublicProfile } from "@/features/profile/slice";
-import { Spinner } from "@/components";
+import { useNavigate } from "react-router-dom";
+import { useActionWithToast } from "@/hooks";
 import { IUserProfile } from "@shared/types/user";
-import ChatMessageThread from "./ChatMessageThread";
-import ChatHeader from "./ChatHeader";
-import ChatMessageStart from "./ChatMessageStart";
 
-function ConversationView({ userId }: { userId: string }) {
-  const [searchParams] = useSearchParams();
-  const { executeAction } = useActionWithToast<IUserProfile, string>();
-  const [selectedProfile, setSelectedProfile] = useState<IUserProfile | null>(null);
-  const navigate = useNavigate();
-  const isNew = searchParams.has("new");
+function ConversationView({ conversationId }: { conversationId: string }) {
+  // const { executeAction } = useActionWithToast<IUserProfile, string>();
+  // const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchUserProfile = async () => {
-      const userProfile = await executeAction({
-        action: fetchPublicProfile(userId),
-        loadingMessage: "Getting profile details...",
-      });
-      if (!userProfile) {
-        navigate(isNew ? "/chat/new" : "/chat", { replace: true });
-        return;
-      }
-      setSelectedProfile(userProfile as IUserProfile);
-    };
-    fetchUserProfile();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   const fetchConversation = async () => {};
+  //   fetchConversation();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [conversationId]);
 
-  useTitle({ title: selectedProfile ? `Chat with ${selectedProfile.fullname}` : "Chat", template: true });
+  // useTitle({ title: selectedProfile ? `Chat with ${selectedProfile.fullname}` : "Chat", template: true });
 
-  if (!selectedProfile) {
-    return (
-      <div className="h-full flex-center">
-        <Spinner />
-      </div>
-    );
-  }
+  // if (!selectedProfile) {
+  //   return (
+  //     <div className="h-full flex-center">
+  //       <Spinner />
+  //     </div>
+  //   );
+  // }
 
   return (
-    <section className="relative h-full">
-      <ChatHeader {...selectedProfile} isNew={isNew} />
-      {isNew ? (
-        <ChatMessageStart targetUserId={selectedProfile._id} />
-      ) : (
-        <ChatMessageThread recipientId={selectedProfile._id} />
-      )}
+    // <section className="relative h-full">
+    //   <ChatHeader {...selectedProfile} isNew={isNew} />
+    //   <ChatMessageThread recipientId={selectedProfile._id} />
+    // </section>
+    <section>
+      <h3 className="text-primary-light">Fetch Conversation Message Thread HERE!!!</h3>
     </section>
   );
 }

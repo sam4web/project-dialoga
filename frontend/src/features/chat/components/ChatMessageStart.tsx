@@ -1,7 +1,7 @@
 import { MessageCircleDashed } from "lucide-react";
 import MessageInput from "./MessageInput";
 import { useActionWithToast } from "@/hooks";
-import { IStartConversationRequestDTO, IUserProfile } from "@shared/types";
+import { IConversationRecipient, IStartConversationRequestDTO } from "@shared/types";
 import { useNavigate } from "react-router-dom";
 import { sendStartNewConversationRequest } from "../slice";
 
@@ -11,16 +11,14 @@ type Props = {
 
 function ChatMessageStart({ targetUserId }: Props) {
   const navigate = useNavigate();
-  const { executeAction } = useActionWithToast<IUserProfile, IStartConversationRequestDTO>();
+  const { executeAction } = useActionWithToast<IConversationRecipient, IStartConversationRequestDTO>();
 
   const sendStartConversationMessage = async (message: string) => {
-    const userProfile = await executeAction({
+    const data = await executeAction({
       action: sendStartNewConversationRequest({ receiverId: targetUserId, initialMessage: message }),
     });
-    if (userProfile) {
-      navigate(`/chat/${userProfile._id}`, { replace: true });
-      return;
-    }
+    navigate(data ? `/chat/${data.conversationId}` : `/chat`, { replace: true });
+    return;
   };
 
   return (
