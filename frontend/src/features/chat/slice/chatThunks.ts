@@ -1,14 +1,14 @@
 import { ThunkApiConfig } from "@/app/store";
 import { handleApiError } from "@/utils";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getConnectedUsersApi, getUnconnectedUsersApi, startNewConversationApi } from "../api";
-import { IConnectedUser, IUserProfile, IStartConversationRequestDTO } from "@shared/types";
+import { getConversationRecipientsApi, getUnassociatedUsersApi, startNewConversationApi } from "../api";
+import { IConversationRecipient, IUserProfile, IStartConversationRequestDTO } from "@shared/types";
 
-export const fetchConnectedUsers = createAsyncThunk<IConnectedUser[], void, ThunkApiConfig>(
+export const fetchConversationRecipients = createAsyncThunk<IConversationRecipient[], void, ThunkApiConfig>(
   "chat/getConnectedUsers",
   async (_, { getState, rejectWithValue }) => {
     try {
-      const connectedUsers = await getConnectedUsersApi(getState);
+      const connectedUsers = await getConversationRecipientsApi(getState);
       return connectedUsers;
     } catch (error) {
       return rejectWithValue(handleApiError(error, "Could not load your active conversations. Please try again."));
@@ -16,12 +16,12 @@ export const fetchConnectedUsers = createAsyncThunk<IConnectedUser[], void, Thun
   }
 );
 
-export const fetchUnconnectedUsers = createAsyncThunk<IUserProfile[], void, ThunkApiConfig>(
-  "chat/getUnconnectedUsers",
+export const fetchUnassociatedUsers = createAsyncThunk<IUserProfile[], void, ThunkApiConfig>(
+  "chat/getUnassociatedUsers",
   async (_, { getState, rejectWithValue }) => {
     try {
-      const unconnectedUsers = await getUnconnectedUsersApi(getState);
-      return unconnectedUsers;
+      const unassociatedUsers = await getUnassociatedUsersApi(getState);
+      return unassociatedUsers;
     } catch (error) {
       return rejectWithValue(handleApiError(error, "Could not load your active conversations. Please try again."));
     }
@@ -29,7 +29,7 @@ export const fetchUnconnectedUsers = createAsyncThunk<IUserProfile[], void, Thun
 );
 
 export const sendStartNewConversationRequest = createAsyncThunk<
-  IConnectedUser,
+  IConversationRecipient,
   IStartConversationRequestDTO,
   ThunkApiConfig
 >("chat/startNewConversation", async ({ receiverId, initialMessage }, { getState, rejectWithValue }) => {

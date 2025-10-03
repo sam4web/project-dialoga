@@ -1,7 +1,7 @@
 import { Header, Spinner } from "@/components";
 import { useActionWithToast, useTitle } from "@/hooks";
 import { NewChatContactItem, NewChatSearchInput } from "../components";
-import { fetchUnconnectedUsers, isUnconnectedUsersLoaded, selectUnconnectedUsers } from "../slice";
+import { fetchUnassociatedUsers, isUnassociatedUsersLoaded, selectUnassociatedUsers } from "../slice";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -11,20 +11,20 @@ function NewChatPage() {
   useTitle({ title: "Find Contacts", template: true });
 
   const { executeAction } = useActionWithToast<IUserProfile[], void>();
-  const unconnectedUsersList = useSelector(selectUnconnectedUsers);
-  const isLoaded = useSelector(isUnconnectedUsersLoaded);
+  const unConversationRecipientsList = useSelector(selectUnassociatedUsers);
+  const isLoaded = useSelector(isUnassociatedUsersLoaded);
 
   useEffect(() => {
     const fetchChatList = async () => {
       await executeAction({
-        action: fetchUnconnectedUsers(),
+        action: fetchUnassociatedUsers(),
         loadingMessage: "Retrieving contacts...",
       });
     };
 
     if (!isLoaded) fetchChatList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isLoaded]);
 
   return (
     <>
@@ -38,8 +38,8 @@ function NewChatPage() {
               <Spinner />
             </div>
           ) : (
-            unconnectedUsersList?.map((user) => (
-              <Link key={user._id} to={`/chat/${user._id}?new`}>
+            unConversationRecipientsList?.map((user) => (
+              <Link key={user._id} to={`/chat/new/${user._id}`}>
                 <NewChatContactItem user={user} />
               </Link>
             ))

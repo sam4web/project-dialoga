@@ -1,22 +1,22 @@
 import { useActionWithToast } from "@/hooks";
-import { IConnectedUser } from "../types";
-import { fetchConnectedUsers, isConnectedUsersLoaded, selectConnectedUsers } from "../slice";
+import { fetchConversationRecipients, isConnectedUsersLoaded, selectConnectedUsers } from "../slice";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { UserAvatar, Spinner } from "@/components";
 import ms from "ms";
 import { truncate } from "@/utils";
 import { Link } from "react-router-dom";
+import { IConversationRecipient } from "@shared/types";
 
-function ConnectedUsersList() {
-  const { executeAction } = useActionWithToast<IConnectedUser[], void>();
+function ConversationRecipientsList() {
+  const { executeAction } = useActionWithToast<IConversationRecipient[], void>();
   const connectedUsers = useSelector(selectConnectedUsers);
   const isLoaded = useSelector(isConnectedUsersLoaded);
 
   useEffect(() => {
     const fetchChatList = async () => {
       await executeAction({
-        action: fetchConnectedUsers(),
+        action: fetchConversationRecipients(),
       });
     };
 
@@ -36,7 +36,7 @@ function ConnectedUsersList() {
     <div className="px-3.5 md:px-2.5 lg:px-3.5 space-y-2">
       {connectedUsers &&
         connectedUsers?.map((contact) => (
-          <Link to={`/chat/${contact._id}`} key={contact._id}>
+          <Link to={`/chat/${contact.conversationId}`} key={contact._id}>
             <div className="hover:bg-zinc-200/70 dark:hover:bg-zinc-400/15 cursor-pointer rounded-xl px-3 md:px-2.5 lg:px-3 py-3">
               <div className="flex items-center space-x-2 sm:space-x-2.5">
                 <div className="relative">
@@ -69,4 +69,4 @@ function ConnectedUsersList() {
   );
 }
 
-export default ConnectedUsersList;
+export default ConversationRecipientsList;

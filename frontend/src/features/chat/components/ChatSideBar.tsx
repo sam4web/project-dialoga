@@ -1,7 +1,7 @@
 import { Plus, Search, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button, ThemeToggler } from "@/components";
-import ConnectedUsersList from "./ConnectedUsersList";
+import ConversationRecipientsList from "./ConversationRecipientsList";
 
 function ChatSideBar() {
   return (
@@ -40,7 +40,7 @@ function ChatSideBar() {
           </div>
         </form>
 
-        <ConnectedUsersList />
+        <ConversationRecipientsList />
       </div>
     </aside>
   );

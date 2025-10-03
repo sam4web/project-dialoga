@@ -1,9 +1,10 @@
 import {
   ConversationRepository,
-  IConnectedUser,
+  IConversationRecipient,
   IConversation,
   IConversationRepository,
   IMessageRepository,
+  IUserProfile,
   IUserRepository,
   MessageRepository,
   UserRepository,
@@ -51,9 +52,9 @@ class ChatService {
     userId,
     receiverId,
     initialMessage,
-  }: IStartConversationDTO): Promise<IConnectedUser> {
+  }: IStartConversationDTO): Promise<IConversationRecipient> {
     if (userId === receiverId) {
-      throw ApiError.forbidden("Cannot start a conversation with yourself. Please specify a different user.");
+      throw ApiError.forbidden("Cannot start a conversation with self. Please specify a different user.");
     }
     const receiver = await this.userRepository.findById(receiverId);
     if (!receiver) {
@@ -61,9 +62,7 @@ class ChatService {
     }
     const conversation = await this.conversationRepository.find({ user1: userId, user2: receiverId });
     if (conversation) {
-      throw ApiError.conflict(
-        "A conversation already exists between the specified users. Use the existing conversation to send a message."
-      );
+      throw ApiError.conflict("Conversation already exists. Please use the existing thread to send your message.");
     }
     const message = await this.messageRepository.create({
       type: "text",
@@ -71,15 +70,17 @@ class ChatService {
       text: initialMessage,
       image: null,
     });
-    await this.conversationRepository.create({
+    const newConversation = await this.conversationRepository.create({
       user1: userId,
       user2: receiverId,
       messages: [message],
     });
-    // TODO: add connected user properties
-    const userProfile = (await userService.getUserProfile(receiverId)) as IConnectedUser;
-    return userProfile;
+    //TODO: add connected user properties
+    const userProfile = (await userService.getUserProfile(receiverId)) as IUserProfile;
+    return { ...userProfile, conversationId: newConversation._id } as IConversationRecipient;
   }
+
+  public async getConversationMessages(userId: string, targetId: string) {}
 }
 
 const chatService = new ChatService();

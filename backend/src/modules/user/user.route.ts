@@ -16,8 +16,8 @@ const updateProfileImageMiddleware = [
 
 userRouter.use(authorize);
 userRouter.get("/", userController.getAllUsers);
-userRouter.get("/unconnected", userController.getUnconnectedUsers);
-userRouter.get("/connected", userController.getConnectedUsers);
+userRouter.get("/unconnected", userController.getUnassociatedUsers);
+userRouter.get("/connected", userController.getConversationRecipient);
 userRouter
   .route("/me")
   .get(userController.getCurrentUserProfile)

@@ -1,6 +1,6 @@
 import {
   ConversationRepository,
-  IConnectedUser,
+  IConversationRecipient,
   IConversationRepository,
   IProfileImage,
   IProfileImageRepository,
@@ -42,7 +42,7 @@ class UserService {
     return users;
   }
 
-  public async getUnconnectedUsers(userId: string): Promise<IUserProfile[]> {
+  public async getUnassociatedUsers(userId: string): Promise<IUserProfile[]> {
     const users = (await this.userRepository.getAll()).filter((u) => u._id != userId);
     const conversations = await this.conversationRepository.getAll(userId);
     const connectedParticipantIds: string[] = conversations.map((conv) => {
@@ -58,23 +58,26 @@ class UserService {
         return { _id, fullname, email, statusMessage, profileImage } as IUserProfile;
       });
 
-    const unconnectedUsers = await Promise.all(participantPromises);
-    return unconnectedUsers;
+    const unassociatedUsers = await Promise.all(participantPromises);
+    return unassociatedUsers;
   }
 
-  public async getConnectedUsers(userId: string): Promise<IConnectedUser[]> {
+  public async getConversationRecipient(userId: string): Promise<IConversationRecipient[]> {
     const conversations = await this.conversationRepository.getAll(userId);
-    const participantIds: string[] = conversations.map((conv) => {
-      return conv.user1._id.toString() === userId ? conv.user2._id.toString() : conv.user1._id.toString();
+    const participants = conversations.map((conv) => {
+      return {
+        userId: conv.user1._id.toString() === userId ? conv.user2._id.toString() : conv.user1._id.toString(),
+        conversationId: conv._id.toString(),
+      };
     });
-    const participantPromises = participantIds.map(async (participantId) => {
-      const user = (await this.userRepository.findById(participantId))!;
+    const participantPromises = participants.map(async ({ userId, conversationId }) => {
+      const user = (await this.userRepository.findById(userId))!;
       let { _id, fullname, email, statusMessage, profileImage } = user;
       if (user.profileImage) {
         profileImage = await getProfileImageDataUri(String(user.profileImage));
       }
       // TODO: include isOnline, lastSeen, lastMessage properties
-      return { _id, fullname, email, statusMessage, profileImage } as IConnectedUser;
+      return { _id, fullname, email, statusMessage, conversationId, profileImage } as IConversationRecipient;
     });
     const activeParticipants = await Promise.all(participantPromises);
     return activeParticipants;

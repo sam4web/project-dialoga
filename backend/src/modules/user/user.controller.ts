@@ -13,16 +13,16 @@ class UserController {
     return;
   }
 
-  public async getUnconnectedUsers(request: Request, response: Response) {
+  public async getUnassociatedUsers(request: Request, response: Response) {
     const userId: string = (request as any).userId;
-    const unconnectedUsers = await userService.getUnconnectedUsers(userId);
-    response.status(HTTP_STATUS.OK).json(unconnectedUsers);
+    const unassociatedUsers = await userService.getUnassociatedUsers(userId);
+    response.status(HTTP_STATUS.OK).json(unassociatedUsers);
     return;
   }
 
-  public async getConnectedUsers(request: Request, response: Response) {
+  public async getConversationRecipient(request: Request, response: Response) {
     const userId: string = (request as any).userId;
-    const connectedUsers = await userService.getConnectedUsers(userId);
+    const connectedUsers = await userService.getConversationRecipient(userId);
     response.status(HTTP_STATUS.OK).json(connectedUsers);
     return;
   }
