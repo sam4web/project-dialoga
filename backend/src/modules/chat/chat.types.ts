@@ -1,5 +1,5 @@
 import { IStartConversationRequestDTO } from "../../../../shared/types/chat";
-import { IConversation, IMessage } from "../../database";
+import { IConversation, IImageMessage, IMessage } from "../../database";
 export { IStartConversationRequestDTO };
 
 export interface IStartConversationDTO extends IStartConversationRequestDTO {
@@ -23,4 +23,7 @@ export interface IConversationIdParamsDTO {
 
 export interface ISendTextMessageDTO extends IConversationIdParamsDTO {
   message: string;
+}
+export interface ISendImageMessageDTO extends IConversationIdParamsDTO {
+  message: IImageMessage;
 }

@@ -8,13 +8,15 @@ import {
   MessageRepository,
   UserRepository,
   IMessage,
+  IImageMessage,
 } from "../../database";
-import { ApiError } from "../../lib";
+import { ApiError, bufferToDataURI } from "../../lib";
 import { userService } from "../user";
 import {
   IAddMessageInConversationDTO,
   IConversationContext,
   IConversationIdParamsDTO,
+  ISendImageMessageDTO,
   ISendTextMessageDTO,
   IStartConversationDTO,
 } from "./chat.types";
@@ -109,7 +111,11 @@ class ChatService {
       throw ApiError.forbidden("Unauthorized access. The user is not a participant in this conversation.");
     }
     const messagesListPromises = conversation.messages.map(async (message) => {
-      return (await this.messageRepository.findById(String(message))) as IMessage;
+      const messageDocument = (await this.messageRepository.findById(String(message))) as IMessage;
+      if (messageDocument.type === "image") {
+        messageDocument.image = bufferToDataURI(messageDocument.image as IImageMessage);
+      }
+      return messageDocument;
     });
     const messages = await Promise.all(messagesListPromises);
     return messages;
@@ -144,6 +150,21 @@ class ChatService {
     });
     this.addMessageInConversation({ conversation, message });
     return message;
+  }
+
+  public async sendImageMessage({ userId, conversationId, message: image }: ISendImageMessageDTO) {
+    const { conversation, receiverId } = await this.getAuthorizedConversationContext({ userId, conversationId });
+    const message = await this.messageRepository.create({
+      type: "image",
+      receiverId,
+      text: null,
+      image,
+    });
+    this.addMessageInConversation({ conversation, message: message });
+    const imageDataUri = bufferToDataURI(message.image as IImageMessage);
+    const { _id, receiverId: receiver, text, type, createdAt, updatedAt } = message;
+    const responseMessage = { _id, receiverId: receiver, text, type, createdAt, updatedAt, image: imageDataUri };
+    return responseMessage;
   }
 }
 

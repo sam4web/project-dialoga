@@ -1,5 +1,5 @@
 import { ProfileImageRepository } from "../../database";
-import { ApiError } from "../../lib";
+import { ApiError, bufferToDataURI } from "../../lib";
 
 export const getProfileImageDataUri = async (profileImageId: string) => {
   const profileImageRepository = new ProfileImageRepository();
@@ -7,6 +7,5 @@ export const getProfileImageDataUri = async (profileImageId: string) => {
   if (!image) {
     throw ApiError.conflict("Resource not found. No image document matches the requested ID.");
   }
-  const base64Image = image.data.toString("base64");
-  return `data:${image.contentType};base64,${base64Image}`;
+  return bufferToDataURI(image);
 };

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { authorize, validate } from "../../middlewares";
+import { authorize, imageFileMiddleware, validate } from "../../middlewares";
 import { conversationIdSchema, sendTextMessageSchema, startConversationSchema } from "./chat.schema";
 import chatController from "./chat.controller";
 
@@ -21,6 +21,7 @@ chatRouter.post(
 chatRouter.post(
   "/conversations/:conversationId/messages/image",
   validate(conversationIdSchema, "params"),
+  imageFileMiddleware,
   chatController.sendImageMessage
 );
 chatRouter.get(

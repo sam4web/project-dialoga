@@ -1,11 +1,13 @@
 import { NextFunction, Request, Response } from "express";
+import fileUpload from "express-fileupload";
 import { formatListWithAnd } from "../../../shared/helpers";
+import { FILE_UPLOAD_CONSTANTS } from "../../../shared/constants";
 import { ApiError } from "../lib";
 
 export const checkFileExists = (fieldname: string) => {
   return (request: Request, response: Response, next: NextFunction) => {
     if (!request.files || !(request as any).files[fieldname]) {
-      return next(ApiError.badRequest("Expected file in request payload, but none was received."));
+      return next(ApiError.badRequest(`Expected ${fieldname} file in request payload, but none was received.`));
     }
     if (Array.isArray((request as any).files[fieldname])) {
       return next(ApiError.badRequest("Expected a single file, but multiple were received."));
@@ -36,3 +38,10 @@ export const validateFileSize = (maxFileSizeBytes: number) => {
     next();
   };
 };
+
+export const imageFileMiddleware = [
+  fileUpload({ createParentPath: true }),
+  checkFileExists("image"),
+  validateFileType(FILE_UPLOAD_CONSTANTS.ACCEPTED_FILE_TYPES),
+  validateFileSize(FILE_UPLOAD_CONSTANTS.MAX_SIZE_BYTES),
+];

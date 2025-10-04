@@ -1,8 +1,5 @@
-export interface IProfileImage {
-  _id: string;
-  name: string;
-  data: Buffer | BinaryType;
-  contentType: string;
-}
+import { IImageFIle } from "../../../../shared/types/file";
+
+export interface IProfileImage extends IImageFIle {}
 
 export interface IUpdateProfileImageDTO extends IProfileImage {}

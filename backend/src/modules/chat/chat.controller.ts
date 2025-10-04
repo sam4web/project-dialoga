@@ -3,7 +3,7 @@ import { HTTP_STATUS } from "../../../../shared/constants";
 import chatService from "./chat.service";
 import { IStartConversationRequestDTO } from "./chat.types";
 import { TConversationIdSchema, TSendTextMessageSchema } from "./chat.schema";
-import { IMessage } from "../../database";
+import { IImageMessage, IMessage } from "../../database";
 
 class ChatController {
   public async startNewConversation(request: Request, response: Response) {
@@ -40,7 +40,12 @@ class ChatController {
   }
 
   public async sendImageMessage(request: Request, response: Response) {
-    response.status(HTTP_STATUS.OK).json({ message: "Send Image Message" });
+    const userId: string = (request as any).userId;
+    const { conversationId }: TConversationIdSchema = (request as any).validatedParams;
+    const { name, data, mimetype: contentType } = (request as any).files.image;
+    const message = { name, data, contentType } as IImageMessage;
+    const messageData = await chatService.sendImageMessage({ userId, conversationId, message });
+    response.status(HTTP_STATUS.OK).json(messageData);
     return;
   }
   // public async getConversationDetails
