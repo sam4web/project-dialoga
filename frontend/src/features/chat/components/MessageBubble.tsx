@@ -1,10 +1,13 @@
 import { cx } from "@/utils";
 import { formatDistanceToNow } from "date-fns/formatDistanceToNow";
 import { capitalize } from "@/utils";
-import type { TMessage } from "../types";
+import { IMessage } from "@shared/types";
 
-function MessageBubble({ message, sentTime, sentBy, type }: TMessage) {
-  const self = sentBy === "self";
+interface Props extends IMessage {
+  self: boolean;
+}
+
+function MessageBubble({ type, text, image, createdAt: sentTime, self }: Props) {
   return (
     <div
       className={cx(
@@ -13,9 +16,9 @@ function MessageBubble({ message, sentTime, sentBy, type }: TMessage) {
       )}
     >
       {type === "text" ? (
-        <p className={cx("text-base", self ? "text-primary-light" : "text-color-light")}>{message}</p>
+        <p className={cx("text-base", self ? "text-primary-light" : "text-color-light")}>{text!}</p>
       ) : (
-        <img src={message} alt="" className="image-message mt-1" />
+        <img src={image!} alt="" className="image-message mt-1" />
       )}
       <p
         className={cx(

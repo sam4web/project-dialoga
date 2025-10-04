@@ -1,14 +1,20 @@
 import { ThunkApiConfig } from "@/app/store";
 import { handleApiError } from "@/utils";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { getConversationRecipientsApi, getUnassociatedUsersApi, startNewConversationApi } from "../api";
-import { IConversationRecipient, IUserProfile, IStartConversationRequestDTO } from "@shared/types";
+import {
+  getChatPartnersApi,
+  getConversationMessagesApi,
+  getRecipientProfileApi,
+  getUnassociatedUsersApi,
+  startNewConversationApi,
+} from "../api";
+import { IChatPartner, IUserProfile, IStartConversationRequestDTO, IMessage } from "@shared/types";
 
-export const fetchConversationRecipients = createAsyncThunk<IConversationRecipient[], void, ThunkApiConfig>(
+export const fetchChatPartners = createAsyncThunk<IChatPartner[], void, ThunkApiConfig>(
   "chat/getConnectedUsers",
   async (_, { getState, rejectWithValue }) => {
     try {
-      const connectedUsers = await getConversationRecipientsApi(getState);
+      const connectedUsers = await getChatPartnersApi(getState);
       return connectedUsers;
     } catch (error) {
       return rejectWithValue(handleApiError(error, "Could not load your active conversations. Please try again."));
@@ -28,15 +34,39 @@ export const fetchUnassociatedUsers = createAsyncThunk<IUserProfile[], void, Thu
   }
 );
 
+export const fetchRecipientProfile = createAsyncThunk<IUserProfile, string, ThunkApiConfig>(
+  "chat/getRecipientProfile",
+  async (conversationId, { getState, rejectWithValue }) => {
+    try {
+      const recipientProfile = await getRecipientProfileApi(conversationId, getState);
+      return recipientProfile;
+    } catch (error) {
+      return rejectWithValue(handleApiError(error, "Could not load your active conversations. Please try again."));
+    }
+  }
+);
+
 export const sendStartNewConversationRequest = createAsyncThunk<
-  IConversationRecipient,
+  IChatPartner,
   IStartConversationRequestDTO,
   ThunkApiConfig
 >("chat/startNewConversation", async ({ receiverId, initialMessage }, { getState, rejectWithValue }) => {
   try {
-    const userProfile = await startNewConversationApi({ receiverId, initialMessage }, getState);
-    return userProfile;
+    const recipient = await startNewConversationApi({ receiverId, initialMessage }, getState);
+    return recipient;
   } catch (error) {
     return rejectWithValue(handleApiError(error, "Could not load your active conversations. Please try again."));
   }
 });
+
+export const fetchConversationMessages = createAsyncThunk<IMessage[], string, ThunkApiConfig>(
+  "chat/getConversationMessages",
+  async (conversationId, { getState, rejectWithValue }) => {
+    try {
+      const recipientProfile = await getConversationMessagesApi(conversationId, getState);
+      return recipientProfile;
+    } catch (error) {
+      return rejectWithValue(handleApiError(error, "Could not load your active conversations. Please try again."));
+    }
+  }
+);

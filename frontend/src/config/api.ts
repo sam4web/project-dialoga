@@ -10,11 +10,13 @@ const apiEndpoints = {
     me: "/api/users/me",
     meImage: "/api/users/me/image",
     profile: (id: string) => `/api/users/${id}`,
-    connected: "/api/users/connected",
-    unconnected: "/api/users/unconnected",
+    partner: "/api/users/partner",
+    unassociated: "/api/users/unassociated",
   },
   chat: {
-    startConversation: "/api/chat/conversations",
+    start: "/api/chat/conversations",
+    recipient: (conversationId: string) => `/api/chat/conversations/${conversationId}/recipient`,
+    messages: (conversationId: string) => `/api/chat/conversations/${conversationId}/messages`,
   },
 };
 

@@ -5,9 +5,9 @@ import ConversationView from "./ConversationView";
 import PlaceholderView from "./PlaceholderView";
 import ChatSideBar from "./ChatSideBar";
 import NewChatSearchInput from "./NewChatSearchInput";
-import ConversationRecipientsList from "./ConversationRecipientsList";
+import ChatPartnersList from "./ChatPartnersList";
 import NewChatContactItem from "./NewChatContactItem";
-import ChatMessageStart from "./ChatMessageStart";
+import ChatPartnerItem from "./ChatPartnerItem";
 
 export {
   MessageBubble,
@@ -17,7 +17,7 @@ export {
   PlaceholderView,
   ChatSideBar,
   NewChatSearchInput,
-  ConversationRecipientsList,
+  ChatPartnersList,
   NewChatContactItem,
-  ChatMessageStart,
+  ChatPartnerItem,
 };

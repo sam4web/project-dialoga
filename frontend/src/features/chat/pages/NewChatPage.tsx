@@ -11,7 +11,7 @@ function NewChatPage() {
   useTitle({ title: "Find Contacts", template: true });
 
   const { executeAction } = useActionWithToast<IUserProfile[], void>();
-  const unConversationRecipientsList = useSelector(selectUnassociatedUsers);
+  const unassociatedUsers = useSelector(selectUnassociatedUsers);
   const isLoaded = useSelector(isUnassociatedUsersLoaded);
 
   useEffect(() => {
@@ -38,7 +38,7 @@ function NewChatPage() {
               <Spinner />
             </div>
           ) : (
-            unConversationRecipientsList?.map((user) => (
+            unassociatedUsers?.map((user) => (
               <Link key={user._id} to={`/chat/new/${user._id}`}>
                 <NewChatContactItem user={user} />
               </Link>

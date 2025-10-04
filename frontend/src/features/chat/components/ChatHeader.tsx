@@ -7,10 +7,10 @@ type Props = {
   _id: string;
   fullname: string;
   profileImage: string | null;
-  isNew: boolean;
+  isNew?: boolean;
 };
 
-function ChatHeader({ _id, profileImage, fullname, isNew }: Props) {
+function ChatHeader({ _id, profileImage, fullname, isNew = false }: Props) {
   return (
     <header className="border-b border-zinc-400/50 dark:border-zinc-700 shadow-xs">
       <div className="flex items-center justify-between w-full py-[11px] md:py-[13px] px-2.5 lg:pl-5 lg:pr-3.5">

@@ -1,15 +1,15 @@
 import { RootState } from "@/app/store";
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchUnassociatedUsers, sendStartNewConversationRequest, fetchConversationRecipients } from "./chatThunks";
-import { IConversationRecipient, IUserProfile } from "@shared/types/user";
+import { fetchUnassociatedUsers, sendStartNewConversationRequest, fetchChatPartners } from "./chatThunks";
+import { IChatPartner, IUserProfile } from "@shared/types/user";
 
 interface ChatState {
-  conversationRecipients: IConversationRecipient[] | null;
+  chatPartners: IChatPartner[] | null;
   unassociatedUsers: IUserProfile[] | null;
 }
 
 const initialState: ChatState = {
-  conversationRecipients: null,
+  chatPartners: null,
   unassociatedUsers: null,
 };
 
@@ -19,21 +19,23 @@ const chatSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchConversationRecipients.fulfilled, (state, action) => {
-        state.conversationRecipients = action.payload;
+      .addCase(fetchChatPartners.fulfilled, (state, action) => {
+        state.chatPartners = action.payload;
       })
       .addCase(fetchUnassociatedUsers.fulfilled, (state, action) => {
         state.unassociatedUsers = action.payload;
       })
       .addCase(sendStartNewConversationRequest.fulfilled, (state, action) => {
-        state.conversationRecipients?.push(action.payload);
+        const recipient = action.payload;
+        state.chatPartners?.push(recipient);
+        state.unassociatedUsers = (state.unassociatedUsers ?? [])?.filter((user) => user._id !== recipient._id);
       });
   },
 });
 
-export const selectConnectedUsers = (state: RootState) => state.chat.conversationRecipients;
+export const selectChatPartners = (state: RootState) => state.chat.chatPartners;
 export const selectUnassociatedUsers = (state: RootState) => state.chat.unassociatedUsers;
-export const isConnectedUsersLoaded = (state: RootState) => Boolean(state.chat.conversationRecipients);
+export const isChatPartnersLoaded = (state: RootState) => Boolean(state.chat.chatPartners);
 export const isUnassociatedUsersLoaded = (state: RootState) => Boolean(state.chat.unassociatedUsers);
 
 export const chatReducer = chatSlice.reducer;

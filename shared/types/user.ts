@@ -26,7 +26,7 @@ export interface IUpdateUserDTO extends Partial<IUserSettings> {
   profileImage?: string;
 }
 
-export interface IConversationRecipient extends IUserProfile {
+export interface IChatPartner extends IUserProfile {
   conversationId: string;
   isOnline: boolean;
   lastSeen: Date;

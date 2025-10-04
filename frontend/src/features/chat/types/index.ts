@@ -1,7 +1,10 @@
 import z from "zod";
 
 export const textMessageInputSchema = z.object({
-  message: z.string().min(1, "Input field cannot be empty."),
+  message: z
+    .string()
+    .min(1, "Message cannot be empty. Please enter some text.")
+    .max(50, "Message is too long. Please limit it to 50 characters or less."),
 });
 
 export type TTextMessageInputSchema = z.infer<typeof textMessageInputSchema>;

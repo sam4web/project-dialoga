@@ -1,29 +1,51 @@
 import { RootState } from "@/app/store";
 import { apiClient } from "@/utils";
 import apiEndpoints from "@/config/api";
-import { IConversationRecipient, IUserProfile, IStartConversationRequestDTO } from "@shared/types";
+import { IChatPartner, IUserProfile, IStartConversationRequestDTO, IMessage } from "@shared/types";
 
 export const getUnassociatedUsersApi = async (getState: () => RootState): Promise<IUserProfile[]> => {
   const token = getState().auth.token;
-  const response = await apiClient.get(apiEndpoints.users.unconnected, {
+  const response = await apiClient.get(apiEndpoints.users.unassociated, {
     headers: { Authorization: `Bearer ${token}` },
   });
   return response.data;
 };
 
-export const getConversationRecipientsApi = async (getState: () => RootState): Promise<IConversationRecipient[]> => {
+export const getChatPartnersApi = async (getState: () => RootState): Promise<IChatPartner[]> => {
   const token = getState().auth.token;
-  const response = await apiClient.get(apiEndpoints.users.connected, { headers: { Authorization: `Bearer ${token}` } });
+  const response = await apiClient.get(apiEndpoints.users.partner, { headers: { Authorization: `Bearer ${token}` } });
+  return response.data;
+};
+
+export const getRecipientProfileApi = async (
+  conversationId: string,
+  getState: () => RootState
+): Promise<IUserProfile> => {
+  const token = getState().auth.token;
+  const response = await apiClient.get(apiEndpoints.chat.recipient(conversationId), {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return response.data;
+};
+
+export const getConversationMessagesApi = async (
+  conversationId: string,
+  getState: () => RootState
+): Promise<IMessage[]> => {
+  const token = getState().auth.token;
+  const response = await apiClient.get(apiEndpoints.chat.messages(conversationId), {
+    headers: { Authorization: `Bearer ${token}` },
+  });
   return response.data;
 };
 
 export const startNewConversationApi = async (
   { receiverId, initialMessage }: IStartConversationRequestDTO,
   getState: () => RootState
-): Promise<IConversationRecipient> => {
+): Promise<IChatPartner> => {
   const token = getState().auth.token;
   const response = await apiClient.post(
-    apiEndpoints.chat.startConversation,
+    apiEndpoints.chat.start,
     { receiverId, initialMessage },
     { headers: { Authorization: `Bearer ${token}` } }
   );

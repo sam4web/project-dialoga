@@ -23,7 +23,7 @@ function MessageInput({ isNew, sendTextMessage, sendImageMessage }: Props) {
     formState: { errors, isSubmitting, isValid },
   } = useForm<TTextMessageInputSchema>({
     resolver: zodResolver(textMessageInputSchema),
-    mode: "onSubmit",
+    mode: "onChange",
   });
 
   const onSubmit: SubmitHandler<TTextMessageInputSchema> = async (data) => {

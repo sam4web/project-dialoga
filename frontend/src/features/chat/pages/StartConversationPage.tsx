@@ -1,20 +1,26 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { IUserProfile } from "@shared/types";
-import { ChatHeader, ChatMessageStart, ChatSideBar } from "../components";
+import { IChatPartner, IStartConversationRequestDTO, IUserProfile } from "@shared/types";
+import { ChatHeader, ChatSideBar, MessageInput } from "../components";
 import { useActionWithToast } from "@/hooks";
 import { fetchPublicProfile } from "@/features/profile/slice";
 import { Spinner } from "@/components";
+import { sendStartNewConversationRequest } from "../slice";
+import { MessageCircleDashed } from "lucide-react";
 
 function StartConversationPage() {
   const { userId } = useParams();
-  const { executeAction } = useActionWithToast<IUserProfile, string>();
+  const { executeAction: executefetchProfileAction } = useActionWithToast<IUserProfile, string>();
+  const { executeAction: executeStartNewConversationAction } = useActionWithToast<
+    IChatPartner,
+    IStartConversationRequestDTO
+  >();
   const [selectedProfile, setSelectedProfile] = useState<IUserProfile | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserProfile = async () => {
-      const userProfile = await executeAction({
+      const userProfile = await executefetchProfileAction({
         action: fetchPublicProfile(userId!),
         loadingMessage: "Getting profile details...",
       });
@@ -27,6 +33,14 @@ function StartConversationPage() {
     fetchUserProfile();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
+
+  const sendStartConversationMessage = async (message: string) => {
+    const recipient = await executeStartNewConversationAction({
+      action: sendStartNewConversationRequest({ receiverId: userId!, initialMessage: message }),
+    });
+    navigate(recipient ? `/chat/${recipient.conversationId}` : `/chat`, { replace: true });
+    return;
+  };
 
   return (
     <div className="flex">
@@ -41,7 +55,18 @@ function StartConversationPage() {
         ) : (
           <section className="relative h-full">
             <ChatHeader {...selectedProfile} isNew />
-            <ChatMessageStart targetUserId={selectedProfile._id} />
+
+            <div className="h-[86dvh] overflow-y-hidden">
+              <div className="h-full flex-center px-2.5">
+                <div className="container-card select-none gap-2 dark:opacity-45 opacity-60 lg:gap-4 flex flex-col lg:flex-row flex-center">
+                  <MessageCircleDashed className="text-color-light opacity-80 size-16 lg:size-20 m-0" />
+                  <p className="text-color-light opacity-80 lg:text-lg max-w-xs">
+                    <b>Ready to chat?</b> Send the first message below to begin your conversation.
+                  </p>
+                </div>
+              </div>
+              <MessageInput isNew sendTextMessage={sendStartConversationMessage} />
+            </div>
           </section>
         )}
       </div>
