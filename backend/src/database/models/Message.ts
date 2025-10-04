@@ -46,7 +46,7 @@ const messageSchema = new Schema<IMessage>(
       },
     },
   },
-  { timestamps: true }
+  { timestamps: true, versionKey: false }
 );
 
 const Message = model<IMessage>("Message", messageSchema);

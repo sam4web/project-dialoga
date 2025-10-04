@@ -20,7 +20,7 @@ const userSchema = new Schema<IUser>(
     settings: { type: settingsSchema, default: () => ({}) },
     profileImage: { type: Schema.Types.ObjectId, ref: "ProfileImage", default: null },
   },
-  { timestamps: true }
+  { timestamps: true, versionKey: false }
 );
 
 userSchema.pre("save", async function (next) {

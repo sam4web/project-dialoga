@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { HTTP_STATUS } from "../../../../shared/constants";
 import chatService from "./chat.service";
 import { IStartConversationRequestDTO } from "./chat.types";
-import { TConversationIdSchema } from "./chat.schema";
+import { TConversationIdSchema, TSendTextMessageSchema } from "./chat.schema";
 import { IMessage } from "../../database";
 
 class ChatController {
@@ -30,6 +30,19 @@ class ChatController {
     return;
   }
 
+  public async sendTextMessage(request: Request, response: Response) {
+    const userId: string = (request as any).userId;
+    const { conversationId }: TConversationIdSchema = (request as any).validatedParams;
+    const { message }: TSendTextMessageSchema = (request as any).validatedBody;
+    const messageData = await chatService.sendTextMessage({ userId, conversationId, message });
+    response.status(HTTP_STATUS.OK).json(messageData);
+    return;
+  }
+
+  public async sendImageMessage(request: Request, response: Response) {
+    response.status(HTTP_STATUS.OK).json({ message: "Send Image Message" });
+    return;
+  }
   // public async getConversationDetails
 }
 

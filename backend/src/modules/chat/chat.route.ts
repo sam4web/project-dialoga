@@ -1,16 +1,28 @@
 import { Router } from "express";
 import { authorize, validate } from "../../middlewares";
-import { conversationIdSchema, startConversationSchema } from "./chat.schema";
+import { conversationIdSchema, sendTextMessageSchema, startConversationSchema } from "./chat.schema";
 import chatController from "./chat.controller";
 
 const chatRouter = Router();
 
 chatRouter.use(authorize);
 chatRouter.post("/conversations", validate(startConversationSchema), chatController.startNewConversation);
-chatRouter
-  .route("/conversations/:conversationId/messages")
-  .get(validate(conversationIdSchema, "params"), chatController.getConversationMessages);
-// .post(sendmessagehere);
+chatRouter.get(
+  "/conversations/:conversationId/messages",
+  validate(conversationIdSchema, "params"),
+  chatController.getConversationMessages
+);
+chatRouter.post(
+  "/conversations/:conversationId/messages/text",
+  validate(conversationIdSchema, "params"),
+  validate(sendTextMessageSchema),
+  chatController.sendTextMessage
+);
+chatRouter.post(
+  "/conversations/:conversationId/messages/image",
+  validate(conversationIdSchema, "params"),
+  chatController.sendImageMessage
+);
 chatRouter.get(
   "/conversations/:conversationId/recipient",
   validate(conversationIdSchema, "params"),

@@ -11,7 +11,13 @@ import {
 } from "../../database";
 import { ApiError } from "../../lib";
 import { userService } from "../user";
-import { IAddMessageInConversationDTO, IConversationIdParamsDTO, IStartConversationDTO } from "./chat.types";
+import {
+  IAddMessageInConversationDTO,
+  IConversationContext,
+  IConversationIdParamsDTO,
+  ISendTextMessageDTO,
+  IStartConversationDTO,
+} from "./chat.types";
 
 class ChatService {
   private userRepository: IUserRepository;
@@ -28,27 +34,39 @@ class ChatService {
     this.messageRepository = messageRepository;
   }
 
-  /*
-  public async addMessageInConversation({
+  private async addMessageInConversation({ conversation, message }: IAddMessageInConversationDTO) {
+    try {
+      await this.conversationRepository.updatePropertyById({
+        conversationId: conversation._id,
+        propertyName: "messages",
+        value: [...conversation.messages, message],
+      });
+    } catch (err) {
+      throw ApiError.internal("Failed to add message in conversation. Please try again.");
+    }
+  }
+
+  private async getAuthorizedConversationContext({
     conversationId,
-    messageId,
-  }: IAddMessageInConversationDTO): Promise<IConversation | null> {
+    userId,
+  }: IConversationIdParamsDTO): Promise<IConversationContext> {
     const conversation = await this.conversationRepository.findById(conversationId);
     if (!conversation) {
       throw ApiError.notFound("Conversation not found. The requested chat session does not exist.");
     }
-    const message = await this.messageRepository.findById(messageId);
-    if (!message) {
-      throw ApiError.notFound("Message not found. The specific message ID could not be located.");
+    if (!(conversation.user1._id.equals(userId) || conversation.user2._id.equals(userId))) {
+      throw ApiError.forbidden("Unauthorized access. The user is not a participant in this conversation.");
     }
-    const updatedConversation = await this.conversationRepository.updatePropertyById({
-      conversationId,
-      propertyName: "messages",
-      value: [...conversation.messages, message],
-    });
-    return updatedConversation;
+    const receiverId =
+      conversation.user1._id.toString() === userId
+        ? conversation.user2._id.toString()
+        : conversation.user1._id.toString();
+    if (userId === receiverId) {
+      throw ApiError.forbidden("Cannot start a conversation with self. Please specify a different user.");
+    }
+
+    return { conversation, receiverId };
   }
-  */
 
   public async startNewConversation({
     userId,
@@ -114,6 +132,18 @@ class ChatService {
       throw ApiError.notFound("User profile not found. The provided ID does not match any existing user.");
     }
     return userProfile;
+  }
+
+  public async sendTextMessage({ userId, conversationId, message: text }: ISendTextMessageDTO): Promise<IMessage> {
+    const { conversation, receiverId } = await this.getAuthorizedConversationContext({ userId, conversationId });
+    const message = await this.messageRepository.create({
+      type: "text",
+      receiverId,
+      text,
+      image: null,
+    });
+    this.addMessageInConversation({ conversation, message });
+    return message;
   }
 }
 

@@ -21,7 +21,7 @@ const conversationSchema = new Schema<IConversation>(
       },
     ],
   },
-  { timestamps: true }
+  { timestamps: true, versionKey: false }
 );
 
 const Conversation = model<IConversation>("Conversation", conversationSchema);

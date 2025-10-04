@@ -13,6 +13,13 @@ export const startConversationSchema = z.object({
   ),
 });
 
+export const sendTextMessageSchema = z.object({
+  message: requiredString("Text message is required.", "Text message must be a valid string.").max(
+    50,
+    "Message too long. Please limit text to 50 characters or less."
+  ),
+});
+
 export const conversationIdSchema = z.object({
   conversationId: requiredString(
     "Conversation ID must be provided.",
@@ -22,4 +29,5 @@ export const conversationIdSchema = z.object({
   }),
 });
 
+export type TSendTextMessageSchema = z.infer<typeof sendTextMessageSchema>;
 export type TConversationIdSchema = z.infer<typeof conversationIdSchema>;
