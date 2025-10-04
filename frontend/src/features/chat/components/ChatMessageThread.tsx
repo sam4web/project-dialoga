@@ -28,6 +28,13 @@ function ChatMessageThread({ conversationId }: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [conversationId]);
 
+  const sendMessage = async (data: FormData) => {
+    const textMessage = data.get("text")?.toString();
+    const imageMessage = data.get("image");
+    console.log(textMessage);
+    console.log(imageMessage);
+  };
+
   if (!messages) {
     return (
       <div className="h-full flex-center">
@@ -40,10 +47,10 @@ function ChatMessageThread({ conversationId }: Props) {
     <>
       <div className="space-y-4 overflow-y-auto h-full chat-container-scrollbar px-2.5 lg:px-5 py-5">
         {messages.map((message) => (
-          <MessageBubble key={message._id} {...message} self={userId === message.receiverId} />
+          <MessageBubble key={message._id} {...message} self={userId !== message.receiverId} />
         ))}
       </div>
-      <MessageInput />
+      <MessageInput handleSubmit={sendMessage} />
     </>
   );
 }

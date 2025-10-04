@@ -8,17 +8,16 @@ import { textMessageInputSchema, TTextMessageInputSchema } from "../types/index"
 import { cx } from "@/utils";
 
 interface Props {
-  sendTextMessage?: (message: string) => Promise<void>;
-  sendImageMessage?: (formData: FormData) => Promise<void>;
+  handleSubmit: (formData: FormData) => Promise<void>;
   isNew?: boolean;
 }
 
-function MessageInput({ isNew, sendTextMessage, sendImageMessage }: Props) {
+function MessageInput({ isNew = false, handleSubmit }: Props) {
   const dispatch = useDispatch();
   const fileUploadModalState = useSelector(selectFileUploadModalState);
   const {
     register,
-    handleSubmit,
+    handleSubmit: handleTextSubmit,
     reset,
     formState: { errors, isSubmitting, isValid },
   } = useForm<TTextMessageInputSchema>({
@@ -26,11 +25,18 @@ function MessageInput({ isNew, sendTextMessage, sendImageMessage }: Props) {
     mode: "onChange",
   });
 
-  const onSubmit: SubmitHandler<TTextMessageInputSchema> = async (data) => {
-    if (sendTextMessage) {
-      await sendTextMessage(data.message);
-      reset();
-    }
+  const onTextMessageSubmit: SubmitHandler<TTextMessageInputSchema> = async (data) => {
+    const formData = new FormData();
+    formData.append("text", data.message);
+    await handleSubmit(formData);
+    reset();
+  };
+
+  const onFileMessageSubmit = async (image: File) => {
+    const formData = new FormData();
+    formData.append("image", image);
+    await handleSubmit(formData);
+    dispatch(closeFileUploadModal());
   };
 
   return (
@@ -38,16 +44,7 @@ function MessageInput({ isNew, sendTextMessage, sendImageMessage }: Props) {
       {fileUploadModalState && !isNew && (
         <ModalWrapper handleCloseAction={() => dispatch(closeFileUploadModal())}>
           <div className="mt-9 sm:mt-7">
-            <FileUploadModal
-              handleFileSubmit={async (imageFile) => {
-                const formData = new FormData();
-                formData.append("image", imageFile);
-                if (sendImageMessage) {
-                  await sendImageMessage(formData);
-                }
-                dispatch(closeFileUploadModal());
-              }}
-            />
+            <FileUploadModal handleFileSubmit={onFileMessageSubmit} />
           </div>
         </ModalWrapper>
       )}
@@ -59,7 +56,7 @@ function MessageInput({ isNew, sendTextMessage, sendImageMessage }: Props) {
               <Paperclip />
             </Button>
           )}
-          <form className="flex-1 " onSubmit={handleSubmit(onSubmit)}>
+          <form className="flex-1 " onSubmit={handleTextSubmit(onTextMessageSubmit)}>
             <div className="w-full flex items-center justify-between space-x-2">
               <input
                 className={cx(

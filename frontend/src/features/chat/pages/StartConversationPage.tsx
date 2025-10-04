@@ -7,6 +7,7 @@ import { fetchPublicProfile } from "@/features/profile/slice";
 import { Spinner } from "@/components";
 import { sendStartNewConversationRequest } from "../slice";
 import { MessageCircleDashed } from "lucide-react";
+import { toast } from "react-toastify";
 
 function StartConversationPage() {
   const { userId } = useParams();
@@ -34,7 +35,16 @@ function StartConversationPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 
-  const sendStartConversationMessage = async (message: string) => {
+  const sendStartConversationMessage = async (data: FormData) => {
+    if (data.get("image")) {
+      toast.error("Only text messages are allowed to start a new conversation.");
+      return;
+    }
+    const message = data.get("text")?.toString();
+    if (!message) {
+      toast.error("Message cannot be empty. Please enter some text.");
+      return;
+    }
     const recipient = await executeStartNewConversationAction({
       action: sendStartNewConversationRequest({ receiverId: userId!, initialMessage: message }),
     });
@@ -65,7 +75,7 @@ function StartConversationPage() {
                   </p>
                 </div>
               </div>
-              <MessageInput isNew sendTextMessage={sendStartConversationMessage} />
+              <MessageInput isNew handleSubmit={sendStartConversationMessage} />
             </div>
           </section>
         )}
