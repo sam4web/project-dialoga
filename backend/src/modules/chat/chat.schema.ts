@@ -10,7 +10,7 @@ export const startConversationSchema = z.object({
   initialMessage: requiredString("Initial message is required.", "Initial message must be a valid string."),
 });
 
-export const getConversationMessagesSchema = z.object({
+export const conversationIdSchema = z.object({
   conversationId: requiredString(
     "Conversation ID must be provided.",
     "Invalid conversation Id format. Please check the Id provided."
@@ -19,4 +19,4 @@ export const getConversationMessagesSchema = z.object({
   }),
 });
 
-export type TGetConversationMessagesSchema = z.infer<typeof getConversationMessagesSchema>;
+export type TConversationIdSchema = z.infer<typeof conversationIdSchema>;

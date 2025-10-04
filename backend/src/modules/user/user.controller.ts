@@ -20,9 +20,9 @@ class UserController {
     return;
   }
 
-  public async getConversationRecipient(request: Request, response: Response) {
+  public async getChatPartners(request: Request, response: Response) {
     const userId: string = (request as any).userId;
-    const connectedUsers = await userService.getConversationRecipient(userId);
+    const connectedUsers = await userService.getChatPartners(userId);
     response.status(HTTP_STATUS.OK).json(connectedUsers);
     return;
   }

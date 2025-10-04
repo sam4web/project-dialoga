@@ -1,6 +1,6 @@
 import {
   ConversationRepository,
-  IConversationRecipient,
+  IChatPartner,
   IConversationRepository,
   IProfileImage,
   IProfileImageRepository,
@@ -62,7 +62,7 @@ class UserService {
     return unassociatedUsers;
   }
 
-  public async getConversationRecipient(userId: string): Promise<IConversationRecipient[]> {
+  public async getChatPartners(userId: string): Promise<IChatPartner[]> {
     const conversations = await this.conversationRepository.getAll(userId);
     const participants = conversations.map((conv) => {
       return {
@@ -77,7 +77,7 @@ class UserService {
         profileImage = await getProfileImageDataUri(String(user.profileImage));
       }
       // TODO: include isOnline, lastSeen, lastMessage properties
-      return { _id, fullname, email, statusMessage, conversationId, profileImage } as IConversationRecipient;
+      return { _id, fullname, email, statusMessage, conversationId, profileImage } as IChatPartner;
     });
     const activeParticipants = await Promise.all(participantPromises);
     return activeParticipants;

@@ -1,6 +1,6 @@
 import {
   ConversationRepository,
-  IConversationRecipient,
+  IChatPartner,
   IConversationRepository,
   IMessageRepository,
   IUserProfile,
@@ -54,7 +54,7 @@ class ChatService {
     userId,
     receiverId,
     initialMessage,
-  }: IStartConversationDTO): Promise<IConversationRecipient> {
+  }: IStartConversationDTO): Promise<IChatPartner> {
     if (userId === receiverId) {
       throw ApiError.forbidden("Cannot start a conversation with self. Please specify a different user.");
     }
@@ -79,7 +79,7 @@ class ChatService {
     });
     //TODO: add connected user properties
     const userProfile = (await userService.getUserProfile(receiverId)) as IUserProfile;
-    return { ...userProfile, conversationId: newConversation._id } as IConversationRecipient;
+    return { ...userProfile, conversationId: newConversation._id } as IChatPartner;
   }
 
   public async getConversationMessages({ userId, conversationId }: IConversationIdParamsDTO): Promise<IMessage[]> {

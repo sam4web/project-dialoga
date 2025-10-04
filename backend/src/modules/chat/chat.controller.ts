@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { HTTP_STATUS } from "../../../../shared/constants";
 import chatService from "./chat.service";
 import { IStartConversationRequestDTO } from "./chat.types";
-import { TGetConversationMessagesSchema } from "./chat.schema";
+import { TConversationIdSchema } from "./chat.schema";
 import { IMessage } from "../../database";
 
 class ChatController {
@@ -16,7 +16,7 @@ class ChatController {
 
   public async getConversationMessages(request: Request, response: Response) {
     const userId: string = (request as any).userId;
-    const { conversationId }: TGetConversationMessagesSchema = (request as any).validatedParams;
+    const { conversationId }: TConversationIdSchema = (request as any).validatedParams;
     const messages: IMessage[] = await chatService.getConversationMessages({ userId, conversationId });
     response.status(HTTP_STATUS.OK).json(messages);
     return;
@@ -24,8 +24,8 @@ class ChatController {
 
   public async getRecipientProfile(request: Request, response: Response) {
     const userId: string = (request as any).userId;
-    const { conversationId }: TGetConversationMessagesSchema = (request as any).validatedParams;
-    const recipientProfile = await chatService.getRecipientProfile(conversationId);
+    const { conversationId }: TConversationIdSchema = (request as any).validatedParams;
+    const recipientProfile = await chatService.getRecipientProfile({ userId, conversationId });
     response.status(HTTP_STATUS.OK).json(recipientProfile);
     return;
   }
