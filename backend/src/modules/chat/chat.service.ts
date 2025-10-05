@@ -9,6 +9,7 @@ import {
   UserRepository,
   IMessage,
   IImageMessage,
+  IConversationDetails,
 } from "../../database";
 import { ApiError, bufferToDataURI } from "../../lib";
 import { userService } from "../user";
@@ -64,9 +65,8 @@ class ChatService {
         ? conversation.user2._id.toString()
         : conversation.user1._id.toString();
     if (userId === receiverId) {
-      throw ApiError.forbidden("Cannot start a conversation with self. Please specify a different user.");
+      throw ApiError.forbidden("A user cannot perform conversation actions targeting their own account.");
     }
-
     return { conversation, receiverId };
   }
 
@@ -103,41 +103,25 @@ class ChatService {
   }
 
   public async getConversationMessages({ userId, conversationId }: IConversationIdParamsDTO): Promise<IMessage[]> {
-    const conversation = await this.conversationRepository.findById(conversationId);
-    if (!conversation) {
-      throw ApiError.notFound("Conversation not found. The requested chat session does not exist.");
-    }
-    if (!(conversation.user1._id.equals(userId) || conversation.user2._id.equals(userId))) {
-      throw ApiError.forbidden("Unauthorized access. The user is not a participant in this conversation.");
-    }
-    const messagesListPromises = conversation.messages.map(async (message) => {
+    const { conversation } = await this.getAuthorizedConversationContext({ userId, conversationId });
+    const messagePromises = conversation.messages.map(async (message) => {
       const messageDocument = (await this.messageRepository.findById(String(message))) as IMessage;
       if (messageDocument.type === "image") {
         messageDocument.image = bufferToDataURI(messageDocument.image as IImageMessage);
       }
       return messageDocument;
     });
-    const messages = await Promise.all(messagesListPromises);
+    const messages = await Promise.all(messagePromises);
     return messages;
   }
 
   public async getRecipientProfile({ userId, conversationId }: IConversationIdParamsDTO): Promise<IUserProfile> {
-    const conversation = await this.conversationRepository.findById(conversationId);
-    if (!conversation) {
-      throw ApiError.notFound("Conversation not found. The requested chat session does not exist.");
-    }
-    if (!(conversation.user1._id.equals(userId) || conversation.user2._id.equals(userId))) {
-      throw ApiError.forbidden("Unauthorized access. The user is not a participant in this conversation.");
-    }
-    const recipientId =
-      conversation.user1._id.toString() === userId
-        ? conversation.user2._id.toString()
-        : conversation.user1._id.toString();
-    const userProfile = await userService.getUserProfile(recipientId);
-    if (!userProfile) {
+    const { receiverId: recipientId } = await this.getAuthorizedConversationContext({ userId, conversationId });
+    const recipientProfile = await userService.getUserProfile(recipientId);
+    if (!recipientProfile) {
       throw ApiError.notFound("User profile not found. The provided ID does not match any existing user.");
     }
-    return userProfile;
+    return recipientProfile;
   }
 
   public async sendTextMessage({ userId, conversationId, message: text }: ISendTextMessageDTO): Promise<IMessage> {
@@ -165,6 +149,60 @@ class ChatService {
     const { _id, receiverId: receiver, text, type, createdAt, updatedAt } = message;
     const responseMessage = { _id, receiverId: receiver, text, type, createdAt, updatedAt, image: imageDataUri };
     return responseMessage;
+  }
+
+  public async getConversationDetails({
+    userId,
+    conversationId,
+  }: IConversationIdParamsDTO): Promise<IConversationDetails> {
+    const { conversation, receiverId } = await this.getAuthorizedConversationContext({ userId, conversationId });
+
+    const recipientProfile = await userService.getUserProfile(receiverId);
+    if (!recipientProfile) {
+      throw ApiError.notFound("User profile not found. The provided ID does not match any existing user.");
+    }
+    const { fullname, profileImage, email, statusMessage } = recipientProfile;
+
+    const messagePromises = conversation.messages.map(
+      (messageId) => this.messageRepository.findById(String(messageId)) as Promise<IMessage>
+    );
+    const messageDocuments = await Promise.all(messagePromises);
+
+    let messagesSent = 0;
+    let mediaShared = 0;
+    const sharedMediaUris: string[] = [];
+
+    messageDocuments.forEach((messageDocument) => {
+      if (messageDocument) {
+        if (messageDocument.type === "image") {
+          mediaShared += 1;
+          const imageContent = messageDocument.image as IImageMessage;
+          if (imageContent) {
+            sharedMediaUris.push(bufferToDataURI(imageContent));
+          }
+        } else if (messageDocument.type === "text") {
+          messagesSent += 1;
+        }
+      }
+    });
+
+    const conversationDetail: IConversationDetails = {
+      fullname,
+      profileImage,
+      // isOnline: boolean;
+      // lastSeen: Date;
+      stats: {
+        messagesSent,
+        mediaShared,
+        // daysActive: number;
+      },
+      details: {
+        email,
+        statusMessage,
+      },
+      sharedMedia: sharedMediaUris,
+    };
+    return conversationDetail;
   }
 }
 

@@ -13,3 +13,20 @@ export interface IStartConversationRequestDTO {
   receiverId: string;
   initialMessage: string;
 }
+
+export interface IConversationDetails {
+  fullname: string;
+  profileImage: string | null;
+  // isOnline: boolean;
+  // lastSeen: Date;
+  stats: {
+    messagesSent: number;
+    mediaShared: number;
+    // daysActive: number;
+  };
+  details: {
+    email: string;
+    statusMessage: string;
+  };
+  sharedMedia: string[];
+}

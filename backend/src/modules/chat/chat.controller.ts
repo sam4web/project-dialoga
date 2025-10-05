@@ -3,7 +3,7 @@ import { HTTP_STATUS } from "../../../../shared/constants";
 import chatService from "./chat.service";
 import { IStartConversationRequestDTO } from "./chat.types";
 import { TConversationIdSchema, TSendTextMessageSchema } from "./chat.schema";
-import { IImageMessage, IMessage } from "../../database";
+import { IConversationDetails, IImageMessage, IMessage } from "../../database";
 
 class ChatController {
   public async startNewConversation(request: Request, response: Response) {
@@ -48,7 +48,14 @@ class ChatController {
     response.status(HTTP_STATUS.OK).json(messageData);
     return;
   }
-  // public async getConversationDetails
+
+  public async getConversationDetails(request: Request, response: Response) {
+    const userId: string = (request as any).userId;
+    const { conversationId }: TConversationIdSchema = (request as any).validatedParams;
+    const details: IConversationDetails = await chatService.getConversationDetails({ userId, conversationId });
+    response.status(HTTP_STATUS.OK).json(details);
+    return;
+  }
 }
 
 const chatController = new ChatController();

@@ -23,7 +23,7 @@ export default class UserRepository implements IUserRepository {
 
   public async create(userData: ICreateUserDTO): Promise<IUser> {
     try {
-      const newUser = await User.create(userData);
+      const newUser = await User.create({ ...userData, statusMessage: "Hey, I'm using Dialoga." });
       return newUser;
     } catch (error) {
       throw ApiError.internal("Failed to create user.");

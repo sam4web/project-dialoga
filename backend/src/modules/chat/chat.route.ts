@@ -29,8 +29,10 @@ chatRouter.get(
   validate(conversationIdSchema, "params"),
   chatController.getRecipientProfile
 );
-
-// Get Details of a Conversation
-// chatRouter.get("/conversations/:conversationId");
+chatRouter.get(
+  "/conversations/:conversationId/details",
+  validate(conversationIdSchema, "params"),
+  chatController.getConversationDetails
+);
 
 export default chatRouter;
