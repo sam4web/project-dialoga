@@ -53,7 +53,7 @@ function ChatDetailPage() {
             <p className="text-color-primary font-medium text-sm sm:text-base">alicejohnson@example.com</p>
           </div>
           <div className="space-y-0.5">
-            <p className="text-color-light font-medium text-base sm:text-lg">Status</p>
+            <p className="text-color-light font-medium text-base sm:text-lg">Status Message</p>
             <p className="text-color-primary font-medium text-sm sm:text-base">Hey, I'm using Dialoga</p>
           </div>
         </div>

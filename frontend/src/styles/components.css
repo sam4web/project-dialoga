@@ -12,12 +12,12 @@
   }
 
   .shared-media-grid {
-    @apply grid gap-2 md:gap-3;
+    @apply grid gap-3;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   }
 
   .image-message {
-    @apply rounded-lg shadow-xs object-cover aspect-square max-w-60 lg:max-w-xs;
+    @apply rounded-lg shadow-xs object-cover aspect-square;
   }
 
   .chat-container-scrollbar {

@@ -68,7 +68,7 @@ function StartConversationPage() {
 
             <div className="h-[86dvh] overflow-y-hidden">
               <div className="h-full flex-center px-2.5">
-                <div className="container-card select-none gap-2 dark:opacity-45 opacity-60 lg:gap-4 flex flex-col lg:flex-row flex-center">
+                <div className="container-card select-none gap-2 dark:opacity-40 opacity-60 lg:gap-4 flex flex-col lg:flex-row flex-center">
                   <MessageCircleDashed className="text-color-light opacity-80 size-16 lg:size-20 m-0" />
                   <p className="text-color-light opacity-80 lg:text-lg max-w-xs">
                     <b>Ready to chat?</b> Send the first message below to begin your conversation.

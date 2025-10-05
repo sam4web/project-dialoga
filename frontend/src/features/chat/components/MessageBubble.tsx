@@ -18,7 +18,7 @@ function MessageBubble({ type, text, image, createdAt: sentTime, self }: Props) 
       {type === "text" ? (
         <p className={cx("text-base", self ? "text-primary-light" : "text-color-light")}>{text!}</p>
       ) : (
-        <img src={image!} alt="" className="image-message my-1" />
+        <img src={image!} alt="" className="image-message max-w-60 lg:max-w-xs my-1" />
       )}
       <p
         className={cx(
