@@ -8,3 +8,13 @@ export const textMessageInputSchema = z.object({
 });
 
 export type TTextMessageInputSchema = z.infer<typeof textMessageInputSchema>;
+
+export interface ISendTextMessage {
+  conversationId: string;
+  message: string;
+}
+
+export interface ISendImageMessage {
+  conversationId: string;
+  message: FormData;
+}

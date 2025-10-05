@@ -17,6 +17,8 @@ const apiEndpoints = {
     start: "/api/chat/conversations",
     recipient: (conversationId: string) => `/api/chat/conversations/${conversationId}/recipient`,
     messages: (conversationId: string) => `/api/chat/conversations/${conversationId}/messages`,
+    textMessage: (conversationId: string) => `/api/chat/conversations/${conversationId}/messages/text`,
+    imageMessage: (conversationId: string) => `/api/chat/conversations/${conversationId}/messages/image`,
   },
 };
 

@@ -40,7 +40,7 @@ function ConversationView({ conversationId }: { conversationId: string }) {
   return (
     <section className="relative h-full">
       <ChatHeader {...selectedProfile} />
-      <div className="h-[86dvh] overflow-y-hidden">
+      <div className="h-[81dvh] overflow-y-hidden">
         <ChatMessageThread conversationId={conversationId} />
       </div>
     </section>
