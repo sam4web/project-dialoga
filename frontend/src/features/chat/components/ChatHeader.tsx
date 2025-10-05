@@ -4,13 +4,13 @@ import { ChevronLeft, EllipsisVertical } from "lucide-react";
 import { Link } from "react-router-dom";
 
 type Props = {
-  _id: string;
   fullname: string;
+  conversationId?: string;
   profileImage: string | null;
   isNew?: boolean;
 };
 
-function ChatHeader({ _id, profileImage, fullname, isNew = false }: Props) {
+function ChatHeader({ profileImage, fullname, conversationId, isNew = false }: Props) {
   return (
     <header className="border-b border-zinc-400/50 dark:border-zinc-700 shadow-xs">
       <div className="flex items-center justify-between w-full py-[11px] md:py-[13px] px-2.5 lg:pl-5 lg:pr-3.5">
@@ -33,7 +33,7 @@ function ChatHeader({ _id, profileImage, fullname, isNew = false }: Props) {
         </div>
 
         {!isNew && (
-          <Link to={`/chat/${_id}/info`}>
+          <Link to={`/chat/${conversationId}/info`}>
             <Button variant="icon" title="Chat Info">
               <EllipsisVertical />
             </Button>

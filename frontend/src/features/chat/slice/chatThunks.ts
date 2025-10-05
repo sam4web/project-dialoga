@@ -3,6 +3,7 @@ import { handleApiError } from "@/utils";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   getChatPartnersApi,
+  getConversationDetailsApi,
   getConversationMessagesApi,
   getRecipientProfileApi,
   getUnassociatedUsersApi,
@@ -10,7 +11,13 @@ import {
   sendTextMessageApi,
   startNewConversationApi,
 } from "../api";
-import { IChatPartner, IUserProfile, IStartConversationRequestDTO, IMessage } from "@shared/types";
+import {
+  IChatPartner,
+  IUserProfile,
+  IStartConversationRequestDTO,
+  IMessage,
+  IConversationDetails,
+} from "@shared/types";
 import { ISendImageMessage, ISendTextMessage } from "../types";
 
 export const fetchChatPartners = createAsyncThunk<IChatPartner[], void, ThunkApiConfig>(
@@ -96,6 +103,20 @@ export const sendImageMessageReqest = createAsyncThunk<IMessage, ISendImageMessa
       return messageData;
     } catch (error) {
       return rejectWithValue(handleApiError(error, "Image failed to upload. Unable to send the file at this time."));
+    }
+  }
+);
+
+export const fetchConversationDetails = createAsyncThunk<IConversationDetails, string, ThunkApiConfig>(
+  "chat/fetchConversationDetails",
+  async (conversationId, { getState, rejectWithValue }) => {
+    try {
+      const recipientProfile = await getConversationDetailsApi(conversationId, getState);
+      return recipientProfile;
+    } catch (error) {
+      return rejectWithValue(
+        handleApiError(error, "Failed to load contact info. Unable to retrieve conversation details.")
+      );
     }
   }
 );

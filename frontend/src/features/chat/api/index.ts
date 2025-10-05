@@ -1,7 +1,13 @@
 import { RootState } from "@/app/store";
 import { apiClient } from "@/utils";
 import apiEndpoints from "@/config/api";
-import { IChatPartner, IUserProfile, IStartConversationRequestDTO, IMessage } from "@shared/types";
+import {
+  IChatPartner,
+  IUserProfile,
+  IStartConversationRequestDTO,
+  IMessage,
+  IConversationDetails,
+} from "@shared/types";
 import { ISendImageMessage, ISendTextMessage } from "../types";
 
 export const getUnassociatedUsersApi = async (getState: () => RootState): Promise<IUserProfile[]> => {
@@ -78,6 +84,17 @@ export const sendImageMessageApi = async (
       Authorization: `Bearer ${token}`,
       "Content-Type": "multipart/form-data",
     },
+  });
+  return response.data;
+};
+
+export const getConversationDetailsApi = async (
+  conversationId: string,
+  getState: () => RootState
+): Promise<IConversationDetails> => {
+  const token = getState().auth.token;
+  const response = await apiClient.get(apiEndpoints.chat.details(conversationId), {
+    headers: { Authorization: `Bearer ${token}` },
   });
   return response.data;
 };

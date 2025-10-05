@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { IChatPartner, IStartConversationRequestDTO, IUserProfile } from "@shared/types";
 import { ChatHeader, ChatSideBar, MessageInput } from "../components";
-import { useActionWithToast } from "@/hooks";
+import { useActionWithToast, useTitle } from "@/hooks";
 import { fetchPublicProfile } from "@/features/profile/slice";
 import { Spinner } from "@/components";
 import { sendStartNewConversationRequest } from "../slice";
@@ -23,7 +23,6 @@ function StartConversationPage() {
     const fetchUserProfile = async () => {
       const userProfile = await executefetchProfileAction({
         action: fetchPublicProfile(userId!),
-        loadingMessage: "Getting profile details...",
       });
       if (!userProfile) {
         navigate("/chat/new", { replace: true });
@@ -51,6 +50,8 @@ function StartConversationPage() {
     navigate(recipient ? `/chat/${recipient.conversationId}` : `/chat`, { replace: true });
     return;
   };
+
+  useTitle({ title: selectedProfile ? `Chat with ${selectedProfile.fullname}` : "Chat", template: true });
 
   return (
     <div className="flex">

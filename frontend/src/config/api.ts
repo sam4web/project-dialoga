@@ -19,6 +19,7 @@ const apiEndpoints = {
     messages: (conversationId: string) => `/api/chat/conversations/${conversationId}/messages`,
     textMessage: (conversationId: string) => `/api/chat/conversations/${conversationId}/messages/text`,
     imageMessage: (conversationId: string) => `/api/chat/conversations/${conversationId}/messages/image`,
+    details: (conversationId: string) => `/api/chat/conversations/${conversationId}/details`,
   },
 };
 
