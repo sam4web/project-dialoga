@@ -32,14 +32,12 @@ function ChatHeader({ _id, profileImage, fullname, isNew = false }: Props) {
           </div>
         </div>
 
-        {!isNew ? (
+        {!isNew && (
           <Link to={`/chat/${_id}/info`}>
             <Button variant="icon" title="Chat Info">
               <EllipsisVertical />
             </Button>
           </Link>
-        ) : (
-          ""
         )}
       </div>
     </header>

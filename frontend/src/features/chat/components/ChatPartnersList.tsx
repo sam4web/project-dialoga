@@ -32,8 +32,8 @@ function ChatPartnersList() {
 
   if (!chatPartners || !chatPartners.length) {
     return (
-      <div className="space-x-2 px-3.5 md:px-2.5 lg:px-3.5">
-        <div className="container-card select-none dark:opacity-45 opacity-60 p-4">
+      <div className="px-3.5 md:px-2.5 lg:px-3.5">
+        <div className="container-card select-none dark:opacity-50 opacity-70 p-4">
           <p className="text-color-light opacity-80 text-sm lg:text-base">
             <b>No active chats.</b> Start a new conversation to begin.
           </p>

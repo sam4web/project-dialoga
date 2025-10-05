@@ -8,6 +8,7 @@ import NewChatSearchInput from "./NewChatSearchInput";
 import ChatPartnersList from "./ChatPartnersList";
 import NewChatContactItem from "./NewChatContactItem";
 import ChatPartnerItem from "./ChatPartnerItem";
+import NewChatContactList from "./NewChatContactList";
 
 export {
   MessageBubble,
@@ -19,5 +20,6 @@ export {
   NewChatSearchInput,
   ChatPartnersList,
   NewChatContactItem,
+  NewChatContactList,
   ChatPartnerItem,
 };

@@ -42,7 +42,7 @@ const messageSchema = new Schema<IMessage>(
     image: {
       type: imageMessageSchema,
       required: function () {
-        return this.type === "image";
+        return (this as unknown as IMessage).type === "image";
       },
     },
   },

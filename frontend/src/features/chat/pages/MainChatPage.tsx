@@ -10,7 +10,7 @@ function MainChatPage() {
       <div className={cx("md:max-w-sm w-full", conversationId ? "hidden md:block" : "flex-1")}>
         <ChatSideBar />
       </div>
-      <div className={cx("flex-1 w-full", !conversationId ? "hidden md:block" : "")}>
+      <div className={cx("flex-1 h-dvh w-full", !conversationId ? "hidden md:block" : "")}>
         {conversationId ? <ConversationView conversationId={conversationId} /> : <PlaceholderView />}
       </div>
     </div>

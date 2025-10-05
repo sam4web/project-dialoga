@@ -57,7 +57,7 @@ function StartConversationPage() {
       <div className="md:max-w-sm w-full hidden md:block">
         <ChatSideBar />
       </div>
-      <div className="flex-1 w-full">
+      <div className="flex-1 h-dvh w-full">
         {!selectedProfile ? (
           <div className="h-full flex-center">
             <Spinner />

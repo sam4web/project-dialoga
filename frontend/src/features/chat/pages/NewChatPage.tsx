@@ -1,17 +1,16 @@
-import { Header, Spinner } from "@/components";
+import { Header } from "@/components";
 import { useActionWithToast, useTitle } from "@/hooks";
-import { NewChatContactItem, NewChatSearchInput } from "../components";
-import { fetchUnassociatedUsers, isUnassociatedUsersLoaded, selectUnassociatedUsers } from "../slice";
+import { NewChatSearchInput } from "../components";
+import { fetchUnassociatedUsers, isUnassociatedUsersLoaded } from "../slice";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
 import { IUserProfile } from "@shared/types/user";
+import NewChatContactList from "../components/NewChatContactList";
 
 function NewChatPage() {
   useTitle({ title: "Find Contacts", template: true });
 
   const { executeAction } = useActionWithToast<IUserProfile[], void>();
-  const unassociatedUsers = useSelector(selectUnassociatedUsers);
   const isLoaded = useSelector(isUnassociatedUsersLoaded);
 
   useEffect(() => {
@@ -29,22 +28,9 @@ function NewChatPage() {
   return (
     <>
       <Header title="New Chat" />
-      <div className="container min-h-full max-w-2xl mx-auto mt-5 space-y-5 sm:space-y-7">
+      <div className="container min-h-full max-w-2xl mx-auto mt-5 space-y-3.5 sm:space-y-4">
         <NewChatSearchInput />
-
-        <div className="container-card px-1.5 sm:px-3 py-4 space-y-2">
-          {!isLoaded ? (
-            <div className="flex-center py-10">
-              <Spinner />
-            </div>
-          ) : (
-            unassociatedUsers?.map((user) => (
-              <Link key={user._id} to={`/chat/new/${user._id}`}>
-                <NewChatContactItem user={user} />
-              </Link>
-            ))
-          )}
-        </div>
+        <NewChatContactList />
       </div>
     </>
   );

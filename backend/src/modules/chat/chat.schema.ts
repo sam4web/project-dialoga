@@ -8,15 +8,15 @@ export const startConversationSchema = z.object({
     { error: "Please enter a valid Id." }
   ),
   initialMessage: requiredString("Initial message is required.", "Initial message must be a valid string.").max(
-    50,
-    "Message too long. Please limit text to 50 characters or less."
+    100,
+    "Message too long. Please limit text to 100 characters or less."
   ),
 });
 
 export const sendTextMessageSchema = z.object({
   message: requiredString("Text message is required.", "Text message must be a valid string.").max(
-    50,
-    "Message too long. Please limit text to 50 characters or less."
+    100,
+    "Message too long. Please limit text to 100 characters or less."
   ),
 });
 

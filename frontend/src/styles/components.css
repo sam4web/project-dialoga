@@ -17,7 +17,7 @@
   }
 
   .image-message {
-    @apply rounded-lg shadow-xs object-cover aspect-square max-w-60 lg:max-w-sm;
+    @apply rounded-lg shadow-xs object-cover aspect-square max-w-60 lg:max-w-xs;
   }
 
   .chat-container-scrollbar {

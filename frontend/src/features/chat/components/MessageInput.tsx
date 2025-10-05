@@ -50,7 +50,7 @@ function MessageInput({ isNew = false, handleSubmit }: Props) {
       )}
 
       <div className="border-t border-zinc-400/50 absolute bottom-0 left-0 w-full bg-primary-light/70 dark:bg-zinc-900 z-[3]">
-        <div className="flex items-center justify-between space-x-2 md:space-x-3 px-2.5 lg:px-4.5 pt-3 md:pt-4 pb-2 md:pb-3">
+        <div className="flex items-center justify-between space-x-2 md:space-x-3 px-2.5 lg:px-4.5 py-3 md:py-4">
           {!isNew && (
             <Button variant="icon" title="Upload File" onClick={() => dispatch(showFileUploadModal())}>
               <Paperclip />
