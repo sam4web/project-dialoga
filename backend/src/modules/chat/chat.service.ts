@@ -99,7 +99,13 @@ class ChatService {
     });
     //TODO: add connected user properties
     const userProfile = (await userService.getUserProfile(receiverId)) as IUserProfile;
-    return { ...userProfile, conversationId: newConversation._id } as IChatPartner;
+    return {
+      ...userProfile,
+      conversationId: newConversation._id,
+      isOnline: receiver.isOnline,
+      lastMessage: initialMessage,
+      lastSeen: receiver.lastSeen,
+    } as IChatPartner;
   }
 
   public async getConversationMessages({ userId, conversationId }: IConversationIdParamsDTO): Promise<IMessage[]> {

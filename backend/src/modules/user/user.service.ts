@@ -2,11 +2,13 @@ import {
   ConversationRepository,
   IChatPartner,
   IConversationRepository,
+  IMessageRepository,
   IProfileImage,
   IProfileImageRepository,
   IUpdateUserDTO,
   IUserProfile,
   IUserRepository,
+  MessageRepository,
   ProfileImageRepository,
   UserRepository,
 } from "../../database";
@@ -18,15 +20,24 @@ class UserService {
   private userRepository: IUserRepository;
   private conversationRepository: IConversationRepository;
   private profileImageRepository: IProfileImageRepository;
+  private messageRepository: IMessageRepository;
 
   constructor(
     userRepository: IUserRepository = new UserRepository(),
     conversationRepository: IConversationRepository = new ConversationRepository(),
+    messageRepository: IMessageRepository = new MessageRepository(),
     profileImageRepository: IProfileImageRepository = new ProfileImageRepository()
   ) {
     this.userRepository = userRepository;
     this.conversationRepository = conversationRepository;
+    this.messageRepository = messageRepository;
     this.profileImageRepository = profileImageRepository;
+  }
+
+  private async getLastMessageInConversation(conversationId: string) {
+    const conversation = (await this.conversationRepository.findById(conversationId))!;
+    const message = (await this.messageRepository.findById(conversation.messages.slice(-1).toString()))!;
+    return message.type === "text" ? message.text : "Image";
   }
 
   public async getAllUsers(userId: string) {
@@ -73,14 +84,26 @@ class UserService {
     });
     const participantPromises = participants.map(async ({ userId, conversationId }) => {
       const user = (await this.userRepository.findById(userId))!;
-      let { _id, fullname, email, statusMessage, profileImage } = user;
+      const lastMessage = await this.getLastMessageInConversation(conversationId);
+      let { _id, fullname, email, statusMessage, profileImage, isOnline, lastSeen } = user;
       if (user.profileImage) {
         profileImage = await getProfileImageDataUri(String(user.profileImage));
       }
-      // TODO: include isOnline, lastSeen, lastMessage properties
-      return { _id, fullname, email, statusMessage, conversationId, profileImage } as IChatPartner;
+      return {
+        _id,
+        fullname,
+        email,
+        statusMessage,
+        conversationId,
+        lastMessage,
+        isOnline,
+        lastSeen,
+        profileImage,
+      } as IChatPartner;
     });
-    const activeParticipants = await Promise.all(participantPromises);
+    const activeParticipants = (await Promise.all(participantPromises)).filter(({ _id, conversationId }) =>
+      Boolean(_id)
+    );
     return activeParticipants;
   }
 
