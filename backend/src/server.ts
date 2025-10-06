@@ -2,6 +2,7 @@ import http from "http";
 import app from "./app";
 import { connectDatabase, logger } from "./config";
 import { config } from "./config";
+import { initSocketIO } from "./socket";
 
 const server = http.createServer(app);
 
@@ -26,7 +27,8 @@ const bootstrap = async () => {
     logger.info("Database connection established.");
 
     // --- Initialize Socket.IO ---
-    // here...
+    initSocketIO(server);
+    logger.info("Socket.IO initialized");
 
     // --- Start HTTP Server ---
     server.listen(config.PORT, () => {

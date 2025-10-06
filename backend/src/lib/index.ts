@@ -1,6 +1,6 @@
 import ApiError from "./errors/ApiError";
 
-export * from "./auth/jwt";
+export * from "./auth";
 export * from "./schema";
 export * from "./helpers";
 
