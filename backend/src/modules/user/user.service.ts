@@ -14,6 +14,7 @@ import {
 } from "../../database";
 import { ApiError } from "../../lib";
 import { getProfileImageDataUri } from "./user.helpers";
+import { broadcastUserUpdate } from "./user.socket";
 import { ISetOnlineStatus } from "./user.types";
 
 class UserService {
@@ -126,6 +127,7 @@ class UserService {
       updatedUser.profileImage = await getProfileImageDataUri(String(updatedUser.profileImage));
     }
     const { password, createdAt, updatedAt, ...userWithoutPassword } = updatedUser;
+    broadcastUserUpdate(userId, updateData);
     return userWithoutPassword as IUserProfile;
   }
 
@@ -147,6 +149,7 @@ class UserService {
     }
     user.profileImage = await getProfileImageDataUri(String(profileImage._id));
     const { password, createdAt, updatedAt, ...userWithoutPassword } = user;
+    broadcastUserUpdate(userId, { profileImage: user.profileImage });
     return userWithoutPassword as IUserProfile;
   }
 

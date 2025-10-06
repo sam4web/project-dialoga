@@ -1,5 +1,5 @@
 import { Socket } from "socket.io";
-import { IDisconnectedUserPayload } from "../types";
+import { IDisconnectedUserPayload, IUpdateUserDTO } from "../types";
 
 export interface ISocketCallback {
   status: "success" | "error";
@@ -10,6 +10,7 @@ export interface ServerToClientEvents {
   "message:system": (message: string) => void;
   "user:connected": (userId: string) => void;
   "user:disconnected": ({ userId, lastSeen }: IDisconnectedUserPayload) => void;
+  "user:profile_updated": ({ userId, updatedData }: { userId: string; updatedData: IUpdateUserDTO }) => void;
 }
 
 export interface ClientToServerEvents {}

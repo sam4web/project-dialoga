@@ -3,8 +3,7 @@ import { Server as HttpServer } from "http";
 import { AppSocket, ClientToServerEvents, InterServerEvents, ServerToClientEvents, SocketData } from "./types";
 import { corsOptions, logger } from "../config";
 import { authorize } from "./middleware";
-import { registerUserHandlers, updateUserStatusAndBroadcast, userService } from "../modules/user";
-import { handleSocketError, wrapSocketHandler } from "./lib/errors/error-wrapper";
+import { updateUserStatusAndBroadcast } from "../modules/user";
 
 let io: SocketIOServer<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData> | null = null;
 
@@ -23,8 +22,6 @@ export const initSocketIO = (httpServer: HttpServer): SocketIOServer => {
     logger.info(`[Socket.IO] Client connected: ${socket.id}`);
 
     await updateUserStatusAndBroadcast(socket, true);
-
-    registerUserHandlers(socket);
 
     socket.on("disconnect", async () => {
       await updateUserStatusAndBroadcast(socket, false, new Date());

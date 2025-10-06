@@ -1,20 +1,8 @@
-import { Socket } from "socket.io";
-import { logger } from "../../config";
-import {
-  AppSocket,
-  ClientToServerEvents,
-  InterServerEvents,
-  ServerToClientEvents,
-  SocketData,
-} from "../../socket/types";
-import { handleSocketError, wrapSocketHandler } from "../../socket/lib/errors/error-wrapper";
+import { AppSocket } from "../../socket/types";
+import { handleSocketError } from "../../socket/lib/errors/error-wrapper";
 import userService from "./user.service";
-import { IUserStatus } from "../../types";
-
-export async function registerUserHandlers(socket: AppSocket) {
-  logger.info(`[Socket] User connected: ${socket.id}`);
-  //   socket.on("user:connect");
-}
+import { IUpdateUserDTO } from "../../types";
+import { getIo } from "../../socket";
 
 export async function updateUserStatusAndBroadcast(socket: AppSocket, isOnline: boolean, lastSeen?: Date) {
   try {
@@ -28,4 +16,9 @@ export async function updateUserStatusAndBroadcast(socket: AppSocket, isOnline: 
   } catch (error) {
     handleSocketError(socket, error as Error);
   }
+}
+
+export function broadcastUserUpdate(userId: string, updatedData: IUpdateUserDTO) {
+  const io = getIo();
+  io.emit("user:profile_updated", { userId, updatedData });
 }
