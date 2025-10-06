@@ -8,9 +8,16 @@ export interface IUser {
   updatedAt: Date;
   settings: IUserSettings;
   profileImage: string | null;
+  isOnline: boolean;
+  lastSeen: Date;
 }
 
 export interface IUserProfile extends Omit<IUser, "password" | "createdAt" | "updatedAt"> {}
+
+export interface IUserStatus {
+  isOnline: boolean;
+  lastSeen: Date;
+}
 
 export interface IUserSettings {
   readReceipts: boolean;
@@ -24,6 +31,8 @@ export interface IUpdateUserDTO extends Partial<IUserSettings> {
   statusMessage?: string;
   password?: string;
   profileImage?: string;
+  isOnline?: boolean;
+  lastSeen?: Date;
 }
 
 export interface IChatPartner extends IUserProfile {
@@ -31,4 +40,9 @@ export interface IChatPartner extends IUserProfile {
   isOnline: boolean;
   lastSeen: Date;
   lastMessage: string;
+}
+
+export interface IDisconnectedUserPayload {
+  userId: string;
+  lastSeen?: string;
 }

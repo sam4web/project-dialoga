@@ -19,6 +19,8 @@ const userSchema = new Schema<IUser>(
     password: { type: String, required: true },
     settings: { type: settingsSchema, default: () => ({}) },
     profileImage: { type: Schema.Types.ObjectId, ref: "ProfileImage", default: null },
+    isOnline: { type: Boolean, default: false },
+    lastSeen: { type: Date, default: () => new Date() },
   },
   { timestamps: true, versionKey: false }
 );

@@ -12,6 +12,7 @@ import {
 } from "../../database";
 import { ApiError } from "../../lib";
 import { getProfileImageDataUri } from "./user.helpers";
+import { ISetOnlineStatus } from "./user.types";
 
 class UserService {
   private userRepository: IUserRepository;
@@ -103,6 +104,13 @@ class UserService {
     }
     const { password, createdAt, updatedAt, ...userWithoutPassword } = updatedUser;
     return userWithoutPassword as IUserProfile;
+  }
+
+  public async setUserOnlineStatus({ userId, isOnline, lastSeen }: ISetOnlineStatus) {
+    await this.userRepository.update(userId, {
+      isOnline,
+      lastSeen: lastSeen ? lastSeen : new Date(),
+    });
   }
 
   public async updateUserProfileImage(userId: string, imageData: IProfileImage) {

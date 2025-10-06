@@ -3,6 +3,8 @@ import { Server as HttpServer } from "http";
 import { AppSocket, ClientToServerEvents, InterServerEvents, ServerToClientEvents, SocketData } from "./types";
 import { corsOptions, logger } from "../config";
 import { authorize } from "./middleware";
+import { registerUserHandlers, updateUserStatusAndBroadcast, userService } from "../modules/user";
+import { handleSocketError, wrapSocketHandler } from "./lib/errors/error-wrapper";
 
 let io: SocketIOServer<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData> | null = null;
 
@@ -20,10 +22,13 @@ export const initSocketIO = (httpServer: HttpServer): SocketIOServer => {
   io.on("connection", async (socket: AppSocket) => {
     logger.info(`[Socket.IO] Client connected: ${socket.id}`);
 
-    // Register module-specific handlers for this socket
+    await updateUserStatusAndBroadcast(socket, true);
 
-    socket.on("disconnect", (reason: string) => {
-      logger.info(`[Socket.IO] Client disconnected: ${socket.id} (Reason: ${reason})`);
+    registerUserHandlers(socket);
+
+    socket.on("disconnect", async () => {
+      await updateUserStatusAndBroadcast(socket, false, new Date());
+      logger.info(`[Socket.IO] Client disconnected: ${socket.id}`);
     });
 
     socket.on("error", (error: Error) => {

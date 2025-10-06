@@ -1,7 +1,7 @@
 import { logger } from "../../../config";
 import { AppSocket } from "../../types";
 
-type SocketEventHandler<T extends any[]> = (socket: AppSocket, ...args: T) => void;
+type SocketEventHandler<T extends any[]> = (socket: AppSocket, ...args: T) => void | Promise<void>;
 
 export const handleSocketError = (socket: AppSocket, error: Error) => {
   const userId = socket.data.userId || socket.id;
@@ -12,15 +12,20 @@ export const handleSocketError = (socket: AppSocket, error: Error) => {
 };
 
 export function wrapSocketHandler<T extends any[]>(handler: SocketEventHandler<T>): (...args: T) => void {
-  return function (this: AppSocket, ...args: T) {
+  return async function (this: AppSocket, ...args: T) {
     const socket = this as AppSocket;
     try {
-      handler(socket, ...args);
+      await handler(socket, ...args);
     } catch (error) {
       handleSocketError(socket, error as Error);
-      const callback = args[args.length - 1];
-      if (typeof callback === "function") {
-        callback("error", "An internal server error occurred.");
+      if (error instanceof Error) {
+        const callback = args[args.length - 1];
+        if (typeof callback === "function") {
+          callback({
+            status: "error",
+            message: error.message || "An internal server error occurred.",
+          });
+        }
       }
     }
   };

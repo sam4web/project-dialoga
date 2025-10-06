@@ -7,6 +7,7 @@ export const authorize = async (socket: AppSocket, next: (err?: ExtendedError) =
   try {
     const userId = await validateAccessToken(token || "");
     socket.data.userId = userId;
+    socket.data.socketId = socket.id;
     next();
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : "Internal server error during authentication.";
