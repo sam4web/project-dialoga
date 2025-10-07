@@ -65,8 +65,7 @@ function StartConversationPage() {
           </div>
         ) : (
           <section className="relative h-full">
-            <ChatHeader {...selectedProfile} isNew />
-
+            <ChatHeader profile={selectedProfile} isNew />
             <div className="h-[86dvh] overflow-y-hidden">
               <div className="h-full flex-center px-2.5">
                 <div className="container-card select-none gap-2 dark:opacity-40 opacity-60 lg:gap-4 flex flex-col lg:flex-row flex-center">

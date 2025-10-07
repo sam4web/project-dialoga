@@ -28,5 +28,6 @@ export interface IConversationDetails {
     email: string;
     statusMessage: string;
   };
+  showOnlineStatus: boolean;
   sharedMedia: string[];
 }

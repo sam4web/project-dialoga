@@ -60,6 +60,8 @@ function ConversationInfoPage() {
     );
   }
 
+  const isOnline = chatInfo.isOnline && chatInfo.showOnlineStatus;
+
   return (
     <PageLayout>
       <div className="space-y-5 sm:space-y-7">
@@ -73,7 +75,7 @@ function ConversationInfoPage() {
                 className="size-16! sm:size-20! text-2xl! sm:text-3xl!"
               />
 
-              {chatInfo.isOnline && (
+              {isOnline && (
                 <div className="absolute bottom-0 right-0 bg-green-500 size-5 rounded-full flex-center">
                   <div className="size-2.5 bg-zinc-50 rounded-full" />
                 </div>
@@ -83,13 +85,10 @@ function ConversationInfoPage() {
               <h3 className="header-text text-xl sm:text-2xl text-center">{chatInfo.fullname}</h3>
               <div className="flex-center gap-2">
                 <div
-                  className={cx(
-                    "size-3 rounded-full",
-                    chatInfo.isOnline ? "bg-green-500 " : "bg-zinc-300 dark:bg-zinc-600"
-                  )}
+                  className={cx("size-3 rounded-full", isOnline ? "bg-green-500 " : "bg-zinc-300 dark:bg-zinc-600")}
                 />
                 <p className="text-color-primary font-medium">
-                  {chatInfo.isOnline
+                  {isOnline
                     ? "Online Now"
                     : `Last seen ${formatDistanceToNow(new Date(chatInfo.lastSeen), { addSuffix: true })}`}
                 </p>

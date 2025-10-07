@@ -64,11 +64,11 @@ class UserService {
     const participantPromises = users
       .filter((user) => !connectedParticipantIds.includes(user._id.toString()))
       .map(async (user) => {
-        let { _id, fullname, email, statusMessage, profileImage } = user;
+        let { password, updatedAt, ...userProfile } = user;
         if (user.profileImage) {
-          profileImage = await getProfileImageDataUri(String(user.profileImage));
+          userProfile.profileImage = await getProfileImageDataUri(String(user.profileImage));
         }
-        return { _id, fullname, email, statusMessage, profileImage } as IUserProfile;
+        return userProfile as IUserProfile;
       });
 
     const unassociatedUsers = await Promise.all(participantPromises);
@@ -86,25 +86,13 @@ class UserService {
     const participantPromises = participants.map(async ({ userId, conversationId }) => {
       const user = (await this.userRepository.findById(userId))!;
       const lastMessage = await this.getLastMessageInConversation(conversationId);
-      let { _id, fullname, email, statusMessage, profileImage, isOnline, lastSeen } = user;
+      let { password, updatedAt, ...userProfile } = user;
       if (user.profileImage) {
-        profileImage = await getProfileImageDataUri(String(user.profileImage));
+        userProfile.profileImage = await getProfileImageDataUri(String(user.profileImage));
       }
-      return {
-        _id,
-        fullname,
-        email,
-        statusMessage,
-        conversationId,
-        lastMessage,
-        isOnline,
-        lastSeen,
-        profileImage,
-      } as IChatPartner;
+      return { ...userProfile, conversationId, lastMessage } as IChatPartner;
     });
-    const activeParticipants = (await Promise.all(participantPromises)).filter(({ _id, conversationId }) =>
-      Boolean(_id)
-    );
+    const activeParticipants = (await Promise.all(participantPromises)).filter(({ _id }) => Boolean(_id));
     return activeParticipants;
   }
 

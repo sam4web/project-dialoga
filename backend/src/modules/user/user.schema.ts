@@ -8,7 +8,6 @@ export const updateUserSchema = z.object({
   statusMessage: z.string().optional(),
   settings: z
     .object({
-      readReceipts: z.boolean(),
       onlineStatus: z.boolean(),
       typingIndicator: z.boolean(),
     })

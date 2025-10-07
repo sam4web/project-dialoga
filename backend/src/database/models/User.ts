@@ -4,7 +4,6 @@ import { IUser, IUserSettings } from "../types";
 
 const settingsSchema = new Schema<IUserSettings>(
   {
-    readReceipts: { type: Boolean, default: true },
     onlineStatus: { type: Boolean, default: true },
     typingIndicator: { type: Boolean, default: false },
   },

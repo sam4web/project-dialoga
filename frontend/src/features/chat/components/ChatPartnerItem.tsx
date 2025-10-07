@@ -15,21 +15,19 @@ function ChatPartnerItem({ partner }: { partner: IChatPartner }) {
               fullname={partner.fullname}
               src={partner?.profileImage || ""}
             />
-            {/* {partner.lastOnline === 0 && (
-                  <div className="absolute bottom-0 right-0 bg-green-500 size-3 rounded-full" />
-                )} */}
+            {partner.isOnline && <div className="absolute bottom-0 right-0 bg-green-500 size-3 rounded-full" />}
           </div>
 
           <div className="flex-1">
             <div className="flex justify-between">
               <p className="header-text text-base sm:text-lg">{partner.fullname}</p>
-              {/* <p className="text-color-light text-xs">{ms(partner.lastOnline)}</p> */}
-              {/* dummy data */}
-              <p className="text-color-light text-xs">{ms(1678879)}</p>
+              {!partner.isOnline && partner.settings.onlineStatus && (
+                <p className="text-color-light text-xs">
+                  {ms(Math.abs(new Date(partner.lastSeen).getTime() - Date.now()))}
+                </p>
+              )}
             </div>
-            {/* <p className="text-color-light text-sm">{truncate(partner.lastMessage, 30)}</p> */}
-            {/* dummy data */}
-            <p className="text-color-light text-sm">{truncate("Hello", 30)}</p>
+            <p className="text-color-light text-sm">{truncate(partner.lastMessage, 30)}</p>
           </div>
         </div>
       </div>

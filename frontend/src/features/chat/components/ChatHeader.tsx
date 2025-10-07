@@ -1,16 +1,18 @@
 import { UserAvatar } from "@/components";
 import Button from "@/components/ui/Button";
+import { IUserProfile } from "@shared/types";
+import { formatDistanceToNow } from "date-fns/formatDistanceToNow";
 import { ChevronLeft, EllipsisVertical } from "lucide-react";
 import { Link } from "react-router-dom";
 
 type Props = {
-  fullname: string;
+  profile: IUserProfile;
+
   conversationId?: string;
-  profileImage: string | null;
   isNew?: boolean;
 };
 
-function ChatHeader({ profileImage, fullname, conversationId, isNew = false }: Props) {
+function ChatHeader({ profile, conversationId, isNew = false }: Props) {
   return (
     <header className="border-b border-zinc-400/50 dark:border-zinc-700 shadow-xs">
       <div className="flex items-center justify-between w-full py-[11px] md:py-[13px] px-2.5 lg:pl-5 lg:pr-3.5">
@@ -22,13 +24,17 @@ function ChatHeader({ profileImage, fullname, conversationId, isNew = false }: P
           </Link>
           <UserAvatar
             className="size-12!"
-            src={profileImage ? profileImage : ""}
+            src={profile.profileImage ? profile.profileImage : ""}
             alt="profile image"
-            fullname={fullname}
+            fullname={profile.fullname}
           />
           <div>
-            <p className="header-text text-base sm:text-lg">{fullname}</p>
-            {/* <p className="text-color-light text-sm">{status}</p> */}
+            <p className="header-text text-base sm:text-lg">{profile.fullname}</p>
+            <p className="text-color-light text-sm">
+              {profile.isOnline && profile.settings.onlineStatus
+                ? "Online Now"
+                : `Last seen ${formatDistanceToNow(new Date(profile.lastSeen), { addSuffix: true })}`}
+            </p>
           </div>
         </div>
 

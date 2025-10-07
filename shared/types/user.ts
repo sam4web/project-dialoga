@@ -20,7 +20,6 @@ export interface IUserStatus {
 }
 
 export interface IUserSettings {
-  readReceipts: boolean;
   onlineStatus: boolean;
   typingIndicator: boolean;
 }

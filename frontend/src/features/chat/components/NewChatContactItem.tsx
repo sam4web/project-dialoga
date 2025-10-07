@@ -9,9 +9,9 @@ function NewChatContactItem({ user }: { user: IUserProfile }) {
       <div className="flex items-center space-x-2 sm:space-x-4">
         <div className="relative">
           <UserAvatar alt={`${user.fullname} profile image`} fullname={user.fullname} src={user?.profileImage || ""} />
-          {/* {user.status === "online" && (
+          {user.isOnline && user.settings.onlineStatus && (
             <div className="absolute bottom-0 right-0 bg-green-500 size-3 rounded-full" />
-          )} */}
+          )}
         </div>
 
         <div>

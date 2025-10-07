@@ -169,8 +169,9 @@ class ChatService {
     if (!recipientProfile) {
       throw ApiError.notFound("User profile not found. The provided ID does not match any existing user.");
     }
-    const { fullname, profileImage, email, statusMessage, isOnline, lastSeen, createdAt } = recipientProfile;
-    const daysActive = Math.abs(differenceInDays(startOfDay(createdAt), startOfDay(new Date())));
+    const { _id, settings, email, statusMessage, ...profile } = recipientProfile;
+    const daysActive = Math.abs(differenceInDays(startOfDay(profile.createdAt), startOfDay(new Date())));
+    const showOnlineStatus = settings.onlineStatus;
 
     const messagePromises = conversation.messages.map(
       (messageId) => this.messageRepository.findById(String(messageId)) as Promise<IMessage>
@@ -196,10 +197,7 @@ class ChatService {
     });
 
     const conversationDetail: IConversationDetails = {
-      fullname,
-      profileImage,
-      isOnline,
-      lastSeen,
+      ...profile,
       stats: {
         messagesSent,
         mediaShared,
@@ -209,6 +207,7 @@ class ChatService {
         email,
         statusMessage,
       },
+      showOnlineStatus,
       sharedMedia: sharedMediaUris,
     };
     return conversationDetail;

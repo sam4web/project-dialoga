@@ -18,7 +18,6 @@ function ProfileSettingCard() {
   const theme = useSelector(selectCurrentTheme);
   const { executeAction } = useActionWithToast<IUserProfile, IUpdateUserDTO>();
   const [settings, setSettings] = useState<IUserSettings>({
-    readReceipts: user?.settings.readReceipts || false,
     onlineStatus: user?.settings.onlineStatus || false,
     typingIndicator: user?.settings.typingIndicator || false,
   });
@@ -40,7 +39,6 @@ function ProfileSettingCard() {
   useDebounceEffect(handleSettingUpdate, [JSON.stringify(settings)], 500);
 
   const settingItems: ISettingItem[] = [
-    { name: "readReceipts", label: "Read Receipts", description: "Let others know when you've read their messages" },
     { name: "onlineStatus", label: "Online Status", description: "Show when you're online to your contacts" },
     {
       name: "typingIndicator",
