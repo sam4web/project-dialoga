@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { changePasswordApi, loginApi, refreshApi, registerApi, signoutApi } from "../api";
 import { IRegisterRequestDTO, ILoginRequestDTO, Token, TChangePasswordSchema } from "../types";
-import { handleApiError } from "@/utils";
+import { disconnectSocket, handleApiError } from "@/utils";
 import { ThunkApiConfig } from "@/app/store";
 
 export const sendLoginRequest = createAsyncThunk<Token, ILoginRequestDTO, ThunkApiConfig>(
@@ -40,6 +40,7 @@ export const sendRefreshTokenRequest = createAsyncThunk<Token, void>("auth/refre
 export const sendSignOutRequest = createAsyncThunk<void>("auth/signout", async (_, { rejectWithValue }) => {
   try {
     await signoutApi();
+    disconnectSocket();
   } catch (error) {
     return rejectWithValue(
       handleApiError(error, "Failed to log out. For security, please clear your cookies or close your browser.")

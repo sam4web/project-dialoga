@@ -3,7 +3,7 @@ import { isUserAuthenticated, selectAuthToken } from "@/features/auth/slice";
 import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
 import { store, useAppDispatch } from "@/app/store";
-import { initializeSocket } from "@/utils/socket";
+import { initializeSocket } from "@/utils";
 import { useEffect } from "react";
 
 function AuthRequired() {
