@@ -10,6 +10,7 @@
   --font-foreground: "Inter", sans-serif;
 
   --animate-appear: appear 170ms ease-in-out;
+  --animate-bounce: bounce 1000ms infinite ease-in-out;
 
   @keyframes appear {
     0% {
@@ -17,6 +18,16 @@
     }
     100% {
       opacity: 1;
+    }
+  }
+
+  @keyframes bounce {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    33% {
+      transform: translateY(-6px);
     }
   }
 }

@@ -8,12 +8,15 @@ import { Spinner } from "@/components";
 import { selectUserId } from "@/features/auth/slice";
 import { IMessage } from "@shared/types";
 import { ISendImageMessage, ISendTextMessage } from "../types";
+import TypingIndicator from "./TypingIndicator";
 
 type Props = {
+  fullname: string;
   conversationId: string;
+  showTypingIndicator: boolean;
 };
 
-function ChatMessageThread({ conversationId }: Props) {
+function ChatMessageThread({ fullname, showTypingIndicator, conversationId }: Props) {
   const { executeAction: executeFetchMessagesAction } = useActionWithToast<IMessage[], string>();
   const { executeAction: executeSendTextMessageAction } = useActionWithToast<IMessage, ISendTextMessage>();
   const { executeAction: executeSendImageMessageAction } = useActionWithToast<IMessage, ISendImageMessage>();
@@ -70,13 +73,14 @@ function ChatMessageThread({ conversationId }: Props) {
 
   return (
     <>
-      <div
-        ref={messagesDivRef}
-        className="space-y-4 overflow-y-auto h-full chat-container-scrollbar px-2.5 lg:px-5 py-5"
-      >
-        {messages.map((message) => (
-          <MessageBubble key={message._id} {...message} self={userId !== message.receiverId} />
-        ))}
+      <div ref={messagesDivRef} className="h-full chat-container-scrollbar overflow-y-auto px-2.5 lg:px-5 ">
+        <div className="space-y-4 pt-5 pb-2">
+          {messages.map((message) => (
+            <MessageBubble key={message._id} {...message} self={userId !== message.receiverId} />
+          ))}
+          <div className="clear-both" />
+        </div>
+        {showTypingIndicator && <TypingIndicator name={fullname} />}
       </div>
       <MessageInput handleSubmit={sendMessage} />
     </>

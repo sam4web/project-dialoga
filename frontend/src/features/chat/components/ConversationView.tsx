@@ -40,8 +40,12 @@ function ConversationView({ conversationId }: { conversationId: string }) {
   return (
     <section className="relative h-full">
       <ChatHeader profile={selectedProfile} conversationId={conversationId} />
-      <div className="h-[81dvh] overflow-y-hidden">
-        <ChatMessageThread conversationId={conversationId} />
+      <div className="h-[78dvh] overflow-y-hidden">
+        <ChatMessageThread
+          showTypingIndicator={selectedProfile.settings.typingIndicator}
+          fullname={selectedProfile.fullname}
+          conversationId={conversationId}
+        />
       </div>
     </section>
   );

@@ -9,6 +9,7 @@ import ChatPartnersList from "./ChatPartnersList";
 import NewChatContactItem from "./NewChatContactItem";
 import ChatPartnerItem from "./ChatPartnerItem";
 import NewChatContactList from "./NewChatContactList";
+import TypingIndicator from "./TypingIndicator";
 
 export {
   MessageBubble,
@@ -22,4 +23,5 @@ export {
   NewChatContactItem,
   NewChatContactList,
   ChatPartnerItem,
+  TypingIndicator,
 };
