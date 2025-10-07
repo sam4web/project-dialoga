@@ -1,5 +1,5 @@
 import { Action, combineReducers } from "@reduxjs/toolkit";
-import { errorReducer, themeReducer, viewReducer } from "../slices";
+import { errorReducer, socketReducer, themeReducer, viewReducer } from "../slices";
 import { profileReducer } from "@/features/profile/slice";
 import { authReducer } from "@/features/auth/slice";
 import { chatReducer } from "@/features/chat/slice";
@@ -12,6 +12,7 @@ export const appReducer = combineReducers({
   auth: authReducer,
   chat: chatReducer,
   view: viewReducer,
+  socket: socketReducer,
 });
 
 export const rootReducer = (state: RootState | undefined, action: Action) => {

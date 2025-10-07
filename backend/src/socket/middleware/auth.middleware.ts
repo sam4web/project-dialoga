@@ -3,7 +3,7 @@ import { AppSocket } from "../types";
 import { ApiError, validateAccessToken } from "../../lib";
 
 export const authorize = async (socket: AppSocket, next: (err?: ExtendedError) => void) => {
-  const token = socket.handshake.headers.authorization;
+  const token = socket.handshake.auth.token || socket.handshake.headers.authorization;
   try {
     const userId = await validateAccessToken(token || "");
     socket.data.userId = userId;

@@ -18,3 +18,9 @@ export interface ISendImageMessage {
   conversationId: string;
   message: FormData;
 }
+
+export interface UpdateStatusPayload {
+  userId: string;
+  isOnline: boolean;
+  lastSeen?: Date;
+}

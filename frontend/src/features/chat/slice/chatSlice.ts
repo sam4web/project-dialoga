@@ -1,7 +1,8 @@
 import { RootState } from "@/app/store";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { fetchUnassociatedUsers, sendStartNewConversationRequest, fetchChatPartners } from "./chatThunks";
 import { IChatPartner, IUserProfile } from "@shared/types/user";
+import { UpdateStatusPayload } from "../types";
 
 interface ChatState {
   chatPartners: IChatPartner[] | null;
@@ -16,7 +17,25 @@ const initialState: ChatState = {
 const chatSlice = createSlice({
   name: "chat",
   initialState,
-  reducers: {},
+  reducers: {
+    updateUserOnlineStatus: (state, action: PayloadAction<UpdateStatusPayload>) => {
+      const { userId, isOnline, lastSeen } = action.payload;
+      const updateStatusInList = (list: IChatPartner[] | IUserProfile[] | null) => {
+        if (!list) return;
+        for (const user of list) {
+          if (user._id === userId) {
+            user.isOnline = isOnline;
+            if (!isOnline && lastSeen) {
+              user.lastSeen = lastSeen;
+            }
+            break;
+          }
+        }
+      };
+      updateStatusInList(state.chatPartners);
+      updateStatusInList(state.unassociatedUsers);
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchChatPartners.fulfilled, (state, action) => {
@@ -38,4 +57,5 @@ export const selectUnassociatedUsers = (state: RootState) => state.chat.unassoci
 export const isChatPartnersLoaded = (state: RootState) => Boolean(state.chat.chatPartners);
 export const isUnassociatedUsersLoaded = (state: RootState) => Boolean(state.chat.unassociatedUsers);
 
+export const { updateUserOnlineStatus } = chatSlice.actions;
 export const chatReducer = chatSlice.reducer;
