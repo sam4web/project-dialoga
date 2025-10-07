@@ -12,7 +12,7 @@ export interface IUser {
   lastSeen: Date;
 }
 
-export interface IUserProfile extends Omit<IUser, "password" | "createdAt" | "updatedAt"> {}
+export interface IUserProfile extends Omit<IUser, "password" | "updatedAt"> {}
 
 export interface IUserStatus {
   isOnline: boolean;

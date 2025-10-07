@@ -1,3 +1,4 @@
+import { differenceInDays, startOfDay } from "date-fns";
 import {
   ConversationRepository,
   IChatPartner,
@@ -57,6 +58,7 @@ class ChatService {
     if (!conversation) {
       throw ApiError.notFound("Conversation not found. The requested chat session does not exist.");
     }
+
     if (!(conversation.user1._id.equals(userId) || conversation.user2._id.equals(userId))) {
       throw ApiError.forbidden("Unauthorized access. The user is not a participant in this conversation.");
     }
@@ -167,7 +169,8 @@ class ChatService {
     if (!recipientProfile) {
       throw ApiError.notFound("User profile not found. The provided ID does not match any existing user.");
     }
-    const { fullname, profileImage, email, statusMessage } = recipientProfile;
+    const { fullname, profileImage, email, statusMessage, isOnline, lastSeen, createdAt } = recipientProfile;
+    const daysActive = Math.abs(differenceInDays(startOfDay(createdAt), startOfDay(new Date())));
 
     const messagePromises = conversation.messages.map(
       (messageId) => this.messageRepository.findById(String(messageId)) as Promise<IMessage>
@@ -195,12 +198,12 @@ class ChatService {
     const conversationDetail: IConversationDetails = {
       fullname,
       profileImage,
-      // isOnline: boolean;
-      // lastSeen: Date;
+      isOnline,
+      lastSeen,
       stats: {
         messagesSent,
         mediaShared,
-        // daysActive: number;
+        daysActive,
       },
       details: {
         email,

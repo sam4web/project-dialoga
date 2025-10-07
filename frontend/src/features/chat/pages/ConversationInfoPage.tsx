@@ -5,6 +5,8 @@ import { Image, User } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchConversationDetails } from "../slice";
+import { formatDistanceToNow } from "date-fns/formatDistanceToNow";
+import { cx } from "@/utils";
 
 function PageLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -70,25 +72,35 @@ function ConversationInfoPage() {
                 src={chatInfo?.profileImage || ""}
                 className="size-16! sm:size-20! text-2xl! sm:text-3xl!"
               />
-              {/* <div className="absolute bottom-0 right-0 bg-green-500 size-5 rounded-full flex-center">
-                <div className="size-2.5 bg-zinc-50 rounded-full" />
-              </div> */}
-            </div>
 
+              {chatInfo.isOnline && (
+                <div className="absolute bottom-0 right-0 bg-green-500 size-5 rounded-full flex-center">
+                  <div className="size-2.5 bg-zinc-50 rounded-full" />
+                </div>
+              )}
+            </div>
             <div className="sm:space-y-0.5">
               <h3 className="header-text text-xl sm:text-2xl text-center">{chatInfo.fullname}</h3>
-              {/* TODO: update */}
               <div className="flex-center gap-2">
-                <div className="bg-green-500 size-3 rounded-full" />
-                <p className="text-color-primary font-medium">Online now</p>
+                <div
+                  className={cx(
+                    "size-3 rounded-full",
+                    chatInfo.isOnline ? "bg-green-500 " : "bg-zinc-300 dark:bg-zinc-600"
+                  )}
+                />
+                <p className="text-color-primary font-medium">
+                  {chatInfo.isOnline
+                    ? "Online Now"
+                    : `Last seen ${formatDistanceToNow(new Date(chatInfo.lastSeen), { addSuffix: true })}`}
+                </p>
               </div>
             </div>
           </div>
 
-          <div className="flex bg-zinc-200/70 dark:bg-zinc-700/60 p-2.5 rounded-lg gap-3">
+          <div className="flex bg-zinc-200/70 dark:bg-zinc-700/60 p-1.5 sm:p-2.5 rounded-lg gap-2 sm:gap-3">
             <ChatInfoStats value={chatInfo.stats.messagesSent} label="Messages Sent" />
             <ChatInfoStats value={chatInfo.stats.mediaShared} label="Media Shared" />
-            <ChatInfoStats value={5} label="Days Active" />
+            <ChatInfoStats value={chatInfo.stats.daysActive} label="Days Active" />
           </div>
         </div>
 
@@ -108,10 +120,9 @@ function ConversationInfoPage() {
 
         <div className="container-card">
           <CardTitle title="Shared Media" icon={Image} />
-
-          <div className="shared-media-grid">
+          <div className="grid gap-2 sm:gap-3 grid-cols-2 sm:grid-cols-3">
             {chatInfo.sharedMedia.map((image, idx) => (
-              <img src={image} alt={`shared-media-${idx}`} className="image-message" />
+              <img src={image} key={idx} alt={`shared-media-${idx}`} className="image-message" />
             ))}
           </div>
         </div>

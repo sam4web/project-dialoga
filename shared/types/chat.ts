@@ -17,12 +17,12 @@ export interface IStartConversationRequestDTO {
 export interface IConversationDetails {
   fullname: string;
   profileImage: string | null;
-  // isOnline: boolean;
-  // lastSeen: Date;
+  isOnline: boolean;
+  lastSeen: Date;
   stats: {
     messagesSent: number;
     mediaShared: number;
-    // daysActive: number;
+    daysActive: number;
   };
   details: {
     email: string;

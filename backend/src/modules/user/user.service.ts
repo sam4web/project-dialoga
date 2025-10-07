@@ -114,7 +114,7 @@ class UserService {
     if (user.profileImage) {
       user.profileImage = await getProfileImageDataUri(String(user.profileImage));
     }
-    const { password, createdAt, updatedAt, ...userWithoutPassword } = user;
+    const { password, updatedAt, ...userWithoutPassword } = user;
     return userWithoutPassword as IUserProfile;
   }
 
