@@ -1,5 +1,5 @@
 import { AppSocket } from "../../socket/types";
-import { handleSocketError } from "../../socket/lib/errors/error-wrapper";
+import { handleSocketError, wrapSocketHandler } from "../../socket/lib/errors/error-wrapper";
 import userService from "./user.service";
 import { IUpdateUserDTO } from "../../types";
 import { getIo } from "../../socket";
@@ -22,3 +22,12 @@ export function broadcastUserUpdate(userId: string, updatedData: IUpdateUserDTO)
   const io = getIo();
   io.emit("user:profile_updated", { userId, updatedData });
 }
+
+export const registerUserHandlers = (socket: AppSocket) => {
+  socket.on(
+    "user:profile_update",
+    wrapSocketHandler((socket, { userId, updateData }) => {
+      socket.broadcast.emit("user:profile_updated", { userId, updatedData: updateData });
+    })
+  );
+};

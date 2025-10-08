@@ -3,6 +3,7 @@ import { getCurrentUserProfileApi, getPublicProfileApi, updateUserProfileApi, up
 import { ThunkApiConfig } from "@/app/store";
 import { IUpdateUserDTO, IUserProfile } from "@shared/types/user";
 import { handleApiError } from "@/utils";
+import { emitSocketEvent } from "@/app/socket";
 
 export const fetchCurrentUserProfile = createAsyncThunk<IUserProfile, void, ThunkApiConfig>(
   "user/getCurrentUserProfile",
@@ -34,6 +35,7 @@ export const sendUpdateUserProfileRequest = createAsyncThunk<IUserProfile, IUpda
   async (updateData, { getState, rejectWithValue }) => {
     try {
       const userData = await updateUserProfileApi(getState, updateData);
+      emitSocketEvent("user:profile_update", { userId: getState().auth.id!, updateData });
       return userData;
     } catch (error) {
       return rejectWithValue(
@@ -48,6 +50,10 @@ export const sendUpdateUserProfileImageRequest = createAsyncThunk<IUserProfile, 
   async (updateImage, { getState, rejectWithValue }) => {
     try {
       const userData = await updateUserProfileImageApi(getState, updateImage);
+      emitSocketEvent("user:profile_update", {
+        userId: getState().auth.id!,
+        updateData: { profileImage: userData.profileImage! },
+      });
       return userData;
     } catch (error) {
       return rejectWithValue(

@@ -3,7 +3,8 @@ import { Server as HttpServer } from "http";
 import { AppSocket, ClientToServerEvents, InterServerEvents, ServerToClientEvents, SocketData } from "./types";
 import { corsOptions, logger } from "../config";
 import { authorize } from "./middleware";
-import { updateUserStatusAndBroadcast } from "../modules/user";
+import { registerUserHandlers, updateUserStatusAndBroadcast } from "../modules/user";
+import { registerChatHandlers } from "../modules/chat/chat.socket";
 
 let io: SocketIOServer<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData> | null = null;
 
@@ -27,6 +28,9 @@ export const initSocketIO = (httpServer: HttpServer): SocketIOServer => {
       await updateUserStatusAndBroadcast(socket, false, new Date());
       logger.info(`[Socket.IO] Client disconnected: ${socket.id}`);
     });
+
+    registerUserHandlers(socket);
+    registerChatHandlers(socket);
 
     socket.on("error", (error: Error) => {
       logger.error(`[Socket.IO] Socket error for ${socket.id}: ${error.message}`, { stack: error.stack });

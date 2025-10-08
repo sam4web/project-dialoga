@@ -13,14 +13,12 @@ function AuthRequired() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    let cleanup: (() => void) | undefined;
     const socket = initializeSocket(store, token);
-    if (socket) {
-      cleanup = () => {
+    return () => {
+      if (socket) {
         socket.disconnect();
-      };
-    }
-    return cleanup;
+      }
+    };
   }, [token, dispatch]);
 
   if (isTooManyRequests) {

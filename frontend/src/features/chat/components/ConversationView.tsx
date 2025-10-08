@@ -14,6 +14,17 @@ function ConversationView({ conversationId }: { conversationId: string }) {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (conversationId) {
+      emitSocketEvent("chat:join_conversation", conversationId);
+    }
+    return () => {
+      if (conversationId) {
+        emitSocketEvent("chat:leave_conversation", conversationId);
+      }
+    };
+  }, [conversationId]);
+
+  useEffect(() => {
     const fetchUserProfile = async () => {
       const userProfile = await executeAction({
         action: fetchRecipientProfile(conversationId),
@@ -22,9 +33,9 @@ function ConversationView({ conversationId }: { conversationId: string }) {
         navigate("/chat", { replace: true });
         return;
       }
-      emitSocketEvent("chat:join_conversation", conversationId);
       setSelectedProfile(userProfile as IUserProfile);
     };
+
     fetchUserProfile();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [conversationId]);

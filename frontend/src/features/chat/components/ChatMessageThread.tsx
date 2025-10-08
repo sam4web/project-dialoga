@@ -9,6 +9,7 @@ import { selectUserId } from "@/features/auth/slice";
 import { IMessage } from "@shared/types";
 import { ISendImageMessage, ISendTextMessage } from "../types";
 import TypingIndicator from "./TypingIndicator";
+import { emitSocketEvent, getSocketInstance } from "@/app/socket";
 
 type Props = {
   fullname: string;
@@ -42,6 +43,25 @@ function ChatMessageThread({ fullname, showTypingIndicator, conversationId }: Pr
     }
   }, [messages]);
 
+  useEffect(() => {
+    const socket = getSocketInstance();
+    if (!socket) return;
+
+    const messageHandler = ({ message }: { message: IMessage }) => {
+      setMessages((prev) => {
+        if (!prev) return null;
+        if (prev.some((m) => m._id === message._id)) return prev;
+        return [...prev, message];
+      });
+    };
+    socket.on("chat:send_message", messageHandler);
+    return () => {
+      if (socket) {
+        socket.off("chat:send_message", messageHandler);
+      }
+    };
+  }, []);
+
   const sendMessage = async (data: FormData) => {
     const textMessage = data.get("text")?.toString();
     const imageMessage = data.get("image");
@@ -60,6 +80,7 @@ function ChatMessageThread({ fullname, showTypingIndicator, conversationId }: Pr
     if (!message) {
       return;
     }
+    emitSocketEvent("chat:send_message", { conversationId, message });
     setMessages((prev) => [...prev!, message]);
   };
 

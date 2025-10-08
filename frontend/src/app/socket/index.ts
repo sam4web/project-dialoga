@@ -56,3 +56,10 @@ export const disconnectSocket = (): boolean => {
   }
   return false;
 };
+
+export const getSocketInstance = (): AppSocket | null => {
+  if (!socketInstance || !socketInstance.connected) {
+    return null;
+  }
+  return socketInstance;
+};
