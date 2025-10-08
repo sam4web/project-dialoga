@@ -22,4 +22,18 @@ export const registerChatHandlers = (socket: AppSocket) => {
       socket.to(conversationId).emit("chat:send_message", { message });
     })
   );
+
+  socket.on(
+    "chat:typing_start",
+    wrapSocketHandler((socket, conversationId) => {
+      socket.to(conversationId).emit("chat:typing_start");
+    })
+  );
+
+  socket.on(
+    "chat:typing_end",
+    wrapSocketHandler((socket, conversationId) => {
+      socket.to(conversationId).emit("chat:typing_end");
+    })
+  );
 };

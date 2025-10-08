@@ -6,15 +6,34 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, FileUploadModal, ModalWrapper } from "@/components";
 import { textMessageInputSchema, TTextMessageInputSchema } from "../types/index";
 import { cx } from "@/utils";
+import useTypingStatus from "../hooks/useTypingStatus";
+import { emitSocketEvent } from "@/app/socket";
+import { useCallback } from "react";
 
 interface Props {
   handleSubmit: (formData: FormData) => Promise<void>;
+  conversationId?: string;
   isNew?: boolean;
 }
 
-function MessageInput({ isNew = false, handleSubmit }: Props) {
+function MessageInput({ isNew = false, conversationId, handleSubmit }: Props) {
   const dispatch = useDispatch();
   const fileUploadModalState = useSelector(selectFileUploadModalState);
+
+  const onStartTyping = useCallback(() => {
+    if (!isNew && conversationId) {
+      emitSocketEvent("chat:typing_start", conversationId);
+    }
+  }, [conversationId, isNew]);
+
+  const onStopTyping = useCallback(() => {
+    if (!isNew && conversationId) {
+      emitSocketEvent("chat:typing_end", conversationId);
+    }
+  }, [conversationId, isNew]);
+
+  const { onKeyDown: onTypingKeyDown, stopTyping } = useTypingStatus({ onStartTyping, onStopTyping });
+
   const {
     register,
     handleSubmit: handleTextSubmit,
@@ -28,6 +47,7 @@ function MessageInput({ isNew = false, handleSubmit }: Props) {
   const onTextMessageSubmit: SubmitHandler<TTextMessageInputSchema> = async (data) => {
     const formData = new FormData();
     formData.append("text", data.message);
+    stopTyping();
     await handleSubmit(formData);
     reset();
   };
@@ -65,6 +85,7 @@ function MessageInput({ isNew = false, handleSubmit }: Props) {
                 )}
                 id="message"
                 placeholder="Type a message..."
+                onKeyDown={onTypingKeyDown}
                 {...register("message")}
               />
               <Button

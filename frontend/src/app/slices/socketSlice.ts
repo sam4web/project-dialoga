@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from "../store";
 
 interface SocketState {
   isConnected: boolean;
@@ -19,6 +20,8 @@ export const socketSlice = createSlice({
     },
   },
 });
+
+export const selectIsConnected = (state: RootState) => state.socket.isConnected;
 
 export const { setConnected, setDisconnected } = socketSlice.actions;
 export const socketReducer = socketSlice.reducer;

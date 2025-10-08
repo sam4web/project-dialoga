@@ -24,6 +24,7 @@ function ChatMessageThread({ fullname, showTypingIndicator, conversationId }: Pr
   const userId = useSelector(selectUserId);
   const [messages, setMessages] = useState<IMessage[] | null>(null);
   const messagesDivRef = useRef<HTMLDivElement>(null);
+  const [isTyping, setIsTyping] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -41,7 +42,7 @@ function ChatMessageThread({ fullname, showTypingIndicator, conversationId }: Pr
     if (div) {
       div.scrollTop = div.scrollHeight;
     }
-  }, [messages]);
+  }, [messages, isTyping]);
 
   useEffect(() => {
     const socket = getSocketInstance();
@@ -54,10 +55,24 @@ function ChatMessageThread({ fullname, showTypingIndicator, conversationId }: Pr
         return [...prev, message];
       });
     };
+
     socket.on("chat:send_message", messageHandler);
+
+    const handleTypingStart = () => {
+      setIsTyping(true);
+    };
+
+    const handleTypingEnd = () => {
+      setIsTyping(false);
+    };
+
+    socket.on("chat:typing_start", handleTypingStart);
+    socket.on("chat:typing_end", handleTypingEnd);
     return () => {
       if (socket) {
         socket.off("chat:send_message", messageHandler);
+        socket.off("chat:typing_start", handleTypingStart);
+        socket.off("chat:typing_end", handleTypingEnd);
       }
     };
   }, []);
@@ -101,9 +116,9 @@ function ChatMessageThread({ fullname, showTypingIndicator, conversationId }: Pr
           ))}
           <div className="clear-both" />
         </div>
-        {showTypingIndicator && <TypingIndicator name={fullname} />}
+        {showTypingIndicator && isTyping ? <TypingIndicator name={fullname} /> : null}
       </div>
-      <MessageInput handleSubmit={sendMessage} />
+      <MessageInput handleSubmit={sendMessage} conversationId={conversationId} />
     </>
   );
 }
