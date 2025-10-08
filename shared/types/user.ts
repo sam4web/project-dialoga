@@ -43,5 +43,5 @@ export interface IChatPartner extends IUserProfile {
 
 export interface IDisconnectedUserPayload {
   userId: string;
-  lastSeen?: string;
+  lastSeen: Date;
 }

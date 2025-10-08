@@ -6,6 +6,7 @@ import { fetchRecipientProfile } from "../slice";
 import { Spinner } from "@/components";
 import ChatHeader from "./ChatHeader";
 import ChatMessageThread from "./ChatMessageThread";
+import { emitSocketEvent } from "@/app/socket";
 
 function ConversationView({ conversationId }: { conversationId: string }) {
   const { executeAction } = useActionWithToast<IUserProfile, string>();
@@ -21,6 +22,7 @@ function ConversationView({ conversationId }: { conversationId: string }) {
         navigate("/chat", { replace: true });
         return;
       }
+      emitSocketEvent("chat:join_conversation", conversationId);
       setSelectedProfile(userProfile as IUserProfile);
     };
     fetchUserProfile();

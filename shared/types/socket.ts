@@ -1,0 +1,26 @@
+import { IDisconnectedUserPayload, IUpdateUserDTO } from "./user";
+
+export interface ISocketCallback {
+  status: "success" | "error";
+  message: string;
+}
+
+export interface ServerToClientEvents {
+  "message:system": (message: string) => void;
+  "user:connected": (userId: string) => void;
+  "user:disconnected": ({ userId, lastSeen }: IDisconnectedUserPayload) => void;
+  "user:profile_updated": ({ userId, updatedData }: { userId: string; updatedData: IUpdateUserDTO }) => void;
+}
+
+export interface ClientToServerEvents {
+  "chat:join_conversation": (conversationId: string) => void;
+}
+
+export interface InterServerEvents {
+  ping: () => void;
+}
+
+export interface SocketData {
+  userId: string;
+  socketId: string;
+}

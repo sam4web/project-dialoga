@@ -11,7 +11,7 @@ export async function updateUserStatusAndBroadcast(socket: AppSocket, isOnline: 
     if (isOnline) {
       socket.broadcast.emit("user:connected", userId);
     } else {
-      socket.broadcast.emit("user:disconnected", { userId, lastSeen: lastSeen?.toISOString() });
+      socket.broadcast.emit("user:disconnected", { userId, lastSeen: lastSeen! });
     }
   } catch (error) {
     handleSocketError(socket, error as Error);
