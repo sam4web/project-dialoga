@@ -1,7 +1,8 @@
 import { setConnected, setDisconnected } from "@/app/slices";
 import { AppStore } from "@/app/store";
 import config from "@/config";
-import { updateUserOnlineStatus } from "@/features/chat/slice";
+import { updateUserOnlineStatus, updateUserProfile } from "@/features/chat/slice";
+import { IUpdateUserDTO } from "@shared/types";
 import { io, Socket } from "socket.io-client";
 
 let socketInstance: Socket | null = null;
@@ -50,6 +51,15 @@ export const initializeSocket = (store: AppStore, token: string | null) => {
         userId: payload.userId,
         isOnline: false,
         lastSeen: payload.lastSeen,
+      })
+    );
+  });
+
+  newSocket.on("user:profile_updated", (payload: { userId: string; updatedData: IUpdateUserDTO }) => {
+    store.dispatch(
+      updateUserProfile({
+        userId: payload.userId,
+        updatedData: payload.updatedData,
       })
     );
   });

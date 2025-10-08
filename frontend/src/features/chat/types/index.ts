@@ -1,3 +1,4 @@
+import { IUpdateUserDTO } from "@shared/types";
 import z from "zod";
 
 export const textMessageInputSchema = z.object({
@@ -23,4 +24,9 @@ export interface UpdateStatusPayload {
   userId: string;
   isOnline: boolean;
   lastSeen?: Date;
+}
+
+export interface UpdateUserProfilePayload {
+  userId: string;
+  updatedData: IUpdateUserDTO;
 }

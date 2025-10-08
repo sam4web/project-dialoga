@@ -2,7 +2,7 @@ import { RootState } from "@/app/store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { fetchUnassociatedUsers, sendStartNewConversationRequest, fetchChatPartners } from "./chatThunks";
 import { IChatPartner, IUserProfile } from "@shared/types/user";
-import { UpdateStatusPayload } from "../types";
+import { UpdateStatusPayload, UpdateUserProfilePayload } from "../types";
 
 interface ChatState {
   chatPartners: IChatPartner[] | null;
@@ -35,6 +35,21 @@ const chatSlice = createSlice({
       updateStatusInList(state.chatPartners);
       updateStatusInList(state.unassociatedUsers);
     },
+    updateUserProfile: (state, action: PayloadAction<UpdateUserProfilePayload>) => {
+      const { userId, updatedData } = action.payload;
+      const updateProfileInList = (list: IChatPartner[] | IUserProfile[] | null) => {
+        if (!list) return;
+        for (let i = 0; i < list.length; i++) {
+          const user = list[i];
+          if (user._id === userId) {
+            list[i] = { ...user, ...updatedData };
+            break;
+          }
+        }
+      };
+      updateProfileInList(state.chatPartners);
+      updateProfileInList(state.unassociatedUsers);
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -57,5 +72,5 @@ export const selectUnassociatedUsers = (state: RootState) => state.chat.unassoci
 export const isChatPartnersLoaded = (state: RootState) => Boolean(state.chat.chatPartners);
 export const isUnassociatedUsersLoaded = (state: RootState) => Boolean(state.chat.unassociatedUsers);
 
-export const { updateUserOnlineStatus } = chatSlice.actions;
+export const { updateUserOnlineStatus, updateUserProfile } = chatSlice.actions;
 export const chatReducer = chatSlice.reducer;
