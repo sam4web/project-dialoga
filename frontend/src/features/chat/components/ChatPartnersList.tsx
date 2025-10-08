@@ -5,11 +5,13 @@ import { useEffect } from "react";
 import { Spinner } from "@/components";
 import { IChatPartner } from "@shared/types";
 import ChatPartnerItem from "./ChatPartnerItem";
+import ContactSearchInput from "./ContactSearchInput";
+import useChatSearch from "../hooks/useChatSearch";
 
 function ChatPartnersList() {
   const { executeAction } = useActionWithToast<IChatPartner[], void>();
-  const chatPartners = useSelector(selectChatPartners);
   const isLoaded = useSelector(isChatPartnersLoaded);
+  const { search, setSearch, filteredUsers } = useChatSearch(useSelector(selectChatPartners) || []);
 
   useEffect(() => {
     const fetchChatList = async () => {
@@ -30,24 +32,32 @@ function ChatPartnersList() {
     );
   }
 
-  if (!chatPartners || !chatPartners.length) {
-    return (
-      <div className="px-3.5 md:px-2.5 lg:px-3.5">
-        <div className="container-card select-none dark:opacity-50 opacity-70 p-4">
-          <p className="text-color-light opacity-80 text-sm lg:text-base">
-            <b>No active chats.</b> Start a new conversation to begin.
-          </p>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="px-3.5 md:px-2.5 lg:px-3.5 space-y-2">
-      {chatPartners.map((partner) => (
-        <ChatPartnerItem partner={partner} key={partner._id} />
-      ))}
-    </div>
+    <>
+      <ContactSearchInput
+        className="space-x-2 px-3.5 md:px-2.5 lg:px-3.5 pt-1"
+        search={search}
+        onSearchChange={setSearch}
+      />
+
+      <div className="px-3.5 md:px-2.5 lg:px-3.5">
+        {!filteredUsers || !filteredUsers.length ? (
+          <div className="px-3.5 md:px-2.5 lg:px-3.5">
+            <div className="container-card select-none dark:opacity-50 opacity-70 p-4">
+              <p className="text-color-light opacity-80 text-sm lg:text-base">
+                <b>No active chats.</b> Start a new conversation to begin.
+              </p>
+            </div>
+          </div>
+        ) : (
+          <div className="space-y-2">
+            {filteredUsers.map((user) => (
+              <ChatPartnerItem partner={user} key={user._id} />
+            ))}
+          </div>
+        )}
+      </div>
+    </>
   );
 }
 

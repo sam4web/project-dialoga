@@ -4,12 +4,12 @@ import MessageInput from "./MessageInput";
 import ConversationView from "./ConversationView";
 import PlaceholderView from "./PlaceholderView";
 import ChatSideBar from "./ChatSideBar";
-import NewChatSearchInput from "./NewChatSearchInput";
 import ChatPartnersList from "./ChatPartnersList";
 import NewChatContactItem from "./NewChatContactItem";
 import ChatPartnerItem from "./ChatPartnerItem";
 import NewChatContactList from "./NewChatContactList";
 import TypingIndicator from "./TypingIndicator";
+import ContactSearchInput from "./ContactSearchInput";
 
 export {
   MessageBubble,
@@ -18,7 +18,7 @@ export {
   ConversationView,
   PlaceholderView,
   ChatSideBar,
-  NewChatSearchInput,
+  ContactSearchInput,
   ChatPartnersList,
   NewChatContactItem,
   NewChatContactList,

@@ -53,6 +53,7 @@ export const sendChangePasswordRequest = createAsyncThunk<void, TChangePasswordS
   async (credentials, { getState, rejectWithValue }) => {
     try {
       await changePasswordApi(getState, credentials);
+      disconnectSocket();
     } catch (error) {
       return rejectWithValue(
         handleApiError(error, "Failed to update password. Please check your information and try again.")

@@ -19,4 +19,5 @@ const useDebounceEffect = (action: () => void, deps: React.DependencyList, delay
     };
   }, [...deps, delay]);
 };
+
 export default useDebounceEffect;

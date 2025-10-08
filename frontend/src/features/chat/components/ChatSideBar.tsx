@@ -1,4 +1,4 @@
-import { Plus, Search, Settings } from "lucide-react";
+import { Plus, Settings } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button, ThemeToggler } from "@/components";
 import ChatPartnersList from "./ChatPartnersList";
@@ -27,18 +27,6 @@ function ChatSideBar() {
           </div>
         </div>
 
-        <form className="space-x-2 px-3.5 md:px-2.5 lg:px-3.5 pt-1">
-          <div className="input-field py-2.5 px-3 rounded-lg flex items-center space-x-2 group focus-within:outline-2">
-            <label htmlFor="search">
-              <Search className="text-color-primary size-5" />
-            </label>
-            <input
-              className="outline-none w-full focus:placeholder:text-transparent dark:placeholder:text-gray-200/60 placeholder:text-gray-800/50"
-              id="search"
-              placeholder="Search conversations..."
-            />
-          </div>
-        </form>
         <ChatPartnersList />
       </div>
     </aside>

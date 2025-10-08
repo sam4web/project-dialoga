@@ -1,4 +1,5 @@
 import { cx, getRandomHexColor } from "@/utils";
+import { memo } from "react";
 
 interface Props {
   fullname: string;
@@ -7,7 +8,7 @@ interface Props {
   src?: string;
 }
 
-function UserAvatar({ className = "", alt, fullname, src }: Props) {
+const UserAvatar = memo(function UserAvatar({ className = "", alt, fullname, src }: Props) {
   if (!src) {
     return (
       <div
@@ -25,6 +26,6 @@ function UserAvatar({ className = "", alt, fullname, src }: Props) {
   return (
     <img src={src} alt={alt} className={cx("size-13 shadow-sm rounded-full object-cover object-center", className)} />
   );
-}
+});
 
 export default UserAvatar;
