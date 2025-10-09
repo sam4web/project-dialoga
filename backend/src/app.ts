@@ -12,6 +12,8 @@ import { chatRouter } from "./modules/chat";
 
 const app: Application = express();
 
+app.set("trust proxy", 1);
+
 // --- MIDDLEWARE SETUP ---
 app.use(helmet());
 app.use(cors(corsOptions));
