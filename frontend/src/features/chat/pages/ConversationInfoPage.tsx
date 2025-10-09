@@ -121,7 +121,7 @@ function ConversationInfoPage() {
           <CardTitle title="Shared Media" icon={Image} />
           <div className="grid gap-2 sm:gap-3 grid-cols-2 sm:grid-cols-3">
             {chatInfo.sharedMedia.map((image, idx) => (
-              <img src={image} key={idx} alt={`shared-media-${idx}`} className="image-message" />
+              <img src={image} key={idx} alt={`shared-media-${idx}`} className="image" />
             ))}
           </div>
         </div>

@@ -9,6 +9,7 @@ import ChatMessageThread from "./ChatMessageThread";
 import { emitSocketEvent } from "@/app/socket";
 
 function ConversationView({ conversationId }: { conversationId: string }) {
+  useTitle({ title: "Active Conversation", template: true });
   const { executeAction } = useActionWithToast<IUserProfile, string>();
   const [selectedProfile, setSelectedProfile] = useState<IUserProfile | null>(null);
   const navigate = useNavigate();

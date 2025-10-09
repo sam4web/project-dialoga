@@ -24,8 +24,8 @@ function Hero() {
         <div className="flex-center pt-3">
           <img
             className="container-card p-0 object-cover aspect-auto"
-            src="https://id-preview--cc04c88d-33ab-4d81-a280-af8578486d4e.lovable.app/assets/hero-chat-interface-CXppf2ZD.jpg"
-            alt=""
+            src="/hero-banner-image.png"
+            alt="hero banner image"
           />
         </div>
       </div>
