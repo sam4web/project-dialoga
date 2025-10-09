@@ -6,7 +6,39 @@
     @apply m-0 box-border p-0;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply font-foreground;
+  }
+
+  body::-webkit-scrollbar-track {
+    background-color: theme("colors.primary-light");
+  }
+
+  body::-webkit-scrollbar-thumb {
+    background-color: theme("colors.zinc.800");
+    border-radius: 2px;
+  }
+
+  body::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  [data-theme="dark"] body::-webkit-scrollbar-track,
+  body[data-theme="dark"]::-webkit-scrollbar-track {
+    background-color: theme("colors.zinc.900");
+  }
+
+  [data-theme="dark"] body::-webkit-scrollbar-thumb,
+  body[data-theme="dark"]::-webkit-scrollbar-thumb {
+    background-color: theme("colors.zinc.700");
+  }
+
+  [data-theme="dark"] body::-webkit-scrollbar,
+  body[data-theme="dark"]::-webkit-scrollbar {
+    background-color: theme("colors.zinc.700");
   }
 }

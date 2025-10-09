@@ -1,6 +1,7 @@
 import BaseLayout from "./layouts/BaseLayout";
 import Spinner from "./common/Spinner";
 import Toast from "./common/Toast";
+import Icon from "./common/Icon";
 import CardTitle from "./shared/CardTitlte";
 import FileUploadModal from "./shared/FileUploadModal";
 import Header from "./shared/Header";
@@ -17,6 +18,7 @@ export {
   BaseLayout,
   Spinner,
   Toast,
+  Icon,
   CardTitle,
   FileUploadModal,
   Header,
