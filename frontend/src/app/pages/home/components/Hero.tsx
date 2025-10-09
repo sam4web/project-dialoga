@@ -6,10 +6,10 @@ function Hero() {
     <section className="section-container pt-28">
       <div className="text-center space-y-3 lg:space-y-6">
         <h1 className="header-text text-4xl lg:text-7xl max-w-xl lg:max-w-4xl mx-auto">
-          Dialoga: Your Simple & Elegant Chat Experience
+          Dialoga: Fullstack Real-Time Chat Application
         </h1>
         <p className="text-color-light dark:text-zinc-300! text-lg lg:text-xl max-w-lg mx-auto">
-          A practice project showcasing modern UI design and chat functionality
+          A practice project built to learn full-stack development, clean architecture, and WebSocket implementation.
         </p>
 
         <div className="space-x-3.5">

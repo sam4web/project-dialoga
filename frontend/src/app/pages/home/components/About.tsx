@@ -3,12 +3,15 @@ import { TECH_STACK } from "../constants";
 function About() {
   return (
     <section className="section-container" id="about">
-      <div className="grid sm:grid-cols-2 gap-x-4 gap-y-5">
-        <div className="space-y-3">
-          <h3 className="section-title">About</h3>
-          <p className="text-color-light text-lg max-w-md">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Id in animi accusantium optio, sed ex repellat
-            cumque ipsum quos nemo itaque quaerat reprehenderit modi et expedita doloremque. Dolorum, illo veritatis.
+      <div className="grid  md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-5">
+        <div className="space-y-3 lg:col-span-2">
+          <h3 className="section-title">About Dialoga</h3>
+          <p className="text-color-light text-lg max-w-2xl">
+            Dialoga is a practice project built to learn the development of <b>real-time chat applications</b> using the{" "}
+            <b>MERN stack</b>. The scope covered the entire application lifecycle: designing the React user interface,
+            building the Node/Express backend, and handling data with MongoDB. A key focus was integrating WebSockets
+            for smooth, instant communication. This experience provided practical expertise in API development,
+            efficient database management, and connecting complex full-stack components.
           </p>
         </div>
 

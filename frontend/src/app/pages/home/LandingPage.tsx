@@ -6,7 +6,7 @@ import { About, Features, Header, Hero, Screenshots, CTA, Footer } from "./compo
 function LandingPage() {
   const isAuthenticated = useSelector(isUserAuthenticated);
   if (isAuthenticated) {
-    // return <Navigate to={"/chat"} replace />;
+    return <Navigate to={"/chat"} replace />;
   }
 
   return (

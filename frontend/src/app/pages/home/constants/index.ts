@@ -8,30 +8,42 @@ export const NAV_LINKS = [
 export const FEATURES_LIST = [
   {
     icon: "MessageCircle",
-    title: "Real-Time Messaging",
-    message: "Enjoy a clutter-free chat interface designed for clear communication.",
+    title: "Real-Time Chat",
+    message: "Uses Socket.IO rooms to handle many users and ensure reliable, fast message delivery.",
   },
   {
     icon: "User",
     title: "User Profiles",
-    message: "View contact details and shared media with ease.",
+    message: "Shows a clean Repository Pattern for managing user data and keeping code simple.",
   },
 
   {
     icon: "Image",
     title: "Media Sharing",
-    message: "Effortlessly share images and media with your contacts.",
+    message: "Logic to process and store image files on the server using multipart form data.",
   },
   {
     icon: "Lock",
     title: "Privacy Settings",
-    message: "Control your online visibility and typing indicators.",
+    message:
+      "Added basic authentication flow and visibility controls to simulate real-world chat app features like online status and typing indicators.",
   },
   {
     icon: "SwatchBook",
     title: "Personalization",
-    message: "Modern aesthetic with eye-friendly design that adapts to your preferences.",
+    message: "Features robust Tailwind CSS setup for switching themes using simple data-theme attributes.",
   },
 ];
 
-export const TECH_STACK = ["React", "TypeScript", "Tailwind CSS", "Node.js", "WebSocket", "PostgreSQL"];
+export const TECH_STACK = [
+  "React",
+  "TypeScript",
+  "Redux Toolkit",
+  "React Hook Form ",
+  "Tailwind CSS",
+  "Zod",
+  "Express.js",
+  "Socket.IO",
+  "JWT",
+  "MongoDB",
+];
