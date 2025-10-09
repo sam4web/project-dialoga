@@ -4,6 +4,7 @@ import { useActionWithToast } from "@/hooks";
 import { useDispatch } from "react-redux";
 import { Button } from "@/components";
 import { showChangePasswordModal } from "@/app/slices";
+import { toast } from "react-toastify";
 
 function ProfileActionCard() {
   const { executeAction } = useActionWithToast<void, void>();
@@ -11,6 +12,7 @@ function ProfileActionCard() {
   const dispatch = useDispatch();
 
   const handleSignout = async () => {
+    toast.dismiss();
     await executeAction({
       action: sendSignOutRequest(),
       loadingMessage: "Logging out, please wait...",

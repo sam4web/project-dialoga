@@ -8,6 +8,7 @@ import { Spinner } from "@/components";
 import { sendStartNewConversationRequest } from "../slice";
 import { MessageCircleDashed } from "lucide-react";
 import { toast } from "react-toastify";
+import { emitSocketEvent } from "@/app/socket";
 
 function StartConversationPage() {
   const { userId } = useParams();
@@ -47,7 +48,15 @@ function StartConversationPage() {
     const recipient = await executeStartNewConversationAction({
       action: sendStartNewConversationRequest({ receiverId: userId!, initialMessage: message }),
     });
-    navigate(recipient ? `/chat/${recipient.conversationId}` : `/chat`, { replace: true });
+    if (!recipient) {
+      navigate(`/chat`, { replace: true });
+      return;
+    }
+    emitSocketEvent("chat:start_conversation", {
+      conversationId: recipient.conversationId,
+      recipientId: userId!,
+    });
+    navigate(`/chat/${recipient.conversationId}`, { replace: true });
     return;
   };
 

@@ -14,10 +14,18 @@ const initialState: ChatState = {
   unassociatedUsers: null,
 };
 
+const handleStartNewConversation = (state: ChatState, userProfile: IChatPartner) => {
+  state.chatPartners?.push(userProfile);
+  state.unassociatedUsers = (state.unassociatedUsers ?? [])?.filter((user) => user._id !== userProfile._id);
+};
+
 const chatSlice = createSlice({
   name: "chat",
   initialState,
   reducers: {
+    startNewConversation: (state, action: PayloadAction<IChatPartner>) => {
+      handleStartNewConversation(state, action.payload);
+    },
     updateUserOnlineStatus: (state, action: PayloadAction<UpdateStatusPayload>) => {
       const { userId, isOnline, lastSeen } = action.payload;
       const updateStatusInList = (list: IChatPartner[] | IUserProfile[] | null) => {
@@ -60,9 +68,7 @@ const chatSlice = createSlice({
         state.unassociatedUsers = action.payload;
       })
       .addCase(sendStartNewConversationRequest.fulfilled, (state, action) => {
-        const recipient = action.payload;
-        state.chatPartners?.push(recipient);
-        state.unassociatedUsers = (state.unassociatedUsers ?? [])?.filter((user) => user._id !== recipient._id);
+        handleStartNewConversation(state, action.payload);
       });
   },
 });
@@ -72,5 +78,5 @@ export const selectUnassociatedUsers = (state: RootState) => state.chat.unassoci
 export const isChatPartnersLoaded = (state: RootState) => Boolean(state.chat.chatPartners);
 export const isUnassociatedUsersLoaded = (state: RootState) => Boolean(state.chat.unassociatedUsers);
 
-export const { updateUserOnlineStatus, updateUserProfile } = chatSlice.actions;
+export const { updateUserOnlineStatus, updateUserProfile, startNewConversation } = chatSlice.actions;
 export const chatReducer = chatSlice.reducer;

@@ -1,5 +1,5 @@
 import { IMessage } from "./message";
-import { IDisconnectedUserPayload, IUpdateUserDTO } from "./user";
+import { IChatPartner, IDisconnectedUserPayload, IUpdateUserDTO } from "./user";
 
 export interface ISocketCallback {
   status: "success" | "error";
@@ -14,6 +14,7 @@ export interface ServerToClientEvents {
   "chat:send_message": ({ message }: { message: IMessage }) => void;
   "chat:typing_start": () => void;
   "chat:typing_end": () => void;
+  "chat:start_conversation": ({ recipientId, userProfile }: { recipientId: string; userProfile: IChatPartner }) => void;
 }
 
 export interface ClientToServerEvents {
@@ -23,6 +24,7 @@ export interface ClientToServerEvents {
   "chat:send_message": ({ conversationId, message }: { conversationId: string; message: IMessage }) => void;
   "chat:typing_start": (conversationId: string) => void;
   "chat:typing_end": (conversationId: string) => void;
+  "chat:start_conversation": ({ conversationId, recipientId }: { conversationId: string; recipientId: string }) => void;
 }
 
 export interface InterServerEvents {

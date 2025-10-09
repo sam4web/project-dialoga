@@ -1,7 +1,7 @@
 import { store } from "../store";
 import { setConnected, setDisconnected } from "../slices";
-import { updateUserOnlineStatus, updateUserProfile } from "@/features/chat/slice";
-import { IDisconnectedUserPayload, IUpdateUserDTO } from "@shared/types";
+import { startNewConversation, updateUserOnlineStatus, updateUserProfile } from "@/features/chat/slice";
+import { IDisconnectedUserPayload } from "@shared/types";
 import { AppSocket } from "./types";
 
 export const registerSocketHandlers = (socket: AppSocket) => {
@@ -13,7 +13,7 @@ export const registerSocketHandlers = (socket: AppSocket) => {
     store.dispatch(setDisconnected());
   });
 
-  socket.on("user:connected", (userId: string) => {
+  socket.on("user:connected", (userId) => {
     store.dispatch(updateUserOnlineStatus({ userId, isOnline: true }));
   });
 
@@ -26,12 +26,21 @@ export const registerSocketHandlers = (socket: AppSocket) => {
     );
   });
 
-  socket.on("user:profile_updated", (payload: { userId: string; updatedData: IUpdateUserDTO }) => {
+  socket.on("user:profile_updated", (payload) => {
     store.dispatch(
       updateUserProfile({
         userId: payload.userId,
         updatedData: payload.updatedData,
       })
     );
+  });
+
+  socket.on("chat:start_conversation", (paylaod) => {
+    const { recipientId, userProfile } = paylaod;
+    const userId = store.getState().auth.id!;
+    if (userId.localeCompare(recipientId) !== 0) {
+      return;
+    }
+    store.dispatch(startNewConversation(userProfile));
   });
 };

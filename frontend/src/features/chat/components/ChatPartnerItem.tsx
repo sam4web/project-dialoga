@@ -15,7 +15,9 @@ function ChatPartnerItem({ partner }: { partner: IChatPartner }) {
               fullname={partner.fullname}
               src={partner?.profileImage || ""}
             />
-            {partner.isOnline && <div className="absolute bottom-0 right-0 bg-green-500 size-3 rounded-full" />}
+            {partner.isOnline && partner.settings.onlineStatus && (
+              <div className="absolute bottom-0 right-0 bg-green-500 size-3 rounded-full" />
+            )}
           </div>
 
           <div className="flex-1">

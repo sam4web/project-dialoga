@@ -18,11 +18,6 @@ export async function updateUserStatusAndBroadcast(socket: AppSocket, isOnline: 
   }
 }
 
-export function broadcastUserUpdate(userId: string, updatedData: IUpdateUserDTO) {
-  const io = getIo();
-  io.emit("user:profile_updated", { userId, updatedData });
-}
-
 export const registerUserHandlers = (socket: AppSocket) => {
   socket.on(
     "user:profile_update",

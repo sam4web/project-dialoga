@@ -95,6 +95,27 @@ class UserService {
     return activeParticipants;
   }
 
+  public async getChatpartner(recipientId: string, conversationId: string): Promise<IChatPartner> {
+    const conversation = await this.conversationRepository.findById(conversationId);
+    if (!conversation) {
+      throw ApiError.notFound("Conversation not found. The requested chat session does not exist.");
+    }
+    if (!(conversation.user1._id.equals(recipientId) || conversation.user2._id.equals(recipientId))) {
+      throw ApiError.forbidden("Unauthorized access. The user is not a participant in this conversation.");
+    }
+    const userId =
+      conversation.user1._id.toString() === recipientId
+        ? conversation.user2._id.toString()
+        : conversation.user1._id.toString();
+    const user = (await this.userRepository.findById(userId))!;
+    const lastMessage = await this.getLastMessageInConversation(conversationId);
+    let { password, updatedAt, ...userProfile } = user;
+    if (user.profileImage) {
+      userProfile.profileImage = await getProfileImageDataUri(String(user.profileImage));
+    }
+    return { ...userProfile, conversationId, lastMessage } as IChatPartner;
+  }
+
   public async getUserProfile(userId: string) {
     const user = await this.userRepository.findById(userId);
     if (!user) return null;

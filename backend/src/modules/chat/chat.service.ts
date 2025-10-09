@@ -58,7 +58,6 @@ class ChatService {
     if (!conversation) {
       throw ApiError.notFound("Conversation not found. The requested chat session does not exist.");
     }
-
     if (!(conversation.user1._id.equals(userId) || conversation.user2._id.equals(userId))) {
       throw ApiError.forbidden("Unauthorized access. The user is not a participant in this conversation.");
     }
@@ -99,7 +98,6 @@ class ChatService {
       user2: receiverId,
       messages: [message],
     });
-    //TODO: add connected user properties
     const userProfile = (await userService.getUserProfile(receiverId)) as IUserProfile;
     return {
       ...userProfile,
