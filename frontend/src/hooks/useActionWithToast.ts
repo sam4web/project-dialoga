@@ -23,7 +23,7 @@ const useActionWithToast = <TResponse, TArgs>() => {
       if (result) return result;
     } catch (error) {
       toast.dismiss();
-      toast.error(error);
+      toast.error(error as string);
     }
   };
 
