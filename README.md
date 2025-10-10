@@ -56,5 +56,5 @@ _User settings and profile management screen._
 
 - **Frontend Code**: [Frontend Repository](https://github.com/sam4web/project-dialoga/tree/main/frontend)
 - **Backend Code**: [Backend Repository](https://github.com/sam4web/project-dialoga/tree/main/backend)
-- **Live Application**: [Dialoga Live]()
-- **Live API**: [Dialoga API]()
+- **Live Application**: [Dialoga Live](https://project-dialoga.netlify.app/)
+- **Live API**: [Dialoga API](https://project-dialoga.onrender.com)
