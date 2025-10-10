@@ -27,10 +27,5 @@
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "typescript": "^5.8.3"
-  },
-  "dependencies": {
-    "jwt-decode": "^4.0.0",
-    "react-toastify": "^11.0.5",
-    "socket.io-client": "^4.8.1"
   }
 }
