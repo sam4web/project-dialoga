@@ -2,7 +2,7 @@
   base="frontend"
   functions = "functions"
   publish = "dist"  
-  command = "npm install && npm run build"
+  command = "npm run build"
 [[redirects]]
   from = "/*"
   to = "/index.html"
