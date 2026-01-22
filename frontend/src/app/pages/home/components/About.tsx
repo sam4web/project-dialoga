@@ -17,9 +17,9 @@ function About() {
 
         <div className="space-y-2">
           <h4 className="header-text text-xl lg:text-xl">Tech Stack</h4>
-          <div className="flex flex-wrap gap-2.5">
+          <div className="flex flex-wrap gap-x-1.5 gap-y-2">
             {TECH_STACK.map((item, idx) => (
-              <div className="container-card rounded-xl px-3 py-2" key={idx}>
+              <div className="container-card rounded-lg px-2 py-1" key={idx}>
                 <p className="text-color-light text-base">{item}</p>
               </div>
             ))}

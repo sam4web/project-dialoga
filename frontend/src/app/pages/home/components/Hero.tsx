@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function Hero() {
   return (
-    <section className="section-container pt-28">
+    <section className="section-container h-[75dvh] flex-center pt-28">
       <div className="text-center space-y-3 lg:space-y-6">
         <h1 className="header-text text-4xl lg:text-7xl max-w-xl lg:max-w-4xl mx-auto">
           Dialoga: Fullstack Real-Time Chat Application
@@ -19,14 +19,6 @@ function Hero() {
           <Link to={"https://github.com/sam4web/project-dialoga"}>
             <Button variant="outline">View on Github</Button>
           </Link>
-        </div>
-
-        <div className="flex-center pt-3">
-          <img
-            className="container-card p-0 object-cover aspect-auto"
-            src="/hero-banner-image.png"
-            alt="hero banner image"
-          />
         </div>
       </div>
     </section>
